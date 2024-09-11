@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!--Global site tag (gtag.js) - Google Analytics -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142145440-1"></script>-->
-    <!--<script>-->
-    <!--  window.dataLayer = window.dataLayer || [];-->
-    <!--  function gtag(){dataLayer.push(arguments);}-->
-    <!--  gtag('js', new Date());-->
-    <!--  gtag('config', 'UA-142145440-1');-->
-    <!--</script>-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142145440-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-142145440-1');
+    </script>
     <title>Imagine Act Game</title>
     <style>
         :root {
             --titlebar-background: linear-gradient(145deg, #0078d4, #005a9e);
             --titlebar-border-radius: 8px;
             --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
-            --titlebar-hover-shadow:  0 6px 12px rgba(0, 0, 0, 0.3), 0 -1px 3px rgba(255, 255, 255, 0.3) inset;
-            
             --titlebar-height: 40px;
             --title-color: #ffffff;
-            --titlebar-padding: 12px 24px;
+            --titlebar-padding: 12px 20px;
             --titlebar-transition: all 0.3s ease;
         }
         
@@ -32,21 +30,27 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
         
         body {
             font-family: 'Press Start 2P', cursive;
-            font-size: 14px;
-            overflow: hidden;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
         
          .dark-theme {
             --background-color: #282c34;
             --text-color: #ffffff;
-            --titlebar-background: linear-gradient(145deg, #615e5e, #2b2828);
-            --titlebar-shadow: 0 4px 8px rgba(44, 47, 51, 0.4), 0 -1px 2px rgba(44, 47, 51, 0.3) inset;
+            --titlebar-background: linear-gradient(145deg, #1e1e1e, #333333);
+            --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 -1px 2px rgba(0, 0, 0, 0.3) inset;
             --title-color: #00ff00;
             --button-background: #00ff00;
             --button-text-color: #282c34;
@@ -60,7 +64,7 @@
             --dropdown-text-color: #00ff00;
             --popup-background: rgba(44, 47, 51, 0.95);
             --popup-content-color: #ffffff;
-            
+            /* Additional */
             --link-color: #00ff00;
             --tooltip-background: #1e1e1e;
             --tooltip-text-color: #ffffff;
@@ -84,6 +88,7 @@
             --dropdown-text-color: #0078d4;
             --popup-background: rgba(255, 255, 255, 0.95);
             --popup-content-color: #000000;
+            /* Additional */
             --link-color: #0078d4;
             --tooltip-background: #f0f0f0;
             --tooltip-text-color: #000000;
@@ -94,10 +99,9 @@
             --text-color: #00ff00;
             --titlebar-background: linear-gradient(145deg, #000000, #111111);
             --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
-            --titlebar-hover-shadow: 0 4px 8px rgba(255, 0, 255, 0.8), 0 -1px 2px rgba(0, 0, 0, 0.8) inset;
             --title-color: #ff00ff;
             --button-background: #ff00ff;
-            --button-text-color: #00ff30;
+            --button-text-color: #000000;
             --button-hover-background: #cc00cc;
             --input-background: #111111;
             --input-border: #00ff00;
@@ -108,6 +112,7 @@
             --dropdown-text-color: #ff00ff;
             --popup-background: rgba(0, 0, 0, 0.95);
             --popup-content-color: #ffffff;
+            /* Additional */
             --link-color: #ff00ff;
             --tooltip-background: #111111;
             --tooltip-text-color: #00ff00;
@@ -133,11 +138,11 @@
         }
         
         .titlebar:hover {
-            box-shadow: var(--titlebar-hover-shadow);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3), 0 -1px 3px rgba(255, 255, 255, 0.3) inset;
         }
         
         .titlebar .title {
-            font-size: 1.4em;
+            font-size: 1.2em;
             font-weight: bold;
         }
         
@@ -187,19 +192,19 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            right: 24px;
+            right: 12px;
             background-color: var(--dropdown-background);
             min-width: 160px;
             max-width: 100%;
-            box-shadow: var(--titlebar-shadow);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
         .dropdown-content a {
             display: block;
             color: var(--text-color);
-            padding: 12px 24px;
+            height: 62px;
+            padding: 12px;
             text-decoration: none;
-            border-bottom: 1px solid var(--receipt-border-color);
         }
         .dropdown-content a:hover {
             background-color: var(--button-hover-background);
@@ -210,7 +215,7 @@
         }
         
         .language-selector, .theme-selector {
-            height: 100%;
+            border-top: solid 1px black;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -229,32 +234,31 @@
             border: 1px solid var(--input-border);
             border-radius: 5px;
             background-color: var(--input-background);
-            color: var(--text-color);
+            color: var(--input-border);
         }
         .popup {
             display: none;
             position: fixed;
             z-index: 100;
             left: 0;
-            top: 50%;
+            top: 0;
             right: 0;
             bottom: 0;
             overflow: auto;
             background-color: var(--popup-background);
-            backdrop-filter: blur(6px);
             padding: 12px 24px;
             word-wrap: break-word;
             max-width: 100%;
         }
-        .popup-content {
-            background-color: var(--popup-content-background);
-            color: var(--popup-content-color);
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-        }
+        /*.popup-content {*/
+        /*    background-color: var(--popup-content-background);*/
+        /*    color: var(--popup-content-color);*/
+        /*    margin: 5% auto;*/
+        /*    padding: 20px;*/
+        /*    border: 1px solid #888;*/
+        /*    width: 80%;*/
+        /*    max-width: 500px;*/
+        /*}*/
         .popup-close {
             color: var(--popup-content-color);
             position: absolute;
@@ -276,7 +280,7 @@
          #loginScreen {
             overflow: auto;
             height: 100%;
-            padding: 12px 24px;
+            padding: 20px 12px;
             max-width: 100%;
         }
         
@@ -401,13 +405,15 @@
             background-color: var(--receipt-background);
             color: var(--text-color);
             border-radius: 8px;
-            box-shadow: 0px 0px 4px 2px var(--title-color);
+            box-shadow: var(--button-background);
+            border: 1px solid var(--receipt-border-color);
             margin: 0 auto;
         }
         
         #controlSpeechButton {
             width: 50px;
             height: 50px;
+            background-color: var(--button-background);
             color: var(--button-text-color);
             border: none;
             border-radius: 50%;
@@ -415,10 +421,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 14px;
-            transition: background-color 0.3s, box-shadow 0.2s, transform 0.2s, font-size 0.8s;
+            margin-right: 20px;
+            transition: background-color 0.3s, box-shadow 0.2s, transform 0.2s;
             flex-shrink: 0;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(255, 255, 255, 0.1) inset;
+            background-image: linear-gradient(to top, var(--button-background), lighten(var(--button-background), 20%));
             position: relative;
+        }
+        
+        #controlSpeechButton:hover {
+            background-color: var(--button-hover-background);
+            box-shadow: 0 7px 12px rgba(0, 0, 0, 0.4), 0 3px 6px rgba(255, 255, 255, 0.1) inset;
+            transform: translateY(-2px);
+        }
+        
+        #controlSpeechButton:active {
+            background-color: darken(var(--button-background), 15%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(255, 255, 255, 0.1) inset;
+            transform: translateY(1px);
+        }
+        
+        #controlSpeechButton[aria-pressed="true"] {
+            background-color: var(--button-hover-background);
+            box-shadow: 0 3px 8px rgba(0, 255, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
         }
         
         #controlSpeechButton::after {
@@ -439,12 +464,6 @@
             opacity: 0.3;
         }
         
-        .active-control {
-            font-size: 26px;
-            background-color: var(--button-hover-background);
-            box-shadow: 0 3px 8px rgba(0, 255, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
-        }
-        
         /* Disabled state */
         #controlSpeechButton:disabled {
             background-color: #888888;
@@ -460,35 +479,37 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            margin-right: 14px;
+            margin-right: 20px;
             flex-shrink: 0;
+            height: 30px; /* Max height for the bars */
         }
         
         #soundBars .sound-bar {
             width: 35px;
             background-color: var(--button-background);
-            margin: 1px;
+            margin: 3px 0;
             transition: height 0.1s ease;
-            height: 4px; /* Start with minimum height */
+            height: 8px; /* Start with minimum height */
         }
         
         /* Rectangular screen for feedback and instructions */
         #instructionContainer {
             width: 100%;
             height: 100%;
-            background-color:#000;
+            background-color: var(--titlebar-background);
             color: var(--popup-content-color);
             padding: 6px;
             border-radius: 8px;
             text-align: center;
-            border: 2px solid var(--receipt-border-color);
+            border: 1px solid var(--receipt-border-color);
         }
         
         #gameScreen {
-            display: none;
-            padding: 12px 24px;
+             padding: 20px;
             width: 100%;
+            max-width: 100%;
             height: 100%;
+            display: none;
             position: relative;
         }
         #gameScreen.game-content {
@@ -508,7 +529,7 @@
             width: 550px;
             max-width: 100%;
             margin: 0 auto;
-            padding: 12px 24px;
+            padding: 24px 12px;
         }
         #balanceCaption {
             font-size: 36px;
@@ -539,7 +560,7 @@
             background-color: var(--receipt-background);
             color: var(--receipt-text-color);
             margin: 6px 0;
-            padding: 6px 12px;
+            padding: 8px 10px;
             border: 2px dashed var(--receipt-border-color);
             font-family: 'Courier New', Courier, monospace;
             font-size: 14px;
@@ -550,23 +571,25 @@
         }
         #purchaseList input {
             margin-right: 10px;
-            padding: 6px 12px;
+            padding: 5px;
             flex-grow: 1;
             font-size: 16px;
         }
-        
+        #purchaseList button {
+            background-color: var(--button-background);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
         #purchaseList button:hover {
             background-color: #ff3333;
         }
         #purchaseList .btn-remove {
+            padding: 6px;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            color: var(--text-color);
-            background-color: #b91212;
-            text-align: center;
-            border: none;
-            
+            width: 30px;
+            height: 30px;
         }
         .labeled-element {
             position: relative; 
@@ -576,13 +599,13 @@
             width: 300px;
             max-width: 100%;
             background-color: var(--receipt-background);
-            padding: 12px 24px;
+            padding: 20px;
             margin: 0 auto;
-            border: 2px dashed var(--receipt-border-color);
+            border: 2px dashed #ccc;
             border-radius: 10px;
             font-family: 'Courier New', Courier, monospace;
             color: var(--receipt-text-color);
-            box-shadow: var(--titlebar-shadow);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         
         .receipt-header {
@@ -616,6 +639,14 @@
             font-style: italic;
         }
 
+        .active-control {
+            box-shadow: 0 0 10px #61dafb;
+            font-weight: 600;
+        }
+        #controlSpeechButton:active {
+            background-color: #21a1f1;
+            box-shadow: 0 0 5px #21a1f1;
+        }
         @media (max-width: 600px) {
             .titlebar h1 {
                 font-size: 20px;
@@ -625,7 +656,7 @@
             }
             #controlSpeechButton {
                 font-size: 16px;
-                padding: 6px 12px;
+                padding: 8px 16px;
             }
         }
         
@@ -633,7 +664,7 @@
             background-color: var(--button-background);
             color: var(--button-text-color);
             border: none;
-            padding:12px 24px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
@@ -708,9 +739,9 @@
         
         .notification {
             border-radius: 5px;
-            padding: 12px 24px;
+            padding: 15px;
             margin-bottom: 10px;
-            box-shadow: var(--titlebar-shadow);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: relative;
             font-family: Arial, sans-serif;
             color: #fff;
@@ -777,27 +808,23 @@
             <div class="dropdown">
                 <div class="dropdown-content" id="dropdown_content">
                     <a href="#" id="aboutLink">About</a>
-                    <a href="#">
-                        <div class="language-selector">
-                            <label for="language">Choose language:</label>
-                            <select id="language">
-                                <option value="en-US">American English</option>
-                                <option value="en-GB">British English</option>
-                            </select>
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="language-selector">
-                            <label for="theme">Themes:</label>
-                            <select id="theme">
-                                <option value="dark-theme">Dark</option>
-                                <option value="light-theme">Light</option>
-                                <option value="retro-theme">Retro</option>
-                            </select>
-                        </div>
-                    </a>
-                    <a href="#" id="resetLevel">Reset Level</a>
                     <a href="#" id="resetGame">Reset Game</a>
+                    
+                    <a href="#" class="language-selector">
+                        <label for="language">Choose language:</label>
+                        <select id="language">
+                            <option value="en-US">American English</option>
+                            <option value="en-GB">British English</option>
+                        </select>
+                    </a>
+                    <a href="#" class="theme-selector">
+                        <label for="theme">Themes:</label>
+                        <select id="theme">
+                            <option value="dark-theme">Dark</option>
+                            <option value="light-theme">Light</option>
+                            <option value="retro-theme">Retro</option>
+                        </select>
+                    </a>
                 </div>
                 
             </div>
@@ -898,7 +925,7 @@
                 </div>
                 
                 <div id="instructionContainer">
-                    <div id="recognizedText">Sleeping. Press the speech button to start Voice Command</div>
+                    <div id="recognizedText">Listening <br/>Try saying "I buy bread for 17 [currency]"</div>
                 </div>
             </div>
             
@@ -908,7 +935,6 @@
             </div>
             <div class="receipt-container">
                 <div class="receipt-header" id="starting_balance"></div>
-                <div style="text-align: center;" id="total_purchases"></div>
                 <div class="receipt-header">Successful Purchases</div>
                 <ul class="labeled-element" id="purchaseList"></ul>
                 <div class="receipt-footer">Thank you for shopping with us! The more you play and believe in the game the more you will seee it actualize in your experience.</div>
@@ -1011,18 +1037,6 @@
         let initialDeposit = 0;
         let selectedCurrency = '';
         let selectedCurrencyName = 'Rand';
-        let displayName = '';
-        
-        function showPopup() {
-            const popup = document.querySelector('.popup');
-            popup.classList.add('show');
-        }
-        
-        function hidePopup() {
-            const popup = document.querySelector('.popup');
-            popup.classList.remove('show');
-            popup.classList.add('hide');
-        }
         
         function setTheme(theme) {
             document.body.classList.remove('dark-theme', 'light-theme', 'retro-theme');
@@ -1033,14 +1047,12 @@
         
         document.addEventListener('DOMContentLoaded', () => {
             const elemResetGame = document.getElementById('resetGame');
-            const elemResetLevel = document.getElementById('resetLevel');
             
             const loginScreen = document.getElementById('loginScreen');
             const loginButton = document.getElementById('loginButton');
             
             const gameScreen = document.getElementById('gameScreen');
             const starting_balance = document.getElementById('starting_balance');
-            const total_purchases = document.getElementById('total_purchases');
             const balanceAmount = document.getElementById('balanceAmount');
             const purchaseList = document.getElementById('purchaseList');
             
@@ -1094,9 +1106,8 @@
                 const storedUsername = localStorage.getItem('username');
                 const storedBalance = parseFloat(localStorage.getItem('balance'));
                 
+                // Only parse initialDeposit and storedCurrency if username and balance are valid
                 if (storedUsername && !isNaN(storedBalance)) {
-                    displayName = storedUsername;
-                    
                     initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
                     const storedCurrency = JSON.parse(localStorage.getItem('currency'));
             
@@ -1119,6 +1130,7 @@
                     gameScreen.style.display = 'block';
                     
                     initSpeechRecognition();
+                    showNote('message', 'Start Imagine Act with the speech button');
                 } else {
                     loginScreen.style.display = 'block';
                     gameScreen.style.display = 'none';
@@ -1193,20 +1205,10 @@
                 resetGame();
             });
             function resetGame() {
-                // localStorage.removeItem('username');
+                localStorage.removeItem('username');
                 localStorage.removeItem('balance');
                 localStorage.removeItem('purchases');
                 localStorage.removeItem('currency');
-                localStorage.removeItem('initialDeposit');
-                location.reload();
-            }
-            // Handle reset level
-            elemResetLevel.addEventListener('click', () => {
-                resetLevel();
-            });
-            function resetLevel() {
-                localStorage.removeItem('balance');
-                localStorage.removeItem('purchases');
                 location.reload();
             }
             
@@ -1242,45 +1244,52 @@
             controlSpeechButton.addEventListener('click', () => {
                 if (recognitionActive) {
                     stopVoiceRecognition();
-                    recognizedTextLabel.textContent = "Sleeping";
                 } else {
                     startVoiceRecognition();
-                    recognizedTextLabel.textContent = "Listening";
                 }
             });
             
             function initSpeechRecognition() {
                 recognition.addEventListener('result', (event) => {
+                    console.log('yes');
                     const speechResult = event.results[event.resultIndex][0].transcript.trim();
-                    recognizedTextLabel.textContent = `You said: "${speechResult}"`;
+                    // recognizedTextLabel.textContent = `You said: "${speechResult}"`;
                     
                     const accuracy = processVoiceCommand(speechResult);
                     
-                    updateSoundBars(accuracy);
+                    console.log(`Accuracy:${accuracy} speechResult: ${speechResult}`);
+            
+                    if (soundBars.length > 0) {
+                        updateSoundBars(accuracy);
+                    }
                 });
                 recognition.onend = () => { 
                     if (recognitionActive) {
+                        console.log('Restarting speech recognition...');
                         startVoiceRecognition();
                     }
                 };
                 recognition.onerror = function(event) {
                     stopVoiceRecognition();
                     showNote('error', 'Speech recognition error detected: ' + event.error ? event.error : 'unknown');
-                };
-                
-                startVoiceRecognition();
-                        recognizedTextLabel.textContent = "Listening";
+                }; 
             }
             
             function startVoiceRecognition() {
                 recognitionActive = true;
                 recognition.start();
                 controlSpeechButton.classList.add('active-control');
+                recognizedTextLabel.textContent = 'Listening';
+            
             }
             function stopVoiceRecognition() {
                 recognitionActive = false;
                 recognition.stop();
                 controlSpeechButton.classList.remove('active-control');
+                
+                recognizedTextLabel.textContent = "Sleeping<br>Press on the Speech button to start vlagain.";
+
+
             }
             
             let currentPurchase = '';
@@ -1288,7 +1297,6 @@
             function processVoiceCommand(text) {
                 if (text.toLowerCase() === 'stop listening') {
                     stopVoiceRecognition();
-                    recognizedTextLabel.textContent = "Sleeping";
                     return 100; // No accuracy needed for stopping
                 }
                 
@@ -1296,33 +1304,29 @@
                 const removeMatch = text.match(removeRegex);
                 
                 if (removeMatch) {
-                    const item = removeMatch[2].trim();
-                    
-                    if (removeItemFromPurchaseList(item)) {
-                        recognizedTextLabel.textContent = `${item} removed`;
-                        
-                        loadPurchases();
-                    
-                        return 100;
+                    const item = removeMatch[1].trim();
+                    console.log('Removing item:', item);
+                    // Assume we have a function to check if the item is in the list
+                    if (isItemNameInPurchaseList(item)) {
+                        removeItemFromPurchaseList(item);
+                        return 100; // Full accuracy for this command
                     } else {
-                        recognizedTextLabel.textContent = `Item ${item} is not found in purchases`;
-                        
-                        return 40; 
+                        recognizedTextLabel.textContent = `Item ${item} not found`;
+                        return 60; // Partial accuracy for incorrect item
                     }
-                } 
+                }
                 
                 if (!text.match(/\bI\b/i)) {
-                    showNote('warning', 'Purchase Command does not start with "I"');
+                    console.log('Command does not start with "I"');
                     return 20;
                 }
             
                 const captureResult = extractDetails(text);
-                // showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
+                console.log(`Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
                 const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
                 
                 if (captureResult.currency !== selectedCurrencyName) {
                     showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
-                    
                     return (nonNullCount + 1) * 20;
                 } else if (nonNullCount < 3) {
                     showNote('warning', `Missing information in your purchase. Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
@@ -1351,12 +1355,16 @@
                             addItemToPurchaseList(item, amount);
                             return 100; // Full accuracy for valid purchase
                         }
+                    } else {
+                        showNote('warning', 'Insufficient balance');
+                        console.log('Insufficient balance');
+                        return 60; // Partial accuracy for insufficient balance
                     }
+                } else {
+                    showNote('warning', 'Insufficient balance');
+                    console.log('No match found for the input text.');
+                    return 40; // Low accuracy for unrecognized command
                 }
-                showNote('warning', 'Insufficient balance');
-                console.log('Insufficient balance');
-                return 20;
-                
             }
 
             function isNumber(value) {
@@ -1364,7 +1372,7 @@
             }
             function handleZeroBalance() {
                 console.log('balance is less than 0. balance: ' + balance);
-                // controlSpeechButton.classList.remove('active-control');
+                controlSpeechButton.classList.remove('active-control');
                 
                 localStorage.removeItem('purchases');
                 
@@ -1375,19 +1383,19 @@
             
             function addItemToPurchaseList(item, amount) {
                 if ((!amount || amount <= 0)) {
-                    showNote('warning', "Invalid item amount.");
+                    recognizedTextLabel.textContent = "Invalid item amount.";
                     return false;
                 }
                 if (!item) {
-                    showNote('warning', "Invalid item name.");
+                    recognizedTextLabel.textContent = "Invalid item name.";
                     return false;
                 }
                 
                 const li = document.createElement('li');
-                li.textContent = `${capFirstLetter(item)} - ${selectedCurrency.symbol}${amount.toFixed(2)}`;
+                li.textContent = `${item} - ${selectedCurrency.symbol}${amount.toFixed(2)}`;
                 const removeButton = document.createElement('button');
                 removeButton.classList.add('btn-remove');
-                removeButton.textContent = "x";
+                removeButton.textContent = "X";
                 removeButton.addEventListener('click', () => {
                     removePurchase(item, amount);
                     
@@ -1418,56 +1426,42 @@
                 
                 return true;
             }
-            
-            function removeItemFromPurchaseList(itemToRemove) {
-                // Retrieve the current list of purchases from localStorage
+            function isItemNameInPurchaseList(itemToFind) {
                 const purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+                const index = purchases.findIndex((element) => element.item === itemToFind);
                 
-                // Find the index of the item to remove
-                const index = purchases.findIndex((element) => element.item.toLowerCase() === itemToRemove.toLowerCase());
+                // If index is not found, return false
+                if (index === -1) {
+                    return false;
+                } 
                 
-                // If the item is found (index is not -1), remove it from the array
-                if (index !== -1) {
-                    purchases.splice(index, 1);
-                    
-                    // Update localStorage with the new list
-                    localStorage.setItem('purchases', JSON.stringify(purchases));
-                    
-                    return true; // Indicate that the item was removed
-                }
-                
-                return false; // Indicate that the item was not found
+                return true;
             }
 
             function loadPurchases() {
                 purchaseList.innerHTML = '';
                 
                 const purchases = JSON.parse(localStorage.getItem('purchases')) || [];
-                let tally = 0;
                 purchases.forEach(purchase => {
-                    tally += purchase.amount;
+                    console.log(purchase.item, purchase.amount);
                     addItemToPurchaseList(purchase.item, purchase.amount);
                 });
-                
-                total_purchases.textContent = `Total Purchases: ${selectedCurrency.symbol}${tally.toFixed(2)}`;
             }
 
             function savePurchasesToLocalStorage() {
                 let purchases = [];
                 
-                let tally = 0;
                 // Read each item from the purchase list
                 purchaseList.querySelectorAll('li').forEach(li => {
                     // Get the item and amount from the text content
                     const itemText = li.textContent.replace("Remove", "").trim();
                     const [item, amountText] = itemText.split(` - ${selectedCurrency.symbol}`);
                     const amount = parseFloat(amountText);
-                    tally += amount;
+            
                     // Add the item and amount to the purchases array
                     purchases.push({ item: item.trim(), amount: amount });
                 });
             
-                total_purchases.textContent = `Total Purchases: ${selectedCurrency.symbol}${tally.toFixed(2)}`;
                 // Save the purchases array to local storage
                 localStorage.setItem('purchases', JSON.stringify(purchases));
             }
@@ -1476,12 +1470,12 @@
                 const purchases = JSON.parse(localStorage.getItem('purchases')) || [];
                 if (purchases.length > 0) {
                     const index = purchases.findIndex(
-                        (element) => element.item.toLowerCase() === itemToRemove.toLowerCase() && element.amount === amountToRemove
+                        (element) => element.item === itemToRemove && element.amount === amountToRemove
                     );
                     
                     // If index is not found, return false
                     if (index === -1) {
-                        recognizedTextLabel.textContent = `The item to remove was not found in the purchase list. Item: ${itemToRemove} Amount: ${amountToRemove}`;
+                        recognizedTextLabel.textContent = "The item to remove was not found in the purchase list.";
                         return false;
                     }
                     
@@ -1492,14 +1486,10 @@
                     balance += amount;
                     balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
                     localStorage.setItem('balance', balance.toFixed(2));
-                    recognizedTextLabel.textContent = `Item ${itemToRemove} removed.`;
-                    
-                    return true;
+                    recognizedTextLabel.textContent = `Item ${item} removed.`;
                 } else {
-                    recognizedTextLabel.textContent = `${itemToRemove} was not removed. Purchase list is empty.`;
+                    recognizedTextLabel.textContent = "Purchase list is empty.";
                 }
-                
-                return false;
             }
 
             function doubleBalanceAndProceed() {
@@ -1541,6 +1531,20 @@
                 localStorage.setItem('balance', balance.toFixed(2));
             };
             
+            function removeItemFromPurchaseList(item) {
+                const listItems = purchaseList.getElementsByTagName('li');
+                for (let i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent.toLowerCase() == item.toLowerCase()) {
+                        const amount = parseFloat(listItems[i].textContent.split(' - R')[1]);
+                        console.log('item to remove found. item: ' + item + ' amount: ' + amount);
+                        recognizedTextLabel.textContent = `${Item} found. Removing...`;
+                        removePurchase(item, amount);
+                        loadPurchases();
+                        return;
+                    }
+                }
+                recognizedTextLabel.textContent = `${Item} not found.`;
+            }
             function wordsToNumbers(words) {
                 const numberMap = {
                     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
@@ -1634,7 +1638,7 @@
             const soundBars = document.querySelectorAll('.sound-bar');
         
             if (soundBars.length === 0) {
-                showNote('warning', 'No sound bars found');
+                console.warn('No sound bars found');
                 return;
             }
             
@@ -1671,7 +1675,7 @@
                     soundBars[3].style.opacity = 1;
                     soundBars[4].style.opacity = 1;
                 } else {
-                    showNote('warning', 'no if condition for accurancy value');
+                    console.log('no if condition for accurancy value');
                 }
             } catch (ex) {
                 showNote('warning', 'Accuracy exception.');
@@ -1761,10 +1765,9 @@
         }
 
         function extractDetails(text) {
-            // 
-            const itemRegex = /(?:I buy|I purchase|I get|I pay for|I pay |I acquire|I order)\s+(?:a |an |the |that |at |[ ])?(?:\d+\s+)?([a-zA-Z0-9-_\s]+?)(?=\sfor|\s\d+)/i;
+            const itemRegex = /(?:I buy|I purchase|I get|I pay for|I acquire|I order)\s+(?:a |an |the )?(?:\d+\s+)?([a-zA-Z\s]+?)(?=\sfor|\s\d+)/i;
             const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
-            const currencyRegex = /\b(R|Rand|USD|Dollar|Euro|Pound)\b/i; // You can extend this for more currencies
+            const currencyRegex = /\b(R|Rand|USD|Dollar|Euro)\b/i; // You can extend this for more currencies
         
             const itemMatch = text.match(itemRegex);
             const amountMatch = text.match(amountRegex);
@@ -1783,10 +1786,6 @@
                 amount,
                 currency
             };
-        }
-        
-        function capFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
         }
     </script>
 </body>
