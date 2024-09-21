@@ -1,0 +1,709 @@
+:root {
+    --titlebar-background: linear-gradient(145deg, #0078d4, #005a9e);
+    --titlebar-border-radius: 8px;
+    --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
+    --titlebar-hover-shadow:  0 6px 12px rgba(0, 0, 0, 0.3), 0 -1px 3px rgba(255, 255, 255, 0.3) inset;    
+    --titlebar-height: 40px;
+    --title-color: #ffffff;
+    --normal-padding: 15px 20px;
+    --small-padding: 12px 8px;
+    --titlebar-padding: var(--normal-padding);
+    --titlebar-transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+ .dark-theme {
+    --background-color: #282c34;
+    --text-color: #ffffff;
+    --titlebar-background: linear-gradient(145deg, #615e5e, #2b2828);
+    --titlebar-shadow: 0 4px 8px rgba(44, 47, 51, 0.4), 0 -1px 2px rgba(44, 47, 51, 0.3) inset;
+    --title-color: #00ff00;
+    --button-background: #00ff00;
+    --button-text-color: #282c34;
+    --button-hover-background: #00cc00;
+    --input-background: #2c2f33;
+    --input-border: #ccccca;
+    --receipt-background: #2c2f33;
+    --receipt-text-color: #ffffff;
+    --receipt-border-color: #555;
+    --dropdown-background: #1e1e1e;
+    --dropdown-text-color: #00ff00;
+    --popup-background: rgba(44, 47, 51, 0.95);
+    --popup-content-color: #ffffff;
+    
+    --link-color: #00ff00;
+    --tooltip-background: #1e1e1e;
+    --tooltip-text-color: #ffffff;
+}
+
+.light-theme {
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --titlebar-background: linear-gradient(145deg, #0078ea2e, #0078eaa3);
+    --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(255, 255, 255, 0.3) inset;
+    --title-color: #0078d4;
+    --button-background: #0078d4;
+    --button-text-color: #ffffff;
+    --button-hover-background: #005a9e;
+    --input-background: #f9f9f9;
+    --input-border: #0078d4;
+    --receipt-background: #0078ea2e;
+    --receipt-text-color: #000000;
+    --receipt-border-color: #dddddd;
+    --dropdown-background: rgba(255, 255, 255, 0.95);
+    --dropdown-text-color: #0078d4;
+    --popup-background: rgba(255, 255, 255, 0.95);
+    --popup-content-color: #000000;
+    --link-color: #0078d4;
+    --tooltip-background: #f0f0f0;
+    --tooltip-text-color: #000000;
+}
+
+.retro-theme {
+    --background-color: #000000;
+    --text-color: #00ff00;
+    --titlebar-background: linear-gradient(145deg, #000000, #111111);
+    --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
+    --titlebar-hover-shadow: 0 4px 8px rgba(255, 0, 255, 0.8), 0 -1px 2px rgba(0, 0, 0, 0.8) inset;
+    --title-color: #ff00ff;
+    --button-background: #ff00ff;
+    --button-text-color: #00ff30;
+    --button-hover-background: #cc00cc;
+    --input-background: #111111;
+    --input-border: #00ff00;
+    --receipt-background: #111111;
+    --receipt-text-color: #00ff00;
+    --receipt-border-color: #ff00ff;
+    --dropdown-background: #000000;
+    --dropdown-text-color: #ff00ff;
+    --popup-background: rgba(0, 0, 0, 0.95);
+    --popup-content-color: #ffffff;
+    --link-color: #ff00ff;
+    --tooltip-background: #111111;
+    --tooltip-text-color: #00ff00;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    position: relative;
+}
+.titlebar {
+    background: var(--titlebar-background);
+    border-bottom-left-radius: var(--titlebar-border-radius);
+    border-bottom-right-radius: var(--titlebar-border-radius);
+    box-shadow: var(--titlebar-shadow);
+    height: var(--titlebar-height);
+    color: var(--title-color);
+    padding: var(--titlebar-padding);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--titlebar-transition);
+}
+
+.titlebar:hover {
+    box-shadow: var(--titlebar-hover-shadow);
+}
+
+.titlebar .title {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.titlebar .buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.titlebar .buttons button {
+    background: transparent;
+    border: none;
+    color: var(--title-color);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.titlebar .buttons button:hover {
+    color: #ff00ff; /* Accent color on hover */
+}
+
+.titlebar h1 {
+    margin: 0;
+    margin-left: 12px;
+    font-size: 24px;
+    color: var(--title-color);
+}
+
+.titlebar .buttons .menu-button {
+    background: transparent;
+    border: none;
+    color: var(--title-color);
+    font-size: 1.5em; /* Adjust size as needed */
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.titlebar .buttons .menu-button:hover {
+    color: #0078d4; /* Accent color on hover */
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.titlebar .buttons .menu-button:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); /* Custom focus ring */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 24px;
+    background-color: var(--dropdown-background);
+    min-width: 160px;
+    max-width: 100%;
+    box-shadow: var(--titlebar-shadow);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    display: block;
+    color: var(--text-color);
+    padding: var(--normal-padding);
+    text-decoration: none;
+}
+.dropdown-content a:not(:last-child) {
+    border-bottom: 1px solid var(--receipt-border-color);
+}
+.dropdown-content a:hover {
+    background-color: var(--button-hover-background);
+}
+.dropdown:hover button {
+    background-color: var(--button-hover-background);
+    color: var(--text-color);
+}
+
+.language-selector, .theme-selector {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.language-selector label, .theme-selector label {
+    font-size: 16px;
+    color: var(--text-color);
+    margin-right: 10px;
+}
+
+.language-selector select, .theme-selector select {
+    font-size: 16px;
+    width: 180px;
+    padding: 5px;
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+}
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 46px;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    background-color: var(--popup-background);
+    backdrop-filter: blur(3px);
+    padding: var(--normal-padding);
+    word-wrap: break-word;
+    max-width: 100%;
+}
+.popup-content {
+    background-color: var(--popup-content-background);
+    color: var(--popup-content-color);
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.popup-close {
+    color: var(--popup-content-color);
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 34px;
+    font-weight: bold;
+}
+.popup-close:hover, .popup-close:focus {
+    color: var(--popup-content-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.summary-about {
+    font-size: 22px;
+}
+.hidden {
+    display: none;
+}
+
+ #loginScreen {
+    overflow: auto;
+    height: 100%;
+    padding: var(--normal-padding);
+    max-width: 100%;
+}
+
+ #loginScreen h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--button-background);
+    text-shadow: 0 0 10px var(--button-background);
+}
+#loginScreen .login-input-container {
+    max-width: 320px;
+    margin: 60px auto;
+}
+#loginScreen .login-purpose {
+    margin: 40px 0;
+}
+#loginScreen input {
+    display: block;
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: var(--small-padding);
+    border: 2px solid var(--input-border); /* Bright green border */
+    border-radius: 5px;
+    background-color: var(--input-background);
+    color: var(--input-border);
+    font-size: 16px;
+}
+
+#loginScreen input::placeholder {
+    color: var(--text-color);
+}
+
+#loginScreen button {
+    background-color: var(--button-background); /* Bright green for the button */
+    color: var(--button-text-color);
+    border: none;
+    padding: var(--small-padding);
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--button-background);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#loginScreen button:hover {
+    background-color: var(--button-hover-background);
+}
+
+#loginScreen button:active {
+    transform: scale(0.95); /* Slight scale down on click */
+}
+
+.login-purpose {
+    margin: 60px;
+    max-width: 100%;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 20px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+
+#speechContainer {
+    width: 600px;
+    max-width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 6px 12px;
+    background-color: var(--receipt-background);
+    color: var(--text-color);
+    border-radius: 8px;
+    box-shadow: 0px 0px 4px 2px var(--title-color);
+    margin: 0 auto;
+}
+
+#controlSpeechButton {
+    width: 50px;
+    height: 50px;
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    transition: background-color 0.3s, box-shadow 0.2s, transform 0.2s, font-size 0.8s;
+    flex-shrink: 0;
+    position: relative;
+}
+
+#controlSpeechButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    pointer-events: none; /* Ensure overlay does not interfere with interactions */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+#controlSpeechButton:hover::after {
+    opacity: 0.3;
+}
+
+.active-control {
+    font-size: 26px;
+    background-color: var(--button-hover-background);
+    box-shadow: 0 3px 8px rgba(0, 255, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
+}
+
+/* Disabled state */
+#controlSpeechButton:disabled {
+    background-color: #888888;
+    color: #cccccc;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+
+
+/* Sound bars for voice detection */
+#soundBars {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+
+#soundBars .sound-bar {
+    width: 35px;
+    background-color: var(--button-background);
+    margin: 1px;
+    transition: height 0.1s ease;
+    height: 4px; /* Start with minimum height */
+}
+
+/* Rectangular screen for feedback and instructions */
+#instructionContainer {
+    width: 100%;
+    height: 100%;
+    background-color:#000;
+    color: var(--popup-content-color);
+    padding: 6px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid var(--receipt-border-color);
+}
+
+#gameScreen {
+    display: none;
+    padding: var(--normal-padding);
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#gameScreen.game-content {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#balanceContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 550px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: var(--normal-padding);
+}
+#balanceCaption {
+    font-size: 36px;
+    color: var(--title-color);
+}
+#balance {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--button-background);
+    text-shadow: 0 0 10px var(--button-background);
+}
+#recognizedText {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--title-color);
+}
+
+#purchaseList {
+    list-style-type: none;
+    padding: 0;
+    width: 320px;
+    max-width: 100%;
+    margin: 24px auto;
+    max-height: 220px;
+    overflow-y: auto;
+}
+#purchaseList li {
+    background-color: var(--receipt-background);
+    color: var(--receipt-text-color);
+    margin: 6px 0;
+    padding: 6px 12px;
+    border: 2px dashed var(--receipt-border-color);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#purchaseList input {
+    margin-right: 10px;
+    padding: 6px 12px;
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+#purchaseList button:hover {
+    background-color: #ff3333;
+}
+#purchaseList .btn-remove {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: var(--text-color);
+    background-color: #b91212;
+    text-align: center;
+    border: none;
+    
+}
+.labeled-element {
+    position: relative; 
+    padding-top: 20px;
+}
+.receipt-container {
+    width: 300px;
+    max-width: 100%;
+    background-color: var(--receipt-background);
+    padding: var(--normal-padding);
+    margin: 0 auto;
+    border: 2px dashed var(--receipt-border-color);
+    border-radius: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--receipt-text-color);
+    box-shadow: var(--titlebar-shadow);
+}
+
+.receipt-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.receipt-item span {
+    font-size: 14px;
+}
+
+.receipt-total {
+    border-top: 2px solid #ccc;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.receipt-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .titlebar h1 {
+        font-size: 20px;
+    }
+    #balance {
+        font-size: 28px;
+    }
+    #controlSpeechButton {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+}
+
+#levelUp {
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    border: none;
+    padding:12px 24px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#levelUp:hover {
+    background-color: var(--button-hover-background);
+}
+
+#levelUp:active {
+    transform: scale(0.95); 
+}
+
+#resultText {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--button-background); /* Bright green for the game theme */
+    text-shadow: 0 0 10px var(--button-background);
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    #loginScreen .login-input-container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: var(--small-padding);
+    }
+
+    .login-purpose {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #loginScreen h2 {
+        font-size: 20px;
+    }
+
+    #loginScreen button {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    #loginScreen h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    #loginScreen button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .login-purpose {
+        margin: 10px;
+        padding: var(--small-padding);
+    }
+}
+
+/*********** Notification ******************/
+#error-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 300px;
+    z-index: 1000;
+}
+
+.notification {
+    border-radius: 5px;
+    padding: var(--normal-padding);
+    margin-bottom: 10px;
+    box-shadow: var(--titlebar-shadow);
+    position: relative;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.error {
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Light red border */
+    color: #721c24; /* Dark red text */
+}
+
+.warning {
+    background-color: #fff3cd; /* Light yellow background */
+    border: 1px solid #ffeeba; /* Light yellow border */
+    color: #856404; /* Dark yellow text */
+}
+
+.message {
+    background-color: #d1ecf1; /* Light blue background */
+    border: 1px solid #bee5eb; /* Light blue border */
+    color: #0c5460; /* Dark blue text */
+}
+
+.notification button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.notification button:hover {
+    opacity: 0.8;
+}

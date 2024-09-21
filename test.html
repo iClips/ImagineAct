@@ -1910,6 +1910,16 @@
                 currency
             };
         }
+
+
+    localStorage.setItem('username', username);
+    localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));
+    
+    localStorage.setItem('balance', initialDeposit.toFixed(2));
+    localStorage.setItem('purchases', JSON.stringify([]));
+    
+    localStorage.setItem('theme', theme);
+    localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
     </script>
 </body>
 </html>
