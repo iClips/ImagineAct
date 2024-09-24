@@ -106,8 +106,6 @@ body {
 }
 .titlebar {
     background: var(--titlebar-background);
-    border-bottom-left-radius: var(--titlebar-border-radius);
-    border-bottom-right-radius: var(--titlebar-border-radius);
     box-shadow: var(--titlebar-shadow);
     height: var(--titlebar-height);
     color: var(--title-color);
@@ -262,7 +260,7 @@ body {
 .summary-about {
     font-size: 22px;
 }
-.hidden {
+.hidden, .voice-commands-hidden {
     display: none;
 }
 
@@ -346,7 +344,7 @@ body {
     background-color: var(--receipt-background);
     color: var(--text-color);
     border-radius: 8px;
-    box-shadow: 0px 0px 4px 2px var(--title-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
     margin: 0 auto;
 }
 
@@ -358,6 +356,7 @@ body {
     border-radius: 50%;
     cursor: pointer;
     display: flex;
+    background-color: #555;
     align-items: center;
     justify-content: center;
     margin-right: 14px;
@@ -386,7 +385,7 @@ body {
 
 .active-control {
     font-size: 26px;
-    background-color: var(--button-hover-background);
+    background-color: var(--button-hover-background)!important;
     box-shadow: 0 3px 8px rgba(0, 255, 0, 0.5), 0 2px 4px rgba(255, 255, 255, 0.2) inset;
 }
 
@@ -420,7 +419,9 @@ body {
 /* Rectangular screen for feedback and instructions */
 #instructionContainer {
     width: 100%;
-    height: 100%;
+    height: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
     background-color:#000;
     color: var(--popup-content-color);
     padding: 6px;

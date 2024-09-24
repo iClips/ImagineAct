@@ -135,12 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         const storedUsername = localStorage.getItem('username');
-        const storedBalance = parseFloat(localStorage.getItem('balance'));
+        initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
         
-        if (storedUsername && !isNaN(storedBalance)) {
+        if (storedUsername && !isNaN(initialDeposit)) {
             displayName = storedUsername;
             
-            initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+            const storedBalance = parseFloat(localStorage.getItem('balance'));
             const storedCurrency = JSON.parse(localStorage.getItem('currency'));
     
             if (isCurrencyObject(storedCurrency)) {
@@ -249,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function resetLevel() {
         localStorage.removeItem('balance');
+        localStorage.setItem('balance', initialDeposit.toFixed(2));
         localStorage.removeItem('purchases');
         location.reload();
     }
@@ -312,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
         
         if (!text.match(/\bI\b/i)) {
-            showNote('warning', 'Purchase Command does not start with "I"');
+            recognizedTextLabel.textContent = `Purchase Command must start with "I"`;
             return 20;
         }
     
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
         
         if (captureResult.currency !== selectedCurrencyName) {
-            showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
+            // showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
             
             return (nonNullCount + 1) * 20;
         } else if (nonNullCount < 3) {
@@ -570,24 +571,24 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     }
 
-    function toggleCommands() {
-        var hiddenItems = document.querySelectorAll('.hidden');
-        var toggleLink = document.getElementById('toggle-link');
-        
-        // Toggle display of hidden items
-        hiddenItems.forEach(function(item) {
-            item.style.display = (item.style.display === 'none' || item.style.display === '') ? 'list-item' : 'none';
-        });
-        
-        // Change the text of the link
-        if (toggleLink.textContent === 'Show more') {
-            toggleLink.textContent = 'Show less';
-        } else {
-            toggleLink.textContent = 'Show more';
-        }
-    }
 });
 
+function toggleCommands() {
+    var hiddenItems = document.querySelectorAll('.voice-commands-hidden');
+    var toggleLink = document.getElementById('toggle-link');
+    
+    // Toggle display of hidden items
+    hiddenItems.forEach(function(item) {
+        item.style.display = (item.style.display === 'none' || item.style.display === '') ? 'list-item' : 'none';
+    });
+    
+    // Change the text of the link
+    if (toggleLink.textContent === 'Show more') {
+        toggleLink.textContent = 'Show less';
+    } else {
+        toggleLink.textContent = 'Show more';
+    }
+}
 
 let repeatCount = 0;
 const targetCount = 10;
