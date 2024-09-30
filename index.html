@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--Global site tag (gtag.js) - Google Analytics -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142145440-1"></script>-->
-    <!--<script>-->
-    <!--  window.dataLayer = window.dataLayer || [];-->
-    <!--  function gtag(){dataLayer.push(arguments);}-->
-    <!--  gtag('js', new Date());-->
-    <!--  gtag('config', 'UA-142145440-1');-->
-    <!--</script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title>Imagine Act Game</title>
     <link rel="stylesheet" href="assets/css/styles.css">     
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0ER5PGJ9PY');
+</script>
 <body class="dark-theme">
     <div class="titlebar">
         <div class="title">Imagine Act</div>
@@ -145,7 +146,7 @@
                 </div>
                 
                 <div id="instructionContainer">
-                    <div id="recognizedText">Sleeping. Press the speech button to start Voice Command</div>
+                    <div id="recognizedText">Press the speech button to start speech recognition</div>
                 </div>
             </div>
             
@@ -163,7 +164,7 @@
         </div>
     </div>
     <div id="aboutPopup" class="popup">
-        <span class="popup-close">&times;</span>
+        <span id="closePopup" class="popup-close">&times;</span>
         <h2>About the Game</h2>
         <p><strong>Welcome to Imagine Act!</strong></p>
         <ul>
