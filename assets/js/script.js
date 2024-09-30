@@ -187,14 +187,15 @@ function showNote(type, message) {
 }
 
 function extractDetails(text) {
-    // Regex to match item in the sentence
-    const itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+)?(?:[a-zA-Z]+\s+)?(?:Rand|USD|Dollar|Euro|Pound)?\s+on\s+([a-zA-Z0-9-_\s]+?)(?=\s|$)/i;
+    // Regex to match purchase actions and capture the item
+const itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:a |an |the |that |at |[ ])?(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+)?(?:R|Rand|USD|Dollar|Euro|Pound)?\s+(.*)/i;
 
-    // Regex to match amount in the sentence
-    const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
+// Regex to match amount in the sentence
+const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
 
-    // Regex to match currency in the sentence
-    const currencyRegex = /\b(R|Rand|USD|Dollar|Euro|Pound)\b/i;
+// Regex to match currency in the sentence
+const currencyRegex = /\b(R|Rand|USD|Dollar|Euro|Pound)\b/i;
+
 
 
     const itemMatch = text.match(itemRegex);
@@ -232,6 +233,9 @@ function hidePopup() {
 }
 
 function setTheme(theme) {
+    if (!theme) {
+        theme = 'retro-theme';
+    }
     document.body.classList.remove('dark-theme', 'light-theme', 'retro-theme');
     // Add the selected theme class
     document.body.classList.add(theme);
