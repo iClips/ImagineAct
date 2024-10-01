@@ -296,11 +296,6 @@ function stopVoiceRecognition() {
 
 function initializeGame() {
     const theme = localStorage.getItem('theme');
-    if (theme) {
-        setTheme(theme);
-        themeSelect.value = theme;
-    }
-
     const storedUsername = localStorage.getItem('username');
     initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
     
@@ -332,7 +327,7 @@ function initializeGame() {
     } else {
         loginScreen.style.display = 'block';
         gameScreen.style.display = 'none';
-    }
+    }    
 }
 
 function setDefaultCurrency() {
