@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/icliphaw/public_html/projects/iact/
+    - git pull origin main

@@ -125,7 +125,7 @@ body {
 }
 
 .titlebar .title {
-    font-size: 1.4em;
+    font-size: clamp(26px, 2vw, 40px);
     font-weight: bold;
 }
 
