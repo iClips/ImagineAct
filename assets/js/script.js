@@ -194,19 +194,16 @@ function extractVoicePurchaseDetails(text) {
     const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
 
     if (itemRegex) {
-        console.log('1');
         const itemBeforeAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+(?:a|an|the|that|at|[ ])?(.*?)(?:\sfor|\swith|\sat)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)?/i;
 
-const itemAfterAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)\s+of\s+(.*)/i;
+        const itemAfterAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)\s+of\s+(.*)/i;
 
-if (itemAfterAmountRegex) {
-    console.log('2');
-    itemRegex = itemAfterAmountRegex;
-}
-if (itemBeforeAmountRegex) {
-    console.log('3');
-    itemRegex = itemBeforeAmountRegex;
-}
+        if (itemAfterAmountRegex) {
+            itemRegex = itemAfterAmountRegex;
+        }
+        if (itemBeforeAmountRegex) {
+            itemRegex = itemBeforeAmountRegex;
+        }
     }
     const currencyRegex = /\b(R|Rand|USD|Dollar|US\sDollar|CAD|Canadian\sDollar|AUD|Australian\sDollar|EUR|Euro|GBP|British\sPound|Pound|JPY|Japanese\sYen|Yen|CHF|Swiss\sFranc|Franc|CNY|Chinese\sYuan|Yuan|₹|INR|Indian\sRupee|Rupee)\b/i;
 
@@ -245,13 +242,17 @@ function hidePopup() {
 }
 
 function setTheme(theme) {
-    if (!theme) {
-        theme = 'retro-theme';
+    try {
+        if (!theme) {
+            theme = 'retro-theme';
+        }
+        document.body.classList.remove('dark-theme', 'light-theme', 'retro-theme');
+        // Add the selected theme class
+        document.body.classList.add(theme);
+        localStorage.setItem('theme', theme);
+    } catch (ex) {
+        showNote('warning', 'Theme set exception: ' + ex.message + ' theme=' + theme);
     }
-    document.body.classList.remove('dark-theme', 'light-theme', 'retro-theme');
-    // Add the selected theme class
-    document.body.classList.add(theme);
-    localStorage.setItem('theme', theme);
 }
 
 function initSpeechRecognition() {
