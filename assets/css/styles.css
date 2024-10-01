@@ -23,13 +23,13 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 body {
     font-family: 'Press Start 2P', cursive;
     font-size: 14px;
-    overflow: hidden;
+    overflow: auto;
 }
 
  .dark-theme {
@@ -512,7 +512,7 @@ body {
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    color: var(--text-color);
+    color: #fff;
     background-color: #b91212;
     text-align: center;
     border: none;

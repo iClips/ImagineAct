@@ -186,17 +186,29 @@ function showNote(type, message) {
     }, 5000);
 }
 
-function extractDetails(text) {
-    // Regex to match purchase actions and capture the item
-const itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:a |an |the |that |at |[ ])?(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+)?(?:R|Rand|USD|Dollar|Euro|Pound)?\s+(.*)/i;
+function extractVoicePurchaseDetails(text) {
+    console.log('Command text: ' + text);
+    
+    let itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))\s+of\s+)?(?:a |an |the |that |at |[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))?/i;
 
-// Regex to match amount in the sentence
-const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
+    const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
 
-// Regex to match currency in the sentence
-const currencyRegex = /\b(R|Rand|USD|Dollar|Euro|Pound)\b/i;
+    if (itemRegex) {
+        console.log('1');
+        const itemBeforeAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+(?:a|an|the|that|at|[ ])?(.*?)(?:\sfor|\swith|\sat)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)?/i;
 
+const itemAfterAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)\s+of\s+(.*)/i;
 
+if (itemAfterAmountRegex) {
+    console.log('2');
+    itemRegex = itemAfterAmountRegex;
+}
+if (itemBeforeAmountRegex) {
+    console.log('3');
+    itemRegex = itemBeforeAmountRegex;
+}
+    }
+    const currencyRegex = /\b(R|Rand|USD|Dollar|US\sDollar|CAD|Canadian\sDollar|AUD|Australian\sDollar|EUR|Euro|GBP|British\sPound|Pound|JPY|Japanese\sYen|Yen|CHF|Swiss\sFranc|Franc|CNY|Chinese\sYuan|Yuan|₹|INR|Indian\sRupee|Rupee)\b/i;
 
     const itemMatch = text.match(itemRegex);
     const amountMatch = text.match(amountRegex);
@@ -379,14 +391,13 @@ function processVoiceCommand(text) {
     } 
     
     if (!text.match(/\bI\b/i)) {
-        // recognizedTextLabel.textContent = `Purchase Command must start with "I"`;
         return 20;
     }
 
-    const captureResult = extractDetails(text);
+    const captureResult = extractVoicePurchaseDetails(text);
     // showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
     const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
-    
+    console.log('nonNullCount: ' + nonNullCount);
     if (captureResult.currency !== selectedCurrencyName) {
         // showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
         
@@ -417,6 +428,8 @@ function processVoiceCommand(text) {
                 localStorage.setItem('balance', balance.toFixed(2));
                 addItemToPurchaseList(item, amount);
                 return 100; // Full accuracy for valid purchase
+            } else {
+                recognizedTextLabel.textContent = `This item is already purchased. ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`;
             }
         }
     }
