@@ -19,6 +19,11 @@
     <div class="titlebar">
         <div class="title">Imagine Act</div>
         <div class="buttons">
+            <div class="achievements">
+                <div class="achievement">🏆</div>
+                <div class="achievement">⭐</div>
+                <div class="achievement">💎</div>
+            </div>
             <button id="btn_menu" aria-label="Menu" class="menu-button">☰</button>
             <div class="dropdown">
                 <div class="dropdown-content" id="dropdown_content">
@@ -44,10 +49,8 @@
                     </a>
                     <a href="#" id="resetLevel">Reset Level</a>
                     <a href="#" id="resetGame">Reset Game</a>
-                </div>
-                
-            </div>
-            
+                </div>                
+            </div>            
         </div>
     </div>
     <div id="error-container"></div>
@@ -134,33 +137,15 @@
     </div>   
 
     <div id="gameScreen" class="game-screen">
-        <div class="game-content">
-            <div id="speechContainer">
-                <button id="controlSpeechButton" aria-pressed="false">🎤</button>
-                <div id="soundBars">
-                    <div class="sound-bar"></div>
-                    <div class="sound-bar"></div>
-                    <div class="sound-bar"></div>
-                    <div class="sound-bar"></div>
-                    <div class="sound-bar"></div>
-                </div>
-                
-                <div id="instructionContainer">
-                    <div id="recognizedText">Press the speech button to start purchasing using voice commands</div>
-                </div>
-            </div>
-            
-            <div id="balanceContainer">
-                <div id="balanceCaption">Balance</div>
-                <div id="balance"><span id="balanceAmount">0.00</span></div>
-            </div>
-            <div class="receipt-container">
-                <div class="receipt-header" id="starting_balance"></div>
-                <div style="text-align: center;" id="total_purchases"></div>
-                <div class="receipt-header">Successful Purchases</div>
-                <ul class="labeled-element" id="purchaseList"></ul>
-                <div class="receipt-footer">Thank you for shopping with us! The more you play and believe in the game the more you will seee it actualize in your experience.</div>
-            </div>
+        <div class="container-List">
+            <div class="item" onclick="loadContent('voice-command-purchase')">Voice Command</div>
+            <div class="item" onclick="loadContent('budget')">Budget Challenge</div>
+            <div class="item" onclick="loadContent('purchase')">Purchase Tutorial</div>
+            <div class="item" onclick="loadContent('spending')">Spending Tips</div>
+            <div class="item" onclick="loadContent('wealth')">Wealth Strategy</div>
+        </div>
+        <div id="content-area" class="content-area">
+            <div id="content-text"></div>
         </div>
     </div>
     <div id="aboutPopup" class="popup">

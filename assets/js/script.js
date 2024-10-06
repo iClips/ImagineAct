@@ -34,7 +34,6 @@ let themeSelect;
 let SpeechRecognition;
 
 function registerEventListeners() {
-    console.log('registerEventListeners...');
     if (popupClose  !== 'undefined') {
         popupClose.addEventListener('click', () => {
             aboutPopup.style.display = 'none';
@@ -50,16 +49,19 @@ function registerEventListeners() {
         }
     };   
     
-    controlSpeechButton.addEventListener('click', () => {
-        if (recognitionActive) {
-            stopVoiceRecognition();
-            recognizedTextLabel.textContent = "Sleeping";
-        } else {
-            startVoiceRecognition();
-            recognizedTextLabel.textContent = "Listening";
-        }
-    });
+    if (controlSpeechButton) {
+        controlSpeechButton.addEventListener('click', () => {
+            if (recognitionActive) {
+                stopVoiceRecognition();
+                recognizedTextLabel.textContent = "Sleeping";
+            } else {
+                startVoiceRecognition();
+                recognizedTextLabel.textContent = "Listening";
+            }
+        });
+    }
     
+    // move start
     languageSelect.addEventListener('change', () => {
         recognitionLang = languageSelect.value;
         recognition.lang = recognitionLang;
@@ -73,6 +75,10 @@ function registerEventListeners() {
     themeSelect.addEventListener('change', () => {
         setTheme(themeSelect.value);
     });
+
+    // move end 
+
+
 
     loginButton.addEventListener('click', () => {
         const username = document.getElementById('username').value;
@@ -300,34 +306,13 @@ function initializeGame() {
     initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
     
     if (storedUsername && !isNaN(initialDeposit)) {
-        displayName = storedUsername;
-        
-        const storedBalance = parseFloat(localStorage.getItem('balance'));
-        const storedCurrency = JSON.parse(localStorage.getItem('currency'));
-
-        if (isCurrencyObject(storedCurrency)) {
-            selectedCurrency = storedCurrency;
-            selectedCurrencyName = getLastWord(selectedCurrency.name);
-            console.log('selectedCurrencyName: ' + selectedCurrencyName);
-        } else {
-            console.log('storedCurrency is not an object.');
-            alert(JSON.stringify(storedCurrency));
-            setDefaultCurrency();
-        }
-
-        starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
-        balance = storedBalance;
-        balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
-        loadPurchases();
-
         loginScreen.style.display = 'none';
         gameScreen.style.display = 'block';
         
-        initSpeechRecognition();
     } else {
         loginScreen.style.display = 'block';
         gameScreen.style.display = 'none';
-    }    
+    }      
 }
 
 function setDefaultCurrency() {
@@ -402,6 +387,7 @@ function processVoiceCommand(text) {
         showNote('warning', `Missing information in your purchase. Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
         return (nonNullCount + 1) * 20;
     } else if (nonNullCount === 3) {
+        console.log('nonNullCount === 3');
         const item = captureResult.item.replace(selectedCurrency.symbol, '');
         const amountText = captureResult.amount;
         let amount;
@@ -411,13 +397,14 @@ function processVoiceCommand(text) {
         } else {
             amount = wordsToNumbers(amountText.toLowerCase());
         }
-
+        console.log('amount: ' + amount);
         if (isNaN(amount)) {
             console.log('Invalid amount');
             showNote('warning', 'Invalid amount. value: ' + amount);
             
             return 60; // Partial accuracy for invalid amount
         } else if (amount <= balance) {
+            console.log('should be purchase..');
             if (!isItemInPurchaseList(item, amount)) {
                 balance -= amount;
                 balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
@@ -425,6 +412,7 @@ function processVoiceCommand(text) {
                 addItemToPurchaseList(item, amount);
                 return 100; // Full accuracy for valid purchase
             } else {
+                console.log('guess not');
                 recognizedTextLabel.textContent = `This item is already purchased. ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`;
             }
         }
@@ -681,52 +669,6 @@ function startAutomationTest() {
     }, 3000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('content loaded');
-    elemResetGame = document.getElementById('resetGame');
-    elemResetLevel = document.getElementById('resetLevel');
-    
-    loginScreen = document.getElementById('loginScreen');
-    loginButton = document.getElementById('loginButton');
-    
-    gameScreen = document.getElementById('gameScreen');
-    starting_balance = document.getElementById('starting_balance');
-    total_purchases = document.getElementById('total_purchases');
-    balanceAmount = document.getElementById('balanceAmount');
-    purchaseList = document.getElementById('purchaseList');
-    
-    dropdown_content = document.getElementById('dropdown_content');
-    btn_menu = document.getElementById('btn_menu');
-    aboutLink = document.getElementById('aboutLink');
-    aboutPopup = document.getElementById('aboutPopup');
-    popupClose = document.getElementById('closePopup');
-    soundBars = document.querySelectorAll('.sound-bar');
-    
-    controlSpeechButton = document.getElementById('controlSpeechButton');
-    recognizedTextLabel = document.getElementById('recognizedText');
-    languageSelect = document.getElementById('language');
-    themeSelect = document.getElementById('theme');
-    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (!SpeechRecognition) {
-        console.log('Speech Recognition API is not supported in this browser.');
-        alert('Speech Recognition API is not supported in this browser.');
-    } else {        
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.lang = "en-US";
-            recognition.interimResults = false;
-            
-            registerEventListeners();
-
-            initializeGame();
-        } else {
-            recognizedTextLabel.textContent = `Unable to Continue!! It looks like your current browser does not support Speech Recognition.`;
-        }
-    }    
-});
-
 function toggleCommands() {
     var hiddenItems = document.querySelectorAll('.voice-commands-hidden');
     var toggleLink = document.getElementById('toggle-link');
@@ -844,4 +786,318 @@ function updateSoundBars(accuracy) {
     } catch (ex) {
         showNote('warning', 'Accuracy exception.');
     }    
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('doc loaded');
+    elemResetGame = document.getElementById('resetGame');
+    elemResetLevel = document.getElementById('resetLevel');
+    
+    loginScreen = document.getElementById('loginScreen');
+    loginButton = document.getElementById('loginButton');
+    
+    gameScreen = document.getElementById('gameScreen');
+    
+    
+    dropdown_content = document.getElementById('dropdown_content');
+    btn_menu = document.getElementById('btn_menu');
+    aboutLink = document.getElementById('aboutLink');
+    aboutPopup = document.getElementById('aboutPopup');
+    popupClose = document.getElementById('closePopup');
+    soundBars = document.querySelectorAll('.sound-bar');
+    
+    controlSpeechButton = document.getElementById('controlSpeechButton');
+    recognizedTextLabel = document.getElementById('recognizedText');
+    languageSelect = document.getElementById('language');
+    themeSelect = document.getElementById('theme');
+    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        console.log('Speech Recognition API is not supported in this browser.');
+        alert('Speech Recognition API is not supported in this browser.');
+    } else {        
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.lang = "en-US";
+            recognition.interimResults = false;
+            
+            registerEventListeners();
+
+            initializeGame();
+        } else {
+            recognizedTextLabel.textContent = `Unable to Continue!! It looks like your current browser does not support Speech Recognition.`;
+        }
+    }
+});
+
+function getVoiceCommandUI() {
+    return `
+    <div class="game-content">
+        <div id="speechContainer">
+            <button id="controlSpeechButton" aria-pressed="false">🎤</button>
+            <div id="soundBars">
+                <div class="sound-bar"></div>
+                <div class="sound-bar"></div>
+                <div class="sound-bar"></div>
+                <div class="sound-bar"></div>
+                <div class="sound-bar"></div>
+            </div>
+            
+            <div id="instructionContainer">
+                <div id="recognizedText">Press the speech button to start purchasing using voice commands</div>
+            </div>
+        </div>
+        
+        <div id="balanceContainer">
+            <div class="account-type">IAct Account</div>
+            <div id="balance">Avail <span id="balanceAmount">0.00</span></div>
+        </div>
+        <div class="receipt-container">
+            <div class="receipt-header" id="starting_balance"></div>
+            <div class="receipt-header">Successful Purchases</div>
+            <ul class="labeled-element" id="purchaseList"></ul>
+            <div style="text-align: center;" id="total_purchases"></div>
+            <div class="receipt-footer">Thank you for shopping with us! The more you play and believe in the game the more you will seee it actualize in your experience.</div>
+        </div>
+    </div>`;
+}
+
+// Function to handle active item styling
+function setActiveItem(clickedItem) {
+    // Remove active class from all items
+    const items = document.querySelectorAll('.item');
+    items.forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Add active class to the clicked item
+    clickedItem.classList.add('active');
+}
+
+// Update the loadContent function to set the active state
+function loadContent(contentKey) {
+    const contentArea = document.getElementById('content-area');
+    const contentText = document.getElementById('content-text');
+    console.log(contentKey);
+    let content = '';
+    switch (contentKey) {
+        case 'voice-command-purchase':
+            contentArea.innerHTML = getVoiceCommandUI();
+            contentArea.style.display = 'block';
+
+            starting_balance = document.querySelector('#starting_balance');
+            total_purchases = document.getElementById('total_purchases');
+            balanceAmount = document.getElementById('balanceAmount');
+            purchaseList = document.getElementById('purchaseList');
+            const theme = localStorage.getItem('theme');
+            const storedUsername = localStorage.getItem('username');
+            initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+            
+            displayName = storedUsername;
+                
+            const storedBalance = parseFloat(localStorage.getItem('balance'));
+            const storedCurrency = JSON.parse(localStorage.getItem('currency'));
+
+            if (isCurrencyObject(storedCurrency)) {
+                selectedCurrency = storedCurrency;
+                selectedCurrencyName = getLastWord(selectedCurrency.name);
+                console.log('selectedCurrencyName: ' + selectedCurrencyName);
+            } else {
+                console.log('storedCurrency is not an object.');
+                alert(JSON.stringify(storedCurrency));
+                setDefaultCurrency();
+            }
+
+            starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
+            balance = storedBalance;
+            balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
+            loadPurchases();
+            
+            initSpeechRecognition();
+            
+            return;
+            break;
+        case 'budget':
+            content = getBudgetChallenge();
+            break;
+        case 'purchase':
+            content = 'The Purchase Tutorial guides you through smart purchasing strategies.';
+            break;
+        case 'spending':
+            content = 'Spending Tips offer insights into reducing unnecessary expenses.';
+            break;
+        case 'wealth':
+            content = 'Wealth Strategy introduces proven techniques for growing your wealth.';
+            break;
+        default:
+            content = 'Select an option to see more details.';
+    }
+
+    contentArea.innerHTML = content;
+    contentArea.style.display = 'block';
+    console.log('content area loaded');
+    // Set the active class on the clicked item
+    setActiveItem(event.target);
+}
+
+////////////////////// Budget Chellenge ////////////////////
+let initialBudget = 1000; // Starting budget
+let spendingGoal = 0.90; // Spend 90% of the budget
+let totalSpent = 0;
+let remainingBudget = initialBudget;
+let categoryLimits = {
+    Food: initialBudget * 0.40, // 40% limit for Food
+    Clothing: initialBudget * 0.30, // 30% limit for Clothing
+    Electronics: initialBudget * 0.20, // 20% limit for Electronics
+    Entertainment: initialBudget * 0.10 // 10% limit for Entertainment
+};
+let categoryTotals = {
+    Food: 0,
+    Clothing: 0,
+    Electronics: 0,
+    Entertainment: 0
+};
+
+const itemOptions = [
+    { name: "Pizza", price: 200, category: "Food" },
+    { name: "Jeans", price: 150, category: "Clothing" },
+    { name: "Headphones", price: 300, category: "Electronics" },
+    { name: "Movie Ticket", price: 100, category: "Entertainment" }
+];
+
+function getBudgetChallenge() {
+    var budgetChallengeHTML = "<h2>Budget Challenge<span class='info-icon' title='Select items to add to your budget. Spend your budget wisely!'>&#9432; </span></h2>" +
+        "<p>Your starting budget is: <span id='budget-display'>" + initialBudget + "</span></p>" +
+        "<div id='item-options'>" +
+            "<h3>Select Items:</h3>" +
+            createItemButtons(itemOptions) +
+        "</div>" +
+        "<div id='budget-status'>" +
+            "<h3>Status:</h3>" +
+            "<p>Total Spent: <span id='total-spent'>0</span></p>" +
+            "<p>Remaining Budget: <span id='remaining-budget'>" + remainingBudget + "</span></p>" +
+        "</div>" +
+        "<div id='message'></div>";
+
+    return budgetChallengeHTML;
+}
+
+// Function to create item buttons
+function createItemButtons(itemOptions) {
+    var buttonsHTML = itemOptions.map(function(item) {
+        return "<button class='item-button' onclick='selectItem(" + JSON.stringify(item) + ")'>" +
+            item.name + " - " + item.price +
+            "</button>";
+    }).join('');
+
+    return buttonsHTML;
+}
+function selectItem(item) {
+    const itemPrice = item.price;
+    const category = item.category;
+
+    // Check if adding this item exceeds category limits
+    if (categoryTotals[category] + itemPrice > categoryLimits[category]) {
+        notifyUser("Category limit exceeded");
+        return;
+    }
+
+    // Add item to totals
+    totalSpent += itemPrice;
+    categoryTotals[category] += itemPrice;
+    remainingBudget = initialBudget - totalSpent;
+
+    // Update UI
+    updateBudgetDisplay();
+
+    // Check for challenge completion
+    if (totalSpent / initialBudget >= spendingGoal) {
+        challengeComplete("Success");
+    }
+}
+
+function updateBudgetDisplay() {
+    document.getElementById('total-spent').innerText = totalSpent;
+    document.getElementById('remaining-budget').innerText = remainingBudget;
+}
+
+function notifyUser(message) {
+    document.getElementById('message').innerText = message;
+}
+
+function challengeComplete(result) {
+    const messageElement = document.getElementById('message');
+    if (result === "Success") {
+        messageElement.innerText = "Congratulations! You've successfully allocated your budget!";
+        initialBudget *= 2; // Reward by doubling the budget
+        resetChallenge(); // Reset for the next challenge
+    } else {
+        messageElement.innerText = "Challenge failed! Please try again.";
+    }
+}
+
+function resetChallenge() {
+    totalSpent = 0;
+    remainingBudget = initialBudget;
+    categoryTotals = {
+        Food: 0,
+        Clothing: 0,
+        Electronics: 0,
+        Entertainment: 0
+    };
+    updateBudgetDisplay();
+}
+
+
+function allocateFunds() {
+    let savingAmt = parseFloat(document.getElementById("savings").value);
+    let essentialAmt = parseFloat(document.getElementById("essentials").value);
+    let discretionaryAmt = parseFloat(document.getElementById("discretionary").value);
+    let investmentAmt = parseFloat(document.getElementById("investments").value);
+    let total = savingAmt + essentialAmt + discretionaryAmt + investmentAmt;
+    let feedback = document.getElementById("budgetFeedback");
+    
+    if (total > initialBalance) {
+        feedback.innerHTML = `<p style="color: red;">You have exceeded your available balance! Please reallocate.</p>`;
+    return;
+    }
+    
+    savings = savingAmt;
+    essentials = essentialAmt;
+    discretionary = discretionaryAmt;
+    investments = investmentAmt;
+    
+    checkBudgetStatus();
+}
+
+function checkBudgetStatus() {
+    let feedback = document.getElementById("budgetFeedback");
+    feedback.innerHTML = "<h3>Budget Feedback:</h3>";
+
+     if (savings >= initialBalance * 0.2) {
+        feedback.innerHTML += `<p>You've saved 20% or more of your income. Great job!</p>`;
+    } else {
+        feedback.innerHTML += `<p>Try saving more of your income.</p>`;
+    }
+
+    if (discretionary <= initialBalance * 0.3) {
+        feedback.innerHTML += `<p>Your discretionary spending is within a reasonable limit.</p>`;
+    } else {
+        feedback.innerHTML += `<p>Your discretionary spending is too high.</p>`;
+    }
+
+    handleUnexpectedEvents();
+}
+
+function handleUnexpectedEvents() {
+    let unexpectedExpense = 200; // Example unexpected cost
+    let remainingBalance = initialBalance - (savings + essentials + discretionary + investments);
+    let feedback = document.getElementById("budgetFeedback");
+    
+    if (remainingBalance < unexpectedExpense) {
+        feedback.innerHTML += `<p style="color: red;">You don't have enough funds to cover an unexpected expense! Reallocate your budget.</p>`;
+    } else {
+        feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
+    }
 }
