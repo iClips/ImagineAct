@@ -779,6 +779,8 @@ body {
     width: 80%;
     max-width: 400px;
     background-color: var(--text-color);
+    background: linear-gradient(72deg, #0078ea2e, #0078eaa3);
+    font-size: 24px;
     color: var(--background-color);
     padding: 2%;
     margin: 1.5% auto;

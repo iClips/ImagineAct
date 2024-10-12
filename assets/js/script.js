@@ -33,6 +33,33 @@ let languageSelect;
 let themeSelect;
 let SpeechRecognition;
 
+function includeHTML() {
+    var z, i, elmnt, file, xhttp;
+    /* Loop through a collection of all HTML elements: */
+    z = document.getElementsByTagName("*");
+    for (i = 0; i < z.length; i++) {
+      elmnt = z[i];
+      /*search for elements with a certain atrribute:*/
+      file = elmnt.getAttribute("w3-include-html");
+      if (file) {
+        /* Make an HTTP request using the attribute value as the file name: */
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4) {
+            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+            /* Remove the attribute, and call this function once more: */
+            elmnt.removeAttribute("w3-include-html");
+            includeHTML();
+          }
+        }
+        xhttp.open("GET", file, true);
+        xhttp.send();
+        /* Exit the function: */
+        return;
+      }
+    }
+}
 function registerEventListeners() {
     if (popupClose  !== 'undefined') {
         popupClose.addEventListener('click', () => {
@@ -291,16 +318,36 @@ function initSpeechRecognition() {
 function startVoiceRecognition() {
     recognitionActive = true;
     recognition.start();
-    controlSpeechButton.classList.add('active-control');
+
+    const speechContainer = document.getElementById('speechContainer'); // Or querySelector
+
+    // Check if the element exists
+    if (speechContainer) {
+        // Modify classList if the element exists
+        speechContainer.classList.add('active');
+    } else {
+        console.error("Element with ID 'speechContainer' not found in the DOM.");
+    }
 }
 
 function stopVoiceRecognition() {
     recognitionActive = false;
     recognition.stop();
-    controlSpeechButton.classList.remove('active-control');
+
+    const speechContainer = document.getElementById('speechContainer'); // Or querySelector
+
+    // Check if the element exists
+    if (speechContainer) {
+        // Modify classList if the element exists
+        speechContainer.classList.add('active');
+    } else {
+        console.error("Element with ID 'speechContainer' not found in the DOM.");
+    }
 }
 
 function initializeGame() {
+    registerEventListeners();
+    
     const theme = localStorage.getItem('theme');
     const storedUsername = localStorage.getItem('username');
     initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
@@ -806,6 +853,10 @@ document.addEventListener('DOMContentLoaded', () => {
     popupClose = document.getElementById('closePopup');
     soundBars = document.querySelectorAll('.sound-bar');
     
+    
+});
+
+function getVoiceCommandUI() {
     controlSpeechButton = document.getElementById('controlSpeechButton');
     recognizedTextLabel = document.getElementById('recognizedText');
     languageSelect = document.getElementById('language');
@@ -822,16 +873,14 @@ document.addEventListener('DOMContentLoaded', () => {
             recognition.lang = "en-US";
             recognition.interimResults = false;
             
-            registerEventListeners();
+            
 
             initializeGame();
         } else {
             recognizedTextLabel.textContent = `Unable to Continue!! It looks like your current browser does not support Speech Recognition.`;
         }
     }
-});
 
-function getVoiceCommandUI() {
     return `
     <div class="game-content">
         <div id="speechContainer">
@@ -921,8 +970,8 @@ function loadContent(contentKey) {
         case 'budget':
             content = getBudgetChallenge();
             break;
-        case 'purchase':
-            content = 'The Purchase Tutorial guides you through smart purchasing strategies.';
+        case '3D Sphere':
+            content = get3DSphere();
             break;
         case 'spending':
             content = 'Spending Tips offer insights into reducing unnecessary expenses.';
@@ -966,22 +1015,6 @@ const itemOptions = [
     { name: "Movie Ticket", price: 100, category: "Entertainment" }
 ];
 
-function getBudgetChallenge() {
-    var budgetChallengeHTML = "<h2>Budget Challenge<span class='info-icon' title='Select items to add to your budget. Spend your budget wisely!'>&#9432; </span></h2>" +
-        "<p>Your starting budget is: <span id='budget-display'>" + initialBudget + "</span></p>" +
-        "<div id='item-options'>" +
-            "<h3>Select Items:</h3>" +
-            createItemButtons(itemOptions) +
-        "</div>" +
-        "<div id='budget-status'>" +
-            "<h3>Status:</h3>" +
-            "<p>Total Spent: <span id='total-spent'>0</span></p>" +
-            "<p>Remaining Budget: <span id='remaining-budget'>" + remainingBudget + "</span></p>" +
-        "</div>" +
-        "<div id='message'></div>";
-
-    return budgetChallengeHTML;
-}
 
 // Function to create item buttons
 function createItemButtons(itemOptions) {
@@ -1101,3 +1134,4 @@ function handleUnexpectedEvents() {
         feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
     }
 }
+
