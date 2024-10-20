@@ -1,15 +1,16 @@
 let balance = 0;
 let recognitionActive = false;
 let initialDeposit = 0;
-let selectedCurrency = '';
+let selectedCurrency = {};
 let selectedCurrencyName = 'Rand';
 let displayName = '';
 let currentPurchase = '';
 let recognition;
 let repeatCount = 0;
-const targetCount = 10;
+const targetRepeatMantraCount = 10;
 
-let elemResetGame;
+let resetGameLink;
+let resetLevelLink;
 
 let loginScreen;
 let loginButton;
@@ -32,6 +33,63 @@ let recognizedTextLabel;
 let languageSelect;
 let themeSelect;
 let SpeechRecognition;
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('doc loaded');
+    resetGameLink = document.getElementById('resetGame');
+    resetLevelLink = document.getElementById('resetLevel');
+    
+    loginScreen = document.getElementById('loginScreen');
+    loginButton = document.getElementById('loginButton');
+    
+    gameScreen = document.getElementById('gameScreen');
+    
+    recognizedTextLabel = document.getElementById('recognizedText');
+    languageSelect = document.getElementById('language');
+    themeSelect = document.getElementById('theme');
+
+    dropdown_content = document.getElementById('dropdown_content');
+    btn_menu = document.getElementById('btn_menu');
+    aboutLink = document.getElementById('aboutLink');
+    aboutPopup = document.getElementById('aboutPopup');
+    popupClose = document.getElementById('closePopup');
+    soundBars = document.querySelectorAll('.sound-bar');
+    
+    registerEventListeners();
+    
+    const theme = localStorage.getItem('theme');
+    const storedUsername = localStorage.getItem('username');
+    initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+    
+    if (popupClose  !== 'undefined') {
+        popupClose.addEventListener('click', () => {
+            aboutPopup.style.display = 'none';
+        });
+    }
+
+    window.onclick = (event) => {
+        if (event.target === aboutPopup) {
+            aboutPopup.style.display = 'none';
+        }
+        if (!btn_menu.contains(event.target) && !dropdown_content.contains(event.target)) {
+            dropdown_content.style.display = 'none';
+        }
+    };
+
+    if (storedUsername && !isNaN(initialDeposit)) {
+        loginScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+
+        // gsap.timeline()
+        // .to('.step-1', { duration: 1.5, opacity: 1, y: -50, delay: 0.5 })
+        // .to('.step-2', { duration: 1.5, opacity: 1, y: -50, delay: 2 })
+        // .to('.step-3', { duration: 1.5, opacity: 1, y: -50, delay: 2 })
+        // .to('.step-4', { duration: 1.5, opacity: 1, y: -50, delay: 2 });
+    } else {
+        loginScreen.style.display = 'block';
+        gameScreen.style.display = 'none';
+    }
+});
 
 function includeHTML() {
     var z, i, elmnt, file, xhttp;
@@ -61,34 +119,17 @@ function includeHTML() {
     }
 }
 function registerEventListeners() {
-    if (popupClose  !== 'undefined') {
-        popupClose.addEventListener('click', () => {
-            aboutPopup.style.display = 'none';
-        });
-    }
-
-    window.onclick = (event) => {
-        if (event.target === aboutPopup) {
-            aboutPopup.style.display = 'none';
-        }
-        if (!btn_menu.contains(event.target) && !dropdown_content.contains(event.target)) {
-            dropdown_content.style.display = 'none';
-        }
-    };   
-    
     if (controlSpeechButton) {
         controlSpeechButton.addEventListener('click', () => {
+            console.log('controlSpeechButton was clicked');
             if (recognitionActive) {
-                stopVoiceRecognition();
-                recognizedTextLabel.textContent = "Sleeping";
+                stopVoiceRecognition();                
             } else {
                 startVoiceRecognition();
-                recognizedTextLabel.textContent = "Listening";
             }
         });
     }
     
-    // move start
     languageSelect.addEventListener('change', () => {
         recognitionLang = languageSelect.value;
         recognition.lang = recognitionLang;
@@ -102,10 +143,6 @@ function registerEventListeners() {
     themeSelect.addEventListener('change', () => {
         setTheme(themeSelect.value);
     });
-
-    // move end 
-
-
 
     loginButton.addEventListener('click', () => {
         const username = document.getElementById('username').value;
@@ -151,23 +188,18 @@ function registerEventListeners() {
     
         localStorage.setItem('username', username);
         localStorage.setItem('balance', initialDeposit.toFixed(2));
-        localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));
-        
+        localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));        
         localStorage.setItem('purchases', JSON.stringify([]));
-        balance = initialDeposit;
-        
-        balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
-        starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
-        
+
         loginScreen.style.display = 'none';
         gameScreen.style.display = 'block';
     });
 
     
-    elemResetGame.addEventListener('click', () => {
+    resetGameLink.addEventListener('click', () => {
         resetGame();
     });
-    elemResetLevel.addEventListener('click', () => {
+    resetLevelLink.addEventListener('click', () => {
         resetLevel();
     });
     
@@ -182,40 +214,34 @@ function registerEventListeners() {
 }
 
 function showNote(type, message) {
-    // Validate the type
-    const validTypes = ['error', 'warning', 'message'];
+     const validTypes = ['error', 'warning', 'message'];
     if (!validTypes.includes(type)) {
-        console.error('Invalid notification type.');
-        showNote('error', 'Invalid notification type.');
+        showNote("error", 'Invalid notification type.');
         return;
     }
 
-    // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.innerHTML = `
-        <button onclick="this.parentElement.remove()">×</button>
+        <button onclick="this.parentElement.remove()">X</button>
         ${message}
     `;
 
-    // Add the notification to the container
     const notificationContainer = document.getElementById('error-container');
     notificationContainer.appendChild(notification);
 
-    // Slide down by adding the 'show' class
-    setTimeout(() => {
+     setTimeout(() => {
         notification.classList.add('show');
-    }, 10); // Slight delay to trigger the transition
+    }, 10); 
 
-    // Auto-hide the notification after 5 seconds
     setTimeout(() => {
-        notification.classList.remove('show'); // Slide up by removing the 'show' class
+        notification.classList.remove('show'); 
         notification.classList.add('hide');
         setTimeout(() => {
             if (notification.parentElement) {
                 notification.remove();
             }
-        }, 500); // Wait for the slide-up animation to complete
+        }, 500);
     }, 5000);
 }
 
@@ -289,11 +315,33 @@ function setTheme(theme) {
 }
 
 function initSpeechRecognition() {
+    if (controlSpeechButton !== null) {
+        controlSpeechButton = document.getElementById('controlSpeechButton');        
+        SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    } else {
+        console.log('Oops! there is no reference');
+    }
+
+    if (!SpeechRecognition) {
+        alert('Speech Recognition API is not supported in this browser.');
+        return;
+    }
+
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+        showNote('message', "Speech Recognition is Initialized");
+    } else {
+        alert('Speech Recognition API is not supported in this browser.');
+        return;
+    }
+
     recognition.addEventListener('result', (event) => {
         const speechResult = event.results[event.resultIndex][0].transcript.trim();
         const capturedText = `You said: "${speechResult}"`;
         recognizedTextLabel.textContent = capturedText;
-        console.log(capturedText);
         const accuracy = processVoiceCommand(speechResult);
         
         if (accuracy && accuracy >= 0) {
@@ -312,21 +360,19 @@ function initSpeechRecognition() {
     };
     
     startVoiceRecognition();
-    recognizedTextLabel.textContent = "Listening";
 }
 
 function startVoiceRecognition() {
     recognitionActive = true;
     recognition.start();
 
-    const speechContainer = document.getElementById('speechContainer'); // Or querySelector
-
-    // Check if the element exists
-    if (speechContainer) {
-        // Modify classList if the element exists
-        speechContainer.classList.add('active');
+    if (recognizedTextLabel) {
+        recognizedTextLabel.textContent = "Listening";
+    }
+    if (controlSpeechButton) {
+        controlSpeechButton.classList.add('active-control');
     } else {
-        console.error("Element with ID 'speechContainer' not found in the DOM.");
+        showNote("error", "Element with ID 'speechContainer' not found in the DOM.");
     }
 }
 
@@ -334,32 +380,15 @@ function stopVoiceRecognition() {
     recognitionActive = false;
     recognition.stop();
 
-    const speechContainer = document.getElementById('speechContainer'); // Or querySelector
-
-    // Check if the element exists
-    if (speechContainer) {
-        // Modify classList if the element exists
-        speechContainer.classList.add('active');
-    } else {
-        console.error("Element with ID 'speechContainer' not found in the DOM.");
+    if (recognizedTextLabel) {
+        recognizedTextLabel.textContent = "Sleeping";
     }
-}
-
-function initializeGame() {
-    registerEventListeners();
     
-    const theme = localStorage.getItem('theme');
-    const storedUsername = localStorage.getItem('username');
-    initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
-    
-    if (storedUsername && !isNaN(initialDeposit)) {
-        loginScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
-        
+    if (controlSpeechButton) {
+       controlSpeechButton.classList.remove('active-control');
     } else {
-        loginScreen.style.display = 'block';
-        gameScreen.style.display = 'none';
-    }      
+        showNote("error", "Element with ID 'controlSpeechButton' not found in the DOM.");
+    }
 }
 
 function setDefaultCurrency() {
@@ -716,12 +745,11 @@ function startAutomationTest() {
     }, 3000);
 }
 
-function toggleCommands() {
+function toggleAboutCommandsLessMore() {
     var hiddenItems = document.querySelectorAll('.voice-commands-hidden');
     var toggleLink = document.getElementById('toggle-link');
     
-    // Toggle display of hidden items
-    hiddenItems.forEach(function(item) {
+   hiddenItems.forEach(function(item) {
         item.style.display = (item.style.display === 'none' || item.style.display === '') ? 'list-item' : 'none';
     });
     
@@ -750,7 +778,7 @@ function promptRepeatPhrase() {
                 repeatCount++;
                 console.log(`Phrase repeated ${repeatCount} times`);
                 
-                if (repeatCount >= targetCount) {
+                if (repeatCount >= targetRepeatMantraCount) {
                     resolve(true);
                 }
             }
@@ -835,82 +863,6 @@ function updateSoundBars(accuracy) {
     }    
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('doc loaded');
-    elemResetGame = document.getElementById('resetGame');
-    elemResetLevel = document.getElementById('resetLevel');
-    
-    loginScreen = document.getElementById('loginScreen');
-    loginButton = document.getElementById('loginButton');
-    
-    gameScreen = document.getElementById('gameScreen');
-    
-    
-    dropdown_content = document.getElementById('dropdown_content');
-    btn_menu = document.getElementById('btn_menu');
-    aboutLink = document.getElementById('aboutLink');
-    aboutPopup = document.getElementById('aboutPopup');
-    popupClose = document.getElementById('closePopup');
-    soundBars = document.querySelectorAll('.sound-bar');
-    
-    
-});
-
-function getVoiceCommandUI() {
-    controlSpeechButton = document.getElementById('controlSpeechButton');
-    recognizedTextLabel = document.getElementById('recognizedText');
-    languageSelect = document.getElementById('language');
-    themeSelect = document.getElementById('theme');
-    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-        console.log('Speech Recognition API is not supported in this browser.');
-        alert('Speech Recognition API is not supported in this browser.');
-    } else {        
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = true;
-            recognition.lang = "en-US";
-            recognition.interimResults = false;
-            
-            
-
-            initializeGame();
-        } else {
-            recognizedTextLabel.textContent = `Unable to Continue!! It looks like your current browser does not support Speech Recognition.`;
-        }
-    }
-
-    return `
-    <div class="game-content">
-        <div id="speechContainer">
-            <button id="controlSpeechButton" aria-pressed="false">🎤</button>
-            <div id="soundBars">
-                <div class="sound-bar"></div>
-                <div class="sound-bar"></div>
-                <div class="sound-bar"></div>
-                <div class="sound-bar"></div>
-                <div class="sound-bar"></div>
-            </div>
-            
-            <div id="instructionContainer">
-                <div id="recognizedText">Press the speech button to start purchasing using voice commands</div>
-            </div>
-        </div>
-        
-        <div id="balanceContainer">
-            <div class="account-type">IAct Account</div>
-            <div id="balance">Avail <span id="balanceAmount">0.00</span></div>
-        </div>
-        <div class="receipt-container">
-            <div class="receipt-header" id="starting_balance"></div>
-            <div class="receipt-header">Successful Purchases</div>
-            <ul class="labeled-element" id="purchaseList"></ul>
-            <div style="text-align: center;" id="total_purchases"></div>
-            <div class="receipt-footer">Thank you for shopping with us! The more you play and believe in the game the more you will seee it actualize in your experience.</div>
-        </div>
-    </div>`;
-}
 
 // Function to handle active item styling
 function setActiveItem(clickedItem) {
@@ -924,214 +876,111 @@ function setActiveItem(clickedItem) {
     clickedItem.classList.add('active');
 }
 
-// Update the loadContent function to set the active state
-function loadContent(contentKey) {
-    const contentArea = document.getElementById('content-area');
-    const contentText = document.getElementById('content-text');
-    console.log(contentKey);
-    let content = '';
-    switch (contentKey) {
-        case 'voice-command-purchase':
-            contentArea.innerHTML = getVoiceCommandUI();
-            contentArea.style.display = 'block';
 
-            starting_balance = document.querySelector('#starting_balance');
-            total_purchases = document.getElementById('total_purchases');
-            balanceAmount = document.getElementById('balanceAmount');
-            purchaseList = document.getElementById('purchaseList');
-            const theme = localStorage.getItem('theme');
-            const storedUsername = localStorage.getItem('username');
-            initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
-            
-            displayName = storedUsername;
-                
-            const storedBalance = parseFloat(localStorage.getItem('balance'));
-            const storedCurrency = JSON.parse(localStorage.getItem('currency'));
-
-            if (isCurrencyObject(storedCurrency)) {
-                selectedCurrency = storedCurrency;
-                selectedCurrencyName = getLastWord(selectedCurrency.name);
-                console.log('selectedCurrencyName: ' + selectedCurrencyName);
-            } else {
-                console.log('storedCurrency is not an object.');
-                alert(JSON.stringify(storedCurrency));
-                setDefaultCurrency();
-            }
-
-            starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
-            balance = storedBalance;
-            balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
-            loadPurchases();
-            
-            initSpeechRecognition();
-            
-            return;
-            break;
-        case 'budget':
-            content = getBudgetChallenge();
-            break;
-        case '3D Sphere':
-            content = get3DSphere();
-            break;
-        case 'spending':
-            content = 'Spending Tips offer insights into reducing unnecessary expenses.';
-            break;
-        case 'wealth':
-            content = 'Wealth Strategy introduces proven techniques for growing your wealth.';
-            break;
-        default:
-            content = 'Select an option to see more details.';
-    }
-
-    contentArea.innerHTML = content;
-    contentArea.style.display = 'block';
-    console.log('content area loaded');
-    // Set the active class on the clicked item
-    setActiveItem(event.target);
-}
-
-////////////////////// Budget Chellenge ////////////////////
-let initialBudget = 1000; // Starting budget
-let spendingGoal = 0.90; // Spend 90% of the budget
-let totalSpent = 0;
-let remainingBudget = initialBudget;
-let categoryLimits = {
-    Food: initialBudget * 0.40, // 40% limit for Food
-    Clothing: initialBudget * 0.30, // 30% limit for Clothing
-    Electronics: initialBudget * 0.20, // 20% limit for Electronics
-    Entertainment: initialBudget * 0.10 // 10% limit for Entertainment
-};
-let categoryTotals = {
-    Food: 0,
-    Clothing: 0,
-    Electronics: 0,
-    Entertainment: 0
-};
-
-const itemOptions = [
-    { name: "Pizza", price: 200, category: "Food" },
-    { name: "Jeans", price: 150, category: "Clothing" },
-    { name: "Headphones", price: 300, category: "Electronics" },
-    { name: "Movie Ticket", price: 100, category: "Entertainment" }
-];
-
-
-// Function to create item buttons
-function createItemButtons(itemOptions) {
-    var buttonsHTML = itemOptions.map(function(item) {
-        return "<button class='item-button' onclick='selectItem(" + JSON.stringify(item) + ")'>" +
-            item.name + " - " + item.price +
-            "</button>";
-    }).join('');
-
-    return buttonsHTML;
-}
-function selectItem(item) {
-    const itemPrice = item.price;
-    const category = item.category;
-
-    // Check if adding this item exceeds category limits
-    if (categoryTotals[category] + itemPrice > categoryLimits[category]) {
-        notifyUser("Category limit exceeded");
+function toggleContent(event, feature) {
+    const item = event.currentTarget;
+    if (item.classList.contains('active')) {
         return;
     }
 
-    // Add item to totals
-    totalSpent += itemPrice;
-    categoryTotals[category] += itemPrice;
-    remainingBudget = initialBudget - totalSpent;
 
-    // Update UI
-    updateBudgetDisplay();
+    const content = item.querySelector('.item-content');
 
-    // Check for challenge completion
-    if (totalSpent / initialBudget >= spendingGoal) {
-        challengeComplete("Success");
+    item.classList.add('active');
+    content.style.display = "block";
+
+    if (feature === 'Voice Command Purchases') {
+        starting_balance = document.querySelector('#starting_balance');
+        balanceAmount = document.getElementById('balanceAmount');
+        total_purchases = document.getElementById('total_purchases');
+        purchaseList = document.getElementById('purchaseList');
+
+        const theme = localStorage.getItem('theme');
+        const storedUsername = localStorage.getItem('username');
+        initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+        
+        if (storedUsername) {
+            displayName = storedUsername;
+        }
+            
+        const storedBalance = parseFloat(localStorage.getItem('balance'));
+        const storedCurrency = JSON.parse(localStorage.getItem('currency'));
+
+        if (isCurrencyObject(storedCurrency)) {
+            selectedCurrency = storedCurrency;
+            selectedCurrencyName = getLastWord(selectedCurrency.name);
+        } else {
+            alert(JSON.stringify(storedCurrency));
+            setDefaultCurrency();
+        }
+
+        starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
+        balance = storedBalance;
+        balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;        
+        
+        loadPurchases();
+        
+        initSpeechRecognition();
+    }
+
+    if (feature === '3D Sphere') {
+        init3DSphere(); // Initialize the 3D sphere when opened
     }
 }
 
-function updateBudgetDisplay() {
-    document.getElementById('total-spent').innerText = totalSpent;
-    document.getElementById('remaining-budget').innerText = remainingBudget;
-}
+let scene, camera, renderer, sphere, controls;
 
-function notifyUser(message) {
-    document.getElementById('message').innerText = message;
-}
 
-function challengeComplete(result) {
-    const messageElement = document.getElementById('message');
-    if (result === "Success") {
-        messageElement.innerText = "Congratulations! You've successfully allocated your budget!";
-        initialBudget *= 2; // Reward by doubling the budget
-        resetChallenge(); // Reset for the next challenge
-    } else {
-        messageElement.innerText = "Challenge failed! Please try again.";
-    }
-}
+function init3DSphere() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, 300);
+    document.getElementById('earth-container').appendChild(renderer.domElement);
 
-function resetChallenge() {
-    totalSpent = 0;
-    remainingBudget = initialBudget;
-    categoryTotals = {
-        Food: 0,
-        Clothing: 0,
-        Electronics: 0,
-        Entertainment: 0
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const material = new THREE.MeshBasicMaterial({
+        color: 0x00aaff, // Blue color for simplicity
+        wireframe: true  // Use wireframe to see the structure
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // OrbitControls to enable zoom and rotation
+    controls = new THREE.OrbitControls(camera, renderer.domElement);    
+
+    // Adjust the zoom and rotation limits
+    controls.enableZoom = true;
+    controls.enableDamping = true;  // Smooth damping (inertia)
+    controls.dampingFactor = 0.25;  // Controls the inertia effect
+    controls.minDistance = 1;       // Minimum zoom (close to the sphere)
+    controls.maxDistance = 10;      // Maximum zoom (far from the sphere)
+    controls.enablePan = false;     // Disable panning to focus on rotation
+    controls.touches = {
+        ONE: THREE.TOUCH.ROTATE,    // One-finger rotates the sphere
+        TWO: THREE.TOUCH.DOLLY_ROTATE // Two-finger zooms and rotates
     };
-    updateBudgetDisplay();
+
+    // Position the camera initially
+    camera.position.z = 3;
+
+    animate();
 }
 
+function animate() {
+    requestAnimationFrame(animate);
 
-function allocateFunds() {
-    let savingAmt = parseFloat(document.getElementById("savings").value);
-    let essentialAmt = parseFloat(document.getElementById("essentials").value);
-    let discretionaryAmt = parseFloat(document.getElementById("discretionary").value);
-    let investmentAmt = parseFloat(document.getElementById("investments").value);
-    let total = savingAmt + essentialAmt + discretionaryAmt + investmentAmt;
-    let feedback = document.getElementById("budgetFeedback");
-    
-    if (total > initialBalance) {
-        feedback.innerHTML = `<p style="color: red;">You have exceeded your available balance! Please reallocate.</p>`;
-    return;
-    }
-    
-    savings = savingAmt;
-    essentials = essentialAmt;
-    discretionary = discretionaryAmt;
-    investments = investmentAmt;
-    
-    checkBudgetStatus();
+    controls.update(); // Update controls to allow rotation and zoom
+    renderer.render(scene, camera);
 }
 
-function checkBudgetStatus() {
-    let feedback = document.getElementById("budgetFeedback");
-    feedback.innerHTML = "<h3>Budget Feedback:</h3>";
-
-     if (savings >= initialBalance * 0.2) {
-        feedback.innerHTML += `<p>You've saved 20% or more of your income. Great job!</p>`;
-    } else {
-        feedback.innerHTML += `<p>Try saving more of your income.</p>`;
+// Handle window resizing
+window.addEventListener('resize', () => {
+    if (renderer) {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
     }
+});
 
-    if (discretionary <= initialBalance * 0.3) {
-        feedback.innerHTML += `<p>Your discretionary spending is within a reasonable limit.</p>`;
-    } else {
-        feedback.innerHTML += `<p>Your discretionary spending is too high.</p>`;
-    }
-
-    handleUnexpectedEvents();
-}
-
-function handleUnexpectedEvents() {
-    let unexpectedExpense = 200; // Example unexpected cost
-    let remainingBalance = initialBalance - (savings + essentials + discretionary + investments);
-    let feedback = document.getElementById("budgetFeedback");
-    
-    if (remainingBalance < unexpectedExpense) {
-        feedback.innerHTML += `<p style="color: red;">You don't have enough funds to cover an unexpected expense! Reallocate your budget.</p>`;
-    } else {
-        feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
-    }
-}
 
