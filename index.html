@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Imagine Act Game</title>
-    <link rel="stylesheet" href="assets/css/styles.css">     
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-0ER5PGJ9PY');
+    gtag('config', 'G-0ER5PGJ9PY');
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
@@ -36,9 +37,15 @@
         </div>
         <div class="buttons">
             <div class="achievements">
-                <div class="achievement"><p class="responsive">🏆</p></div>
-                <div class="achievement"><p class="responsive">⭐</p></div>
-                <div class="achievement"><p class="responsive">💎</p></div>
+                <div class="achievement">
+                    <p class="responsive">🏆</p>
+                </div>
+                <div class="achievement">
+                    <p class="responsive">⭐</p>
+                </div>
+                <div class="achievement">
+                    <p class="responsive">💎</p>
+                </div>
             </div>
             <button id="btn_menu" aria-label="Menu" class="menu-button">☰</button>
             <div class="dropdown">
@@ -54,7 +61,7 @@
                         </div>
                     </a>
                     <a href="#">
-                        <div class="language-selector">
+                        <div class="theme-selector">
                             <label for="theme">Themes:</label>
                             <select id="theme">
                                 <option value="dark-theme">Dark</option>
@@ -65,8 +72,8 @@
                     </a>
                     <a href="#" id="resetLevel">Reset Level</a>
                     <a href="#" id="resetGame">Reset Game</a>
-                </div>                
-            </div>            
+                </div>
+            </div>
         </div>
     </div>
     <div id="error-container"></div>
@@ -93,26 +100,38 @@
         <div class="login-purpose">
             <h2 class="responsive">Welcome to Imagine Act</h2>
             <p>
-                Imagine Act (IA) is a unique, interactive game designed to help you visualize and work towards your financial goals in a fun and engaging way. Using your imagination and voice commands, you can "buy" items and create lists, connecting mentally and emotionally with the idea of wealth and abundance.
+                Imagine Act (IA) is a unique, interactive game designed to help you visualize and work towards your
+                financial goals in a fun and engaging way. Using your imagination and voice commands, you can "buy"
+                items and create lists, connecting mentally and emotionally with the idea of wealth and abundance.
             </p>
-        
+
             <p><strong>Key Features:</strong></p>
             <ul>
-                <li><strong>Visualization of Wealth:</strong> Experience the feeling of wealth by spending virtual currency on desired items.</li>
-                <li><strong>Gamification of Financial Goals:</strong> Progress through levels where your virtual currency doubles each time you successfully complete a level.</li>
-                <li><strong>Mindset Training:</strong> Reinforce positive beliefs about money and abundance, using concepts from the laws of the universe to bring positive benefits into your reality.</li>
-                <li><strong>User Engagement:</strong> Enjoy a more personalized experience with User Artificial Intelligence (UAI) and GPT integration.</li>
+                <li><strong>Visualization of Wealth:</strong> Experience the feeling of wealth by spending virtual
+                    currency on desired items.</li>
+                <li><strong>Gamification of Financial Goals:</strong> Progress through levels where your virtual
+                    currency doubles each time you successfully complete a level.</li>
+                <li><strong>Mindset Training:</strong> Reinforce positive beliefs about money and abundance, using
+                    concepts from the laws of the universe to bring positive benefits into your reality.</li>
+                <li><strong>User Engagement:</strong> Enjoy a more personalized experience with User Artificial
+                    Intelligence (UAI) and GPT integration.</li>
             </ul>
-        
+
             <p><strong>How to Play:</strong></p>
             <ul>
-                <li><strong>Starting the Game:</strong> Enter your display name and initial deposit (starting balance) on the login screen and click "Let’s start" to begin.</li>
-                <li><strong>Buying Items:</strong> Use voice commands to buy items by stating, "I [buy/purchase/get/pay for/acquire] [item name] for [amount] [currency]." For example, "I buy a laptop for 1,000 [currency]."</li>
-                <li><strong>Managing Your Balance:</strong> Your virtual balance updates with each purchase, and successful transactions are listed like a receipt.</li>
-                <li><strong>Game Controls:</strong> Use voice commands for interactions, or the dropdown menu at the top for options like viewing game information or resetting the game.</li>
-                <li><strong>Editing/Removing Items:</strong> You can modify or remove items from your list using voice commands. For example, "Edit the laptop to gaming laptop" or "Remove the laptop."</li>
+                <li><strong>Starting the Game:</strong> Enter your display name and initial deposit (starting balance)
+                    on the login screen and click "Let’s start" to begin.</li>
+                <li><strong>Buying Items:</strong> Use voice commands to buy items by stating, "I [buy/purchase/get/pay
+                    for/acquire] [item name] for [amount] [currency]." For example, "I buy a laptop for 1,000
+                    [currency]."</li>
+                <li><strong>Managing Your Balance:</strong> Your virtual balance updates with each purchase, and
+                    successful transactions are listed like a receipt.</li>
+                <li><strong>Game Controls:</strong> Use voice commands for interactions, or the dropdown menu at the top
+                    for options like viewing game information or resetting the game.</li>
+                <li><strong>Editing/Removing Items:</strong> You can modify or remove items from your list using voice
+                    commands. For example, "Edit the laptop to gaming laptop" or "Remove the laptop."</li>
             </ul>
-        
+
             <p><strong>Possible Voice Commands:</strong></p>
             <ul>
                 <li>I buy [item] for [amount]</li>
@@ -137,25 +156,32 @@
                 <li class="voice-commands-hidden">Eliminate [item]</li>
                 <li class="voice-commands-hidden">Clear [item]</li>
                 <li class="voice-commands-hidden">Take out [item]</li>
-                <a style="text-decoration: none;" href="javascript:void(0);" id="toggle-link" onclick="toggleAboutCommandsLessMore()">Show more</a>
+                <a style="text-decoration: none;" href="javascript:void(0);" id="toggle-link"
+                    onclick="toggleAboutCommandsLessMore()">Show more</a>
             </ul>
 
             <p><strong>Additional Features:</strong></p>
             <ul>
-                <li><strong>Responsive Design:</strong> The game interface adapts to different screen sizes, including mobile devices.</li>
-                <li><strong>Language Selector:</strong> Choose between different English dialects (American or British) for voice recognition.</li>
+                <li><strong>Responsive Design:</strong> The game interface adapts to different screen sizes, including
+                    mobile devices.</li>
+                <li><strong>Language Selector:</strong> Choose between different English dialects (American or British)
+                    for voice recognition.</li>
             </ul>
-        
+
             <p><strong>
-                Imagine Act is more than just a game—it's a tool for personal growth and empowerment, helping you develop a prosperous mindset that can lead to real-life success.
-            </strong></p>
+                    Imagine Act is more than just a game—it's a tool for personal growth and empowerment, helping you
+                    develop a prosperous mindset that can lead to real-life success.
+                </strong></p>
         </div>
-    </div>   
+    </div>
 
     <div id="gameScreen" class="game-screen ia-background">
         <div class="item-list">
             <div class="item" onclick="toggleContent(event, 'Voice Command Purchases')">
-                <div class="item-header"><h3 class="responsive">Voice Command</h3></div>
+                <div class="audio-container item-header">
+                    <h3 class="responsive">Voice Command Purchases</h3>
+                    <canvas id="audioCanvas"></canvas>
+                </div> 
                 <div class="item-content">
                     <div class="game-content">
                         <div id="speechContainer">
@@ -167,54 +193,54 @@
                                 <div class="sound-bar"></div>
                                 <div class="sound-bar"></div>
                             </div>
-                            
+
                             <div id="instructionContainer">
-                                <div id="recognizedText">Press the speech button to start purchasing using voice commands</div>
+                                <div id="recognizedText">Press the speech button to start purchasing using voice
+                                    commands</div>
                             </div>
                         </div>
-                        
+
                         <div id="balanceContainer">
-                            <div class="account-type"><h3 class="responsive">Balance</h3></div>
-                            <div id="balance"><h3 class="responsive">Avail <span id="balanceAmount">0.00</span></h3></div>
+                            <div class="account-type">
+                                <h3 class="responsive">Balance</h3>
+                            </div>
+                            <div id="balance">
+                                <h3 class="responsive">Avail <span id="balanceAmount">0.00</span></h3>
+                            </div>
                         </div>
                         <div class="receipt-container">
                             <div class="receipt-header" id="starting_balance"></div>
                             <div class="receipt-header">Successful Purchases</div>
                             <ul class="labeled-element" id="purchaseList"></ul>
                             <div style="text-align: center;" id="total_purchases"></div>
-                            <div class="receipt-footer">"Thank you for being a part of our journey! The more you immerse yourself and believe in the game, the more you'll see its magic unfold in your life. Play, believe, and watch your experience come to life!"</div>
+                            <div class="receipt-footer">"Thank you for being a part of our journey! The more you immerse
+                                yourself and believe in the game, the more you'll see its magic unfold in your life.
+                                Play, believe, and watch your experience come to life!"</div>
                         </div>
                     </div>
                 </div>
-            </div>            
-           
+            </div>
+
             <div class="item" onclick="toggleContent(event, '3D Sphere')">
-                <div class="item-header"><h3 class="responsive">Shopping Sphere</h3></div>
+                <div class="item-header">
+                    <h3 class="responsive">Shopping Sphere</h3>
+                </div>
                 <div class="item-content">
                     <style>
-                        canvas { display: block; }
+                        canvas {
+                            display: block;
+                        }
                     </style>
-                    <div id="earth-container"></div>                    
+                    <div id="earth-container"></div>
                 </div>
-            </div>            
+            </div>
             <div class="item budget" onclick="toggleContent(event, 'Fun Budget Creation')">
-                <div class="item-header"><h3 class="responsive">Fun Budget Creation</h3></div>
+                <div class="item-header">
+                    <h3 class="responsive">Fun Budget Creation</h3>
+                </div>
                 <div class="item-content">
                     <div class="container-budget">
                         <h4 class="responsive">Welcome to Fun Budget Creation!</h4>
-                      
-                        <h4 class="responsive">Budget Challenge<span class='info-icon' title='Select items to add to your budget. Spend your budget wisely!'>&#9432; </span></h4>
-                        <p>Your starting budget is: <span id='budget-display'> initialBudget </span></p>
-                        <div id='item-options'>
-                            <h3 class="responsive">Select Items:</h3>
-                            createItemButtons(itemOptions)
-                        </div>
-                        <div id='budget-status'>
-                            <h4 class="responsive">Status:</h4>
-                            <p>Total Spent: <span id='total-spent'>0</span></p>
-                            <p>Remaining Budget: <span id='remaining-budget'> remainingBudget </span></p>
-                        </div>
-                        <div id='message'></div>
 
                         <!-- Step 1: Template Selection -->
                         <div class="step step-1">
@@ -225,14 +251,14 @@
                                 <button class="template-btn" data-template="envelope-system">Envelope System</button>
                             </div>
                         </div>
-                      
+
                         <!-- Step 2: Enter Budget Amount -->
                         <div class="step step-2 hidden">
                             <h3 class="responsive">Enter Your Budget Amount</h3>
                             <input type="number" id="budgetAmount" placeholder="Enter amount in your currency" min="0">
                             <button class="next-btn">Next</button>
                         </div>
-                      
+
                         <!-- Step 3: Fun Budget Creation -->
                         <div class="step step-3 hidden">
                             <h3 class="responsive">Complete Your Budget</h3>
@@ -244,7 +270,7 @@
                             </div>
                             <button class="generate-btn">Generate Budget</button>
                         </div>
-                      
+
                         <!-- Step 4: Suggested Budget -->
                         <div class="step step-4 hidden">
                             <h3 class="responsive">Suggested Budget</h3>
@@ -253,22 +279,102 @@
                             <button class="back-btn">Go Back</button>
                         </div>
                     </div>
-                      
+
                 </div>
-            </div>  
-            <div class="item" onclick="toggleContent(event, 'Wealth Strategy')">
-                <div class="item-header"><h3 class="responsive">Wealth Strategy</h3></div>
+            </div>
+            <div class="item" onclick="toggleContent(event, 'AI Mental Health Model')">
+                <div class="item-header">
+                    <h3 class="responsive">AI Mental Health Model</h3>
+                </div>
                 <div class="item-content">
-                    
+                    <div class="container">
+                        <h1>Core Ideas for an AI Mental Health Model</h1>
+
+                        <div class="core-idea">
+                            <h2>Understanding and Diagnosis:</h2>
+                            <ul>
+                                <li>Data Collection: Gather comprehensive data on mental health conditions, including
+                                    symptoms, behaviors, and medical history.</li>
+                                <li>Machine Learning: Develop algorithms to analyze this data and accurately identify
+                                    mental health conditions.</li>
+                                <li>Natural Language Processing (NLP): Implement NLP to understand and interpret user
+                                    input, such as text, voice, and images.</li>
+                            </ul>
+                        </div>
+
+                        <div class="core-idea">
+                            <h2>Personalized Treatment:</h2>
+                            <ul>
+                                <li>User Profiling: Create detailed user profiles based on collected data to understand
+                                    individual needs and preferences.</li>
+                                <li>Treatment Recommendation: Develop algorithms to suggest appropriate treatment plans,
+                                    therapies, or coping mechanisms.</li>
+                                <li>Adaptive Treatment: Implement systems to monitor treatment progress and adjust
+                                    recommendations accordingly.</li>
+                            </ul>
+                        </div>
+
+                        <div class="core-idea">
+                            <h2>Emotional Support:</h2>
+                            <ul>
+                                <li>Empathy and Understanding: Design the AI to demonstrate empathy and understanding
+                                    through natural language interactions.</li>
+                                <li>Therapeutic Techniques: Incorporate evidence-based therapeutic techniques like
+                                    cognitive-behavioral therapy (CBT) or dialectical behavior therapy (DBT).</li>
+                                <li>Virtual Companionship: Create AI companions that can provide emotional support and
+                                    companionship.</li>
+                            </ul>
+                        </div>
+
+                        <div class="core-idea">
+                            <h2>Prevention and Early Detection:</h2>
+                            <ul>
+                                <li>Risk Assessment: Develop models to identify individuals at risk of developing mental
+                                    health conditions.</li>
+                                <li>Preventive Strategies: Offer proactive guidance and resources to help users maintain
+                                    mental well-being.</li>
+                                <li>Early Intervention: Implement systems to detect early signs of mental health issues
+                                    and provide timely interventions.</li>
+                            </ul>
+                        </div>
+
+                        <div class="core-idea">
+                            <h2>Accessibility and Inclusivity:</h2>
+                            <ul>
+                                <li>User-Friendly Interface: Design an intuitive and user-friendly interface accessible
+                                    to people of all ages and tech-savviness levels.</li>
+                                <li>Multilingual Support: Offer support in multiple languages to reach a wider audience.
+                                </li>
+                                <li>Affordability: Make the AI model accessible to people with different socioeconomic
+                                    backgrounds.</li>
+                            </ul>
+                        </div>
+
+                        <div class="core-idea">
+                            <h2>Ethical Considerations:</h2>
+                            <ul>
+                                <li>Privacy and Security: Implement robust data protection measures to safeguard user
+                                    information.</li>
+                                <li>Bias Mitigation: Develop algorithms that are free from bias and discrimination.</li>
+                                <li>Human Oversight: Ensure human oversight and intervention when necessary.</li>
+                            </ul>
+                        </div>
+
+                        <p>By focusing on these core ideas, you can develop an AI mental health model that has a
+                            positive impact on people's lives.</p>
+                    </div>
+
                 </div>
-            </div>  
+            </div>
             <div class="item" onclick="toggleContent(event, 'Spending Tips')">
-                <div class="item-header"><h3 class="responsive">Spending Tips</h3></div>
-                <div class="item-content">
-                    
+                <div class="item-header">
+                    <h3 class="responsive">Spending Tips</h3>
                 </div>
-            </div>  
-        </div>        
+                <div class="item-content">
+
+                </div>
+            </div>
+        </div>
     </div>
     <div id="aboutPopup" class="popup">
         <span id="closePopup" class="popup-close">&times;</span>
@@ -276,13 +382,16 @@
         <p><strong>Welcome to Imagine Act!</strong></p>
         <ul>
             <li>The goal is to use your imagination and believe in making purchases real in your reality.</li>
-            <li>The more you play, the more likely you are to buy items for real. Make each purchase as realistic as possible.</li>
+            <li>The more you play, the more likely you are to buy items for real. Make each purchase as realistic as
+                possible.</li>
         </ul>
 
         <p><strong>Overview of the Game:</strong></p>
         <ul>
-            <li><strong>Theme:</strong> Retro, arcade-inspired appearance with a dark theme, bright colors, and nostalgic fonts.</li>
-            <li><strong>Objective:</strong> Manage your virtual balance while making purchases using voice commands. The game tracks your balance and displays your bought items.</li>
+            <li><strong>Theme:</strong> Retro, arcade-inspired appearance with a dark theme, bright colors, and
+                nostalgic fonts.</li>
+            <li><strong>Objective:</strong> Manage your virtual balance while making purchases using voice commands. The
+                game tracks your balance and displays your bought items.</li>
         </ul>
 
         <p><strong>How to Play:</strong></p>
@@ -297,7 +406,8 @@
                 <h3 class="responsive">2. Buying/Acquiring/Paying for an Item</h3>
                 <h4>How to Speak It:</h4>
                 <p>
-                    <strong>Basic Format:</strong> "I [buy/purchase/get/pay for/acquire/obtain/order/book/reserve/take/give away/give] [item name] for [amount] [currency]."
+                    <strong>Basic Format:</strong> "I [buy/purchase/get/pay
+                    for/acquire/obtain/order/book/reserve/take/give away/give] [item name] for [amount] [currency]."
                 </p>
                 <p><strong>Examples:</strong></p>
                 <ul>
@@ -312,14 +422,18 @@
                 <p><strong>Notes:</strong></p>
                 <ul>
                     <li>The command must start with "I" followed by any of the listed verbs.</li>
-                    <li>The item name can be anything, and the amount can be a numeric value or a spelled-out number.</li>
-                    <li>The currency can be optional but if included, it can be in various formats like dollars, euros, pounds, etc.</li>
+                    <li>The item name can be anything, and the amount can be a numeric value or a spelled-out number.
+                    </li>
+                    <li>The currency can be optional but if included, it can be in various formats like dollars, euros,
+                        pounds, etc.</li>
                 </ul>
             </li>
             <li>
                 <h3 class="responsive">3. Removing an Item</h3>
                 <h4>How to Speak It:</h4>
-                <p><strong>Basic Format:</strong> "[remove/delete/drop/cancel/discard/erase/eliminate/clear/take out] [item name]" or "[Item name] [remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]."</p>
+                <p><strong>Basic Format:</strong> "[remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]
+                    [item name]" or "[Item name] [remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]."
+                </p>
                 <p><strong>Examples:</strong></p>
                 <ul>
                     <li>"Remove the laptop."</li>
@@ -332,35 +446,47 @@
                 </ul>
                 <p><strong>Notes:</strong></p>
                 <ul>
-                    <li>This command can be phrased either by starting with the action verb followed by the item or by stating the item first followed by the action verb.</li>
+                    <li>This command can be phrased either by starting with the action verb followed by the item or by
+                        stating the item first followed by the action verb.</li>
                     <li>The item name should correspond to something already in your list or inventory.</li>
                 </ul>
             </li>
-            <li><strong>Balance Management:</strong> Your virtual balance updates based on your purchases, subtracting the spent amount.</li>
-            <li><strong>Receipt Display:</strong> Successful purchases are listed in a receipt format, showing what you've bought.</li>
+            <li><strong>Balance Management:</strong> Your virtual balance updates based on your purchases, subtracting
+                the spent amount.</li>
+            <li><strong>Receipt Display:</strong> Successful purchases are listed in a receipt format, showing what
+                you've bought.</li>
             <li><strong>Controls:</strong>
                 <ul>
-                    <li><strong>Speech Recognition:</strong> Control the game through voice commands. Press the <em>"Start"</em> button to activate the voice command feature.</li>
-                    <li><strong>Menu Options:</strong> Use the dropdown menu at the top to view game information (<em>"About"</em>) or reset the game to start over.</li>
+                    <li><strong>Speech Recognition:</strong> Control the game through voice commands. Press the
+                        <em>"Start"</em> button to activate the voice command feature.</li>
+                    <li><strong>Menu Options:</strong> Use the dropdown menu at the top to view game information
+                        (<em>"About"</em>) or reset the game to start over.</li>
                 </ul>
             </li>
         </ul>
         <p><strong>Winning/Losing:</strong></p>
         <ul>
-            <li>There’s no traditional win/lose condition. Focus on managing your balance while interacting with the system. The game could end when you run out of money or decide to stop playing.</li>
+            <li>There’s no traditional win/lose condition. Focus on managing your balance while interacting with the
+                system. The game could end when you run out of money or decide to stop playing.</li>
         </ul>
         <p><strong>Additional Features:</strong></p>
         <ul>
-            <li><strong>Language Selector:</strong> Choose between different English dialects (American or British) for voice recognition.</li>
-            <li><strong>Responsive Design:</strong> The interface adapts to different screen sizes, including mobile devices.</li>
+            <li><strong>Language Selector:</strong> Choose between different English dialects (American or British) for
+                voice recognition.</li>
+            <li><strong>Responsive Design:</strong> The interface adapts to different screen sizes, including mobile
+                devices.</li>
         </ul>
 
-        <p class="summary-about"><strong>In summary,</strong> Imagine Act is an interactive shopping simulation game where you use your voice to buy items and manage your balance. It offers an engaging way to practice decision-making and budgeting in a virtual environment.</p>
-        <br/><br/><br/>        
-    </div>    
+        <p class="summary-about"><strong>In summary,</strong> Imagine Act is an interactive shopping simulation game
+            where you use your voice to buy items and manage your balance. It offers an engaging way to practice
+            decision-making and budgeting in a virtual environment.</p>
+        <br /><br /><br />
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
+    <script src="assets/js/audioLevels.js"></script>
 </body>
+
 </html>

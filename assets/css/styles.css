@@ -1,13 +1,8 @@
 :root {
-    /* Base color */
     --primary-color: #00ff00;
-    /* Bright Green */
     --primary-dark: #008000;
-    /* Dark Green */
     --primary-light: #66ff66;
-    /* Light Green */
-
-    /* Titlebar */
+    
     --color-background-titlebar: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
     --titlebar-border-radius: 8px;
     --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
@@ -56,6 +51,95 @@
     --padding-content: 16px 24px;
     --padding-card: 12px 16px;
     --padding-box: 12px;
+}
+
+
+.dark-theme {
+    --primary-color: #00ff00;
+    --primary-dark: #008000;
+    --primary-light: #66ff66;
+    --background-color: #202020;
+    --text-color: #ffffff;
+    --color-background-titlebar: linear-gradient(145deg, black, #252525);
+    --titlebar-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+    --title-color: var(--primary-color);
+    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-text-color: var(--primary-light);
+    --button-hover-background: var(--primary-dark);
+    --input-background: #2c2f33;
+    --input-border: var(--primary-light);
+    --receipt-background: #2c2f33;
+    --receipt-text-color: #ffffff;
+    --receipt-border-color: #555;
+    --dropdown-background: #1e1e1e;
+    --dropdown-text-color: var(--primary-color);
+    --popup-background: rgba(44, 47, 51, 0.75);
+    --popup-content-color: #ffffff;
+    --link-color: var(--primary-color);
+    --tooltip-background: #1e1e1e;
+    --tooltip-text-color: #ffffff;
+}
+
+.light-theme {
+    --primary-color: #0078d4;
+    --primary-dark: #005a9e;
+    --primary-light: #66c0ff;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --color-background-titlebar: linear-gradient(145deg, #d6fbe5, var(--primary-light));
+    --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(255, 255, 255, 0.3) inset;
+    --title-color: var(--primary-color);
+    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-text-color: var(--primary-light);
+    --button-hover-background: var(--primary-dark);
+    --input-background: #f9f9f9;
+    --input-border: var(--primary-color);
+    --receipt-background: #f9f9f9;
+    --receipt-text-color: #000000;
+    --receipt-border-color: #dddddd;
+    --dropdown-background: rgba(255, 255, 255, 0.95);
+    --dropdown-text-color: var(--primary-color);
+    --popup-background: rgba(255, 255, 255, 0.75);
+    --popup-content-color: #000000;
+    --link-color: var(--primary-color);
+    --tooltip-background: #f0f0f0;
+    --tooltip-text-color: #000000;
+}
+
+.retro-theme {
+    --primary-color: #ff00ff;
+    --primary-dark: #cc00cc;
+    --primary-light: #ff66ff;
+
+    --background-color: #000000;
+    --text-color: var(--primary-color);
+
+    --color-background-titlebar: linear-gradient(145deg, var(--primary-dark), var(--primary-light));
+    --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
+    --titlebar-hover-shadow: 0 6px 12px rgba(255, 0, 255, 0.8), 0 -1px 3px rgba(0, 0, 0, 0.8) inset;
+    --title-color: var(--primary-color);
+
+    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-text-color: var(--primary-light);
+    --button-hover-background: var(--primary-dark);
+
+    --input-background: #111111;
+    --input-border: var(--primary-color);
+
+    --receipt-background: #111111;
+    --receipt-text-color: var(--primary-color);
+    --receipt-border-color: var(--primary-dark);
+
+    --dropdown-background: #000000;
+    --dropdown-text-color: var(--primary-light);
+
+    --popup-background: rgba(0, 0, 0, 0.75);
+    --popup-content-color: #ffffff;
+
+    --link-color: var(--primary-color);
+
+    --tooltip-background: #111111;
+    --tooltip-text-color: var(--primary-light);
 }
 
 * {
@@ -167,93 +251,7 @@ body {
     }
 }
 
-.dark-theme {
-    --primary-color: #00ff00;
-    --primary-dark: #008000;
-    --primary-light: #66ff66;
-    --background-color: #202020;
-    --text-color: #ffffff;
-    --color-background-titlebar: linear-gradient(145deg, black, #252525);
-    --titlebar-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
-    --title-color: var(--primary-color);
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
-    --button-text-color: #282c34;
-    --button-hover-background: var(--primary-dark);
-    --input-background: #2c2f33;
-    --input-border: var(--primary-light);
-    --receipt-background: #2c2f33;
-    --receipt-text-color: #ffffff;
-    --receipt-border-color: #555;
-    --dropdown-background: #1e1e1e;
-    --dropdown-text-color: var(--primary-color);
-    --popup-background: rgba(44, 47, 51, 0.75);
-    --popup-content-color: #ffffff;
-    --link-color: var(--primary-color);
-    --tooltip-background: #1e1e1e;
-    --tooltip-text-color: #ffffff;
-}
 
-.light-theme {
-    --primary-color: #0078d4;
-    --primary-dark: #005a9e;
-    --primary-light: #66c0ff;
-    --background-color: #ffffff;
-    --text-color: #000000;
-    --color-background-titlebar: linear-gradient(145deg, #d6fbe5, var(--primary-light));
-    --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(255, 255, 255, 0.3) inset;
-    --title-color: var(--primary-color);
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
-    --button-text-color: #ffffff;
-    --button-hover-background: var(--primary-dark);
-    --input-background: #f9f9f9;
-    --input-border: var(--primary-color);
-    --receipt-background: #f9f9f9;
-    --receipt-text-color: #000000;
-    --receipt-border-color: #dddddd;
-    --dropdown-background: rgba(255, 255, 255, 0.95);
-    --dropdown-text-color: var(--primary-color);
-    --popup-background: rgba(255, 255, 255, 0.75);
-    --popup-content-color: #000000;
-    --link-color: var(--primary-color);
-    --tooltip-background: #f0f0f0;
-    --tooltip-text-color: #000000;
-}
-
-.retro-theme {
-    --primary-color: #ff00ff;
-    --primary-dark: #cc00cc;
-    --primary-light: #ff66ff;
-
-    --background-color: #000000;
-    --text-color: var(--primary-color);
-
-    --color-background-titlebar: linear-gradient(145deg, var(--primary-dark), var(--primary-light));
-    --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
-    --titlebar-hover-shadow: 0 6px 12px rgba(255, 0, 255, 0.8), 0 -1px 3px rgba(0, 0, 0, 0.8) inset;
-    --title-color: var(--primary-color);
-
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
-    --button-text-color: #00ff30;
-    --button-hover-background: var(--primary-light);
-
-    --input-background: #111111;
-    --input-border: var(--primary-color);
-
-    --receipt-background: #111111;
-    --receipt-text-color: var(--primary-color);
-    --receipt-border-color: var(--primary-dark);
-
-    --dropdown-background: #000000;
-    --dropdown-text-color: var(--primary-light);
-
-    --popup-background: rgba(0, 0, 0, 0.75);
-    --popup-content-color: #ffffff;
-
-    --link-color: var(--primary-color);
-
-    --tooltip-background: #111111;
-    --tooltip-text-color: var(--primary-light);
-}
 
 body {
     background-color: var(--background-color);
@@ -536,8 +534,7 @@ body {
 
 
 
-.hidden,
-.voice-commands-hidden {
+.hidden, .voice-commands-hidden {
     display: none;
 }
 
@@ -616,12 +613,71 @@ body {
     border-radius: 8px;
 }
 
+@media (max-width: 768px) {
+    #loginScreen .login-input-container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: var(--small-padding);
+    }
+
+    .login-purpose {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    #loginScreen h2 {
+        font-size: 20px;
+    }
+
+    #loginScreen button {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    #loginScreen h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    #loginScreen button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .login-purpose {
+        margin: 10px;
+        padding: var(--small-padding);
+    }
+}
+
 /*********************** /Login ************************/
 
 
+/************************ Voice Command Purchases *********************/
 
+.audio-container {
+    width: 100%; 
+    height: 130px;
+    position: relative;
+}
+
+.audio-container h3 {
+    position: absolute;
+    text-align: center;
+    top: -20px;
+    text-shadow: 5px 6px 3px rgba(0, 0, 0, 0.73);
+}
+
+#audioCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 
 #speechContainer {
+    position: relative;
     width: 600px;
     max-width: 100%;
     height: 100px;
@@ -909,44 +965,7 @@ body {
     margin-top: 20px;
 }
 
-@media (max-width: 768px) {
-    #loginScreen .login-input-container {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: var(--small-padding);
-    }
-
-    .login-purpose {
-        margin: 20px;
-        padding: 15px;
-    }
-
-    #loginScreen h2 {
-        font-size: 20px;
-    }
-
-    #loginScreen button {
-        font-size: 16px;
-        padding: 8px 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    #loginScreen h2 {
-        font-size: 18px;
-        margin-bottom: 15px;
-    }
-
-    #loginScreen button {
-        font-size: 14px;
-        padding: 6px 12px;
-    }
-
-    .login-purpose {
-        margin: 10px;
-        padding: var(--small-padding);
-    }
-}
+/************************ /Voice Command Purchases *********************/
 
 /*********** Notification ******************/
 #error-container {
@@ -1069,7 +1088,7 @@ body {
     padding: var(--padding-card);
     text-align: center;
     background: var(--button-background);
-    color: var(--text-color);
+    color: var(--button-text-color);
     border-radius: 10px;
     border: 2 solid var(--titlebar-hover-shadow);
     transition: background-color 0.5s, color 1.0s, border 0.3s;
@@ -1084,7 +1103,7 @@ body {
 }
 
 .item-list .item:nth-child(1) {
-    background-image: url('/assets/images/voice_command_bg.jpg');
+    background-image: url('/assets/images/vc_list_item.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1116,27 +1135,19 @@ body {
 }
 
 .item-list .item:hover,
-.item-list .item:active {
+.item-list .item:focus-visible {
     box-shadow: var(--primary-color);
-    /* background: var(--button-hover-background); */
     font-weight: 600;
-}
-
-.item-list .item-header {
-    background: var(--popup-background);
-    border-radius: 6px;
-    position: relative;
-    padding: var(--padding-card);
-    border: 1px double var(--primary-light);
 }
 
 .item-list .item-content {
     display: none;
-    background: var(--input-background);
+    /* background: var(--co); */
     width: 100%;
 }
 
 .item-list .item.active .item-content {
+    position: relative;    
     display: block;
     background: var(--popup-background);
     border-radius: 10px;
@@ -1171,6 +1182,7 @@ body {
 /******** Fun With BUDGET ***************/
 
 .item.budget {
+
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to bottom right, var(--primary-color), var(--blue));
     color: var(--background-color);
@@ -1414,3 +1426,42 @@ h3 {
 }
 
 /******** /BUDGET CHALLENGE ***************/
+
+/***************** AI Prevents / Cure Mental Health ****************/
+.mental .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mental h1 {
+    color: #0078d4;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mental h2 {
+    color: #005a9e;
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+.core-idea {
+    margin-bottom: 20px;
+}
+
+/***************** /AI Prevents / Cure Mental Health ****************/
