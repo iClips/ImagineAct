@@ -164,11 +164,9 @@ function registerEventListeners() {
             
             const currencyInput = document.getElementById('currency');
             const selectedCurrencySymbol = currencyInput.value;
-            console.log('selectedCurrencySymbol: ' + selectedCurrencySymbol);
             let selectedCurrencyObj = null;
             
             const datalistOptions = document.querySelectorAll('#currencies option');
-            console.log(JSON.stringify(datalistOptions));
             
             datalistOptions.forEach(option => {
                 if (option.value === selectedCurrencySymbol) {
@@ -177,14 +175,12 @@ function registerEventListeners() {
                         name: currencyName,
                         symbol: selectedCurrencySymbol
                     };
-                    console.log('selectedCurrencyText: ' + option.textContent);
                 }
             });
         
             if (selectedCurrencyObj) {
                 localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
                 selectedCurrency = selectedCurrencyObj;
-                console.log('selectedCurrency is saved to storage: ' + JSON.stringify(selectedCurrency));
             } else {
                 alert('Please select a valid currency.');
                 return;
@@ -207,7 +203,10 @@ function registerEventListeners() {
 
             loginScreen.style.display = 'none';
             gameScreen.style.display = 'block';
+            showNote('message', "Welcome to Imagine Act, or I Act.");
         });
+    } else {
+        showNote('error', 'Error: Login Button Failed')
     }
 
     

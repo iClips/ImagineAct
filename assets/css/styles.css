@@ -3,7 +3,7 @@
     --primary-dark: #008000;
     --primary-light: #66ff66;
     
-    --color-background-titlebar: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+    --color-bg-titlebar: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
     --titlebar-border-radius: 8px;
     --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
     --titlebar-hover-shadow: 0 6px 8px rgba(255, 0, 0, 0.3), 0 -1px 8px rgba(0, 255, 0, 0.7) inset;
@@ -13,30 +13,32 @@
     --titlebar-transition: all 0.3s ease;
 
     /* Button */
-    --button-background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    --button-bg: linear-gradient(135deg, var(--primary-light), var(--primary-color));
     --button-text-color: var(--text-color);
-    --button-hover-background: var(--primary);
+    --button-hover-bg: var(--primary-color);
+    --color-bg-btn-close: var(--primary-color);
+    --color-bg-btn-close-hover: var(--primary-light);
 
     /* Input Fields */
-    --input-background: #2c2f33;
+    --input-bg: #2c2f33;
     --input-border: var(--primary-light);
 
     /* Receipts */
-    --receipt-background: #2c2f33;
+    --receipt-bg: #2c2f33;
     --receipt-text-color: #ffffff;
     --receipt-border-color: var(--primary-dark);
 
     /* Dropdown */
-    --dropdown-background: #1e1e1e;
+    --dropdown-bg: #1e1e1e;
     --dropdown-text-color: var(--primary-color);
 
     /* Popup */
-    --popup-background: rgba(5, 37, 80, 0.75);
+    --popup-bg: rgba(5, 37, 80, 0.75);
     --popup-content-color: #ffffff;
 
     /* Links & Tooltips */
     --link-color: var(--primary-color);
-    --tooltip-background: #1e1e1e;
+    --tooltip-bg: #1e1e1e;
     --tooltip-text-color: #ffffff;
 
     --red: #EA4335;
@@ -49,7 +51,9 @@
     --padding-card: 12px 16px;
     --padding-box: 12px;
     --padding-box-small: 6px;
-    --padding-box-big: 24px;
+    --padding-box-big: 28px;
+
+    --border-radius: 12px;
 }
 
 
@@ -57,25 +61,25 @@
     --primary-color: #00ff00;
     --primary-dark: #008000;
     --primary-light: #66ff66;
-    --background-color: #202020;
+    --bg-color: #202020;
     --text-color: #ffffff;
-    --color-background-titlebar: linear-gradient(145deg, black, #252525);
+    --color-bg-titlebar: linear-gradient(145deg, black, #252525);
     --titlebar-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
     --title-color: var(--primary-color);
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-bg: var(--primary-color);
     --button-text-color: var(--primary-light);
-    --button-hover-background: var(--primary-dark);
-    --input-background: #2c2f33;
+    --button-hover-bg: var(--primary-dark);
+    --input-bg: #2c2f33;
     --input-border: var(--primary-light);
-    --receipt-background: #2c2f33;
+    --receipt-bg: #2c2f33;
     --receipt-text-color: #ffffff;
     --receipt-border-color: #555;
-    --dropdown-background: #1e1e1e;
+    --dropdown-bg: #1e1e1e;
     --dropdown-text-color: var(--primary-color);
-    --popup-background: rgba(44, 47, 51, 0.75);
+    --popup-bg: rgba(44, 47, 51, 0.75);
     --popup-content-color: #ffffff;
     --link-color: var(--primary-color);
-    --tooltip-background: #1e1e1e;
+    --tooltip-bg: #1e1e1e;
     --tooltip-text-color: #ffffff;
 }
 
@@ -83,25 +87,25 @@
     --primary-color: #0078d4;
     --primary-dark: #005a9e;
     --primary-light: #66c0ff;
-    --background-color: #ffffff;
+    --bg-color: #ffffff;
     --text-color: #000000;
-    --color-background-titlebar: linear-gradient(145deg, #d6fbe5, var(--primary-light));
+    --color-bg-titlebar: linear-gradient(145deg, #d6fbe5, var(--primary-light));
     --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(255, 255, 255, 0.3) inset;
     --title-color: var(--primary-color);
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-bg: var(--primary-color);
     --button-text-color: var(--primary-light);
-    --button-hover-background: var(--primary-dark);
-    --input-background: #f9f9f9;
+    --button-hover-bg: var(--primary-dark);
+    --input-bg: #f9f9f9;
     --input-border: var(--primary-color);
-    --receipt-background: #f9f9f9;
+    --receipt-bg: #f9f9f9;
     --receipt-text-color: #000000;
     --receipt-border-color: #dddddd;
-    --dropdown-background: rgba(255, 255, 255, 0.95);
+    --dropdown-bg: rgba(255, 255, 255, 0.95);
     --dropdown-text-color: var(--primary-color);
-    --popup-background: rgba(255, 255, 255, 0.75);
+    --popup-bg: rgba(255, 255, 255, 0.75);
     --popup-content-color: #000000;
     --link-color: var(--primary-color);
-    --tooltip-background: #f0f0f0;
+    --tooltip-bg: #f0f0f0;
     --tooltip-text-color: #000000;
 }
 
@@ -110,34 +114,34 @@
     --primary-dark: #cc00cc;
     --primary-light: #ff66ff;
 
-    --background-color: #000000;
+    --bg-color: #000000;
     --text-color: var(--primary-color);
 
-    --color-background-titlebar: linear-gradient(145deg, var(--primary-dark), var(--primary-light));
+    --color-bg-titlebar: linear-gradient(145deg, var(--primary-dark), var(--primary-light));
     --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
     --titlebar-hover-shadow: 0 6px 12px rgba(255, 0, 255, 0.8), 0 -1px 3px rgba(0, 0, 0, 0.8) inset;
     --title-color: var(--primary-color);
 
-    --button-background: linear-gradient(90deg, var(--primary-dark), var(--primary-color));
+    --button-bg: var(--primary-color);
     --button-text-color: var(--primary-light);
-    --button-hover-background: var(--primary-dark);
+    --button-hover-bg: var(--primary-dark);
 
-    --input-background: #111111;
+    --input-bg: #111111;
     --input-border: var(--primary-color);
 
-    --receipt-background: #111111;
+    --receipt-bg: #111111;
     --receipt-text-color: var(--primary-color);
     --receipt-border-color: var(--primary-dark);
 
-    --dropdown-background: #000000;
+    --dropdown-bg: #000000;
     --dropdown-text-color: var(--primary-light);
 
-    --popup-background: rgba(0, 0, 0, 0.75);
+    --popup-bg: rgba(0, 0, 0, 0.75);
     --popup-content-color: #ffffff;
 
     --link-color: var(--primary-color);
 
-    --tooltip-background: #111111;
+    --tooltip-bg: #111111;
     --tooltip-text-color: var(--primary-light);
 }
 
@@ -189,14 +193,14 @@ body {
     overflow: auto;
 }
 
-.ia-backgrounds {
+.ia-bgs {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -1;
-    background: var(--button-hover-background) !important;
+    background: var(--button-hover-bg) !important;
     overflow: hidden;
 }
 
@@ -253,7 +257,7 @@ body {
 
 
 body {
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
     color: var(--text-color);
     position: relative;
 }
@@ -261,7 +265,7 @@ body {
 
 /********************* Titlebar / Header ****************/
 .titlebar {
-    background: var(--color-background-titlebar);
+    background: var(--color-bg-titlebar);
     box-shadow: var(--titlebar-shadow);
     height: var(--titlebar-height);
     color: var(--title-color);
@@ -423,7 +427,7 @@ body {
     display: none;
     position: absolute;
     right: 24px;
-    background-color: var(--dropdown-background);
+    background-color: var(--dropdown-bg);
     min-width: 160px;
     max-width: 100%;
     box-shadow: var(--titlebar-shadow);
@@ -443,11 +447,11 @@ body {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--button-hover-bg);
 }
 
 .dropdown:hover button {
-    background-color: var(--button-hover-background);
+    background-color: var(--button-hover-bg);
     color: var(--text-color);
 }
 
@@ -477,7 +481,7 @@ body {
     padding: 5px;
     border: 1px solid var(--input-border);
     border-radius: 5px;
-    background-color: var(--input-background);
+    background-color: var(--input-bg);
     color: var(--text-color);
 }
 
@@ -490,7 +494,7 @@ body {
     right: 0;
     bottom: 0;
     overflow: auto;
-    background-color: var(--popup-background);
+    background-color: var(--popup-bg);
     backdrop-filter: blur(3px);
     padding: var(--padding-content);
     word-wrap: break-word;
@@ -498,7 +502,7 @@ body {
 }
 
 .popup-content {
-    background-color: var(--popup-content-background);
+    background-color: var(--popup-content-bg);
     color: var(--popup-content-color);
     margin: 5% auto;
     padding: 20px;
@@ -527,6 +531,43 @@ body {
     font-size: 22px;
 }
 
+.achievements {
+    display: flex;
+    gap: 32px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.achievement {
+    width: 40px;
+    height: 40px;
+    background-color: var(--receipt-border-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.achievement.active {
+    box-shadow: 0 0 8px #ff0;
+}
+
+
+@media (max-width: 780px) {
+    .titlebar .buttons {
+        gap: 10px;
+    }
+    .achievements {
+        gap: 8px;
+    }
+    .achievements .achievement {
+        width: 30px;
+        height: 30px;        
+    }
+    
+}
+
+
 /********************* /Titlebar / Header ****************/
 
 
@@ -549,8 +590,8 @@ body {
 #loginScreen h2 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: var(--button-background);
-    text-shadow: 0 0 10px var(--button-background);
+    color: var(--button-bg);
+    text-shadow: 0 0 10px var(--button-bg);
 }
 
 #loginScreen .login-input-container {
@@ -558,91 +599,51 @@ body {
     margin: 60px auto;
 }
 
-#loginScreen .login-purpose {
-    margin: 40px 0;
-}
-
 #loginScreen input {
     display: block;
     width: calc(100% - 20px);
-    /* Bright green border */
+    height: 40px;
+    padding: var(--padding-content);
     border-radius: 5px;
-    background-color: var(--input-background);
+    background-color: var(--input-bg);
     color: var(--input-border);
-    font-size: 16px;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
     margin: 10px auto;
-}
-
-#loginScreen input::placeholder {
-    color: var(--text-color);
-}
-
-#loginButton {
-    background: var(--button-background);
-    color: var(--button-text-color);
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px var(--button-background);
-    transition: background-color 0.3s, transform 0.2s;
-}
-border: none;
-
-#loginScreen button:hover {
-    background-color: var(--button-hover-background);
-}
-
-#loginScreen button:active {
-    transform: scale(0.95);
-    /* Slight scale down on click */
-}
-
-#loginScreen .login-purpose {
-    margin: 40px 0;
-}
-
-#loginScreen input {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 10px auto;
-    padding: var(--small-padding);
     border: 2px solid var(--input-border);
-    /* Bright green border */
-    border-radius: 5px;
-    background-color: var(--input-background);
-    color: var(--input-border);
-    font-size: 16px;
 }
+
 
 #loginScreen input::placeholder {
     color: var(--text-color);
 }
 
 #loginButton {
-    background: var(--button-background);
-    color: var(--button-text-color);
+    height: 40px;
+    width: 120px;
+    background: var(--primary-dark);
+    color: white;
+    text-shadow: 0px 0px 8px #000;
     border: none;
     padding: var(--small-padding);
     border-radius: 5px;
-    font-size: 18px;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
     cursor: pointer;
-    box-shadow: 0px 4px 8px var(--button-background);
-    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px var(--button-hover-bg) inset;
 }
 
 #loginScreen button:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--primary-color);
 }
 
 #loginScreen button:active {
     transform: scale(0.95);
-    /* Slight scale down on click */
 }
 
 .login-purpose {
     margin: 60px;
     max-width: 100%;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: var(--bg-color);
     padding: 20px;
     border: 1px solid var(--input-border);
     border-radius: 8px;
@@ -721,7 +722,7 @@ border: none;
     align-items: center;
     flex-direction: row;
     padding: 6px 12px;
-    background-color: var(--receipt-background);
+    background-color: var(--receipt-bg);
     color: var(--text-color);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
@@ -736,7 +737,7 @@ border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
-    background-color: var(--button-background);
+    background-color: var(--button-bg);
     align-items: center;
     justify-content: center;
     margin-right: 14px;
@@ -766,7 +767,7 @@ border: none;
 
 .active-control {
     font-size: scale(1.2);
-    background-color: var(--button-hover-background) !important;
+    background-color: var(--button-hover-bg) !important;
     box-shadow: 0 3px 8px rgba(0, 255, 0, 0.5), 0 2px 4px rgba(0, 255, 0, 0.2) inset;
 }
 
@@ -789,7 +790,7 @@ border: none;
 
 #soundBars .sound-bar {
     width: 35px;
-    background: var(--button-background);
+    background: var(--button-bg);
     transition: height 0.1s ease;
     height: 6px;
 }
@@ -868,7 +869,7 @@ border: none;
 }
 
 #purchaseList li {
-    background-color: var(--receipt-background);
+    background-color: var(--receipt-bg);
     color: var(--receipt-text-color);
     margin: 6px 0;
     padding: 6px 12px;
@@ -910,11 +911,11 @@ border: none;
 
 .receipt-container {
     width: 100%;
-    background-color: var(--receipt-background);
+    background-color: var(--receipt-bg);
     padding: var(--padding-content);
     margin: 0 auto;
     border: 2px dashed var(--receipt-border-color);
-    border-radius: 10px;    
+    border-radius: var(--border-radius);    
     color: var(--receipt-text-color);
     box-shadow: var(--titlebar-shadow);
 }
@@ -966,7 +967,7 @@ border: none;
 }
 
 #levelUp {
-    background-color: var(--button-background);
+    background-color: var(--button-bg);
     color: var(--button-text-color);
     border: none;
     padding: 12px 24px;
@@ -978,7 +979,7 @@ border: none;
 }
 
 #levelUp:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--button-hover-bg);
 }
 
 #levelUp:active {
@@ -988,9 +989,9 @@ border: none;
 #resultText {
     font-size: 20px;
     font-weight: bold;
-    color: var(--button-background);
+    color: var(--button-bg);
     /* Bright green for the game theme */
-    text-shadow: 0 0 10px var(--button-background);
+    text-shadow: 0 0 10px var(--button-bg);
     text-align: center;
     margin-top: 20px;
 }
@@ -1064,36 +1065,6 @@ border: none;
     opacity: 0.8;
 }
 
-
-/**************** Achievements *****************/
-.achievements {
-    display: flex;
-    gap: 32px;
-    flex-direction: row;
-    align-items: center;
-}
-
-.achievement {
-    width: 40px;
-    height: 40px;
-    background-color: var(--receipt-border-color);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.achievement.active {
-    box-shadow: 0 0 8px #ff0;
-}
-
-/**************** /Achievements *****************/
-
-
-
-
-
-
 /********************* Centered Vertical List ********************/
 .item-list {
     display: flex;
@@ -1108,10 +1079,9 @@ border: none;
     width: 80%;
     max-width: 100%;
     min-width: 400px;
-    padding: var(--padding-card);
+    padding: var(--padding-box-big);
     text-align: center;
-    background: var(--color-background-titlebar);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     border: 2 solid var(--titlebar-hover-shadow);
     transition: background-color 0.5s, color 1.0s, border 0.3s;
     overflow: hidden;
@@ -1121,7 +1091,8 @@ border: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 60px;
+    box-shadow: 0 2px 10px var(--primary-light);
 }
 
 @keyframes bgMove {
@@ -1151,29 +1122,32 @@ border: none;
     font-size: clamp(1.5rem, 1.8vw + 0.5rem, 3rem);
     color: var(--title-color);
     position: relative;
+    background-color: #ff9800;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius);
 }
 
 .item-list .item:hover,
 .item-list .item:focus-visible {
-    box-shadow: var(--primary-color);
-    font-weight: 600;
+    box-shadow: 0 2px 10px var(--primary-dark);
     transform: scale(1.02);
 }
 
 .item-list .item-content {
     display: none;
     width: 100%;
+    position: relative;
+    background: var(--popup-bg);
+    border-radius: var(--border-radius);
+    padding: var(--padding-box-big);
+    cursor: default;
+    height: 80vh;
+    font-weight: 600;
 }
 
 .item-list .item-content.active {
-    position: relative;
-    display: block;
-    background: var(--popup-background);
-    border-radius: 10px;
-    padding: var(--padding-box);
-    box-shadow: var(--titlebar-hover-shadow);
-    cursor: default;
-    height: 80vh;
+    display: block;    
 }
 
 .item-list .item.active .item-content:nth-child(1) {
@@ -1187,27 +1161,28 @@ border: none;
 }
 
 .btn {
-    background-color: var(--primary-color); /* Primary color */
     color: var(--text-color);
     border: none;
-    border-radius: 50%;
-    padding: 8px 16px;
-    width: 60px;
-    height: 60px;
+    padding: var(--padding-box-small);
     text-align: center;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
 }
 
 .btn-close {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: -30px;
     right: -20px;
+    background-color: var(--color-bg-btn-close);
+    transition: background-color 0.3s;
 }
 
 .btn:hover {
-    background-color: #005a9e; /* Darker shade on hover */
+    background-color: var(--color-bg-btn-close-hover); /* Darker shade on hover */
+    border: 2px solid var(--color-bg-btn-close);
 }
 
 @media (max-width: 600px) {
@@ -1314,14 +1289,14 @@ form input {
 }
 
 .item-button:hover {
-    background-color: var(--button-hover-background);
+    background-color: var(--button-hover-bg);
 }
 
 
 .container-budget {
     background: #fff;
     padding: var(--padding-box);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     box-shadow: var(--titlebar-shadow);
     width: 90%;
     max-width: 600px;
