@@ -77,112 +77,17 @@
         </div>
     </div>
     <div id="error-container"></div>
-    <div id="loginScreen" class="login-screen hidden">
-        <div class="login-input-container">
-            <h2 class="responsive">Login</h2>
-            <input type="text" id="username" placeholder="Display name">
-            <input type="number" id="initialDeposit" placeholder="Initial Deposit" min="0" step="1.00">
-            <input list="currencies" id="currency" name="currency" placeholder="Choose your currency">
-            <datalist id="currencies">
-                <option value="$">USD - US Dollar</option>
-                <option value="€">EUR - Euro</option>
-                <option value="£">GBP - British Pound</option>
-                <option value="¥">JPY - Japanese Yen</option>
-                <option value="R">ZAR - South African Rand</option>
-                <option value="$">CAD - Canadian Dollar</option>
-                <option value="$">AUD - Australian Dollar</option>
-                <option value="CHF">CHF - Swiss Franc</option>
-                <option value="¥">CNY - Chinese Yuan</option>
-                <option value="₹">INR - Indian Rupee</option>
-            </datalist>
-            <button id="loginButton">Let's start</button>
-        </div>
-        <div class="login-purpose">
-            <h2 class="responsive">Welcome to Imagine Act</h2>
-            <p>
-                Imagine Act (IA) is a unique, interactive game designed to help you visualize and work towards your
-                financial goals in a fun and engaging way. Using your imagination and voice commands, you can "buy"
-                items and create lists, connecting mentally and emotionally with the idea of wealth and abundance.
-            </p>
-
-            <p><strong>Key Features:</strong></p>
-            <ul>
-                <li><strong>Visualization of Wealth:</strong> Experience the feeling of wealth by spending virtual
-                    currency on desired items.</li>
-                <li><strong>Gamification of Financial Goals:</strong> Progress through levels where your virtual
-                    currency doubles each time you successfully complete a level.</li>
-                <li><strong>Mindset Training:</strong> Reinforce positive beliefs about money and abundance, using
-                    concepts from the laws of the universe to bring positive benefits into your reality.</li>
-                <li><strong>User Engagement:</strong> Enjoy a more personalized experience with User Artificial
-                    Intelligence (UAI) and GPT integration.</li>
-            </ul>
-
-            <p><strong>How to Play:</strong></p>
-            <ul>
-                <li><strong>Starting the Game:</strong> Enter your display name and initial deposit (starting balance)
-                    on the login screen and click "Let’s start" to begin.</li>
-                <li><strong>Buying Items:</strong> Use voice commands to buy items by stating, "I [buy/purchase/get/pay
-                    for/acquire] [item name] for [amount] [currency]." For example, "I buy a laptop for 1,000
-                    [currency]."</li>
-                <li><strong>Managing Your Balance:</strong> Your virtual balance updates with each purchase, and
-                    successful transactions are listed like a receipt.</li>
-                <li><strong>Game Controls:</strong> Use voice commands for interactions, or the dropdown menu at the top
-                    for options like viewing game information or resetting the game.</li>
-                <li><strong>Editing/Removing Items:</strong> You can modify or remove items from your list using voice
-                    commands. For example, "Edit the laptop to gaming laptop" or "Remove the laptop."</li>
-            </ul>
-
-            <p><strong>Possible Voice Commands:</strong></p>
-            <ul>
-                <li>I buy [item] for [amount]</li>
-                <li>Remove [item]</li>
-                <li>Stop Listening</li>
-                <li class="voice-commands-hidden">I purchase [item] for [amount]</li>
-                <li class="voice-commands-hidden">I get [item] for [amount]</li>
-                <li class="voice-commands-hidden">I pay for [item] with [amount]</li>
-                <li class="voice-commands-hidden">I acquire [item] for [amount]</li>
-                <li class="voice-commands-hidden">I obtain [item] for [amount]</li>
-                <li class="voice-commands-hidden">I order [item] for [amount]</li>
-                <li class="voice-commands-hidden">I book [item] for [amount]</li>
-                <li class="voice-commands-hidden">I reserve [item] for [amount]</li>
-                <li class="voice-commands-hidden">I take [item] for [amount]</li>
-                <li class="voice-commands-hidden">I give away [item]</li>
-                <li class="voice-commands-hidden">I give [item]</li>
-                <li class="voice-commands-hidden">Delete [item]</li>
-                <li class="voice-commands-hidden">Drop [item]</li>
-                <li class="voice-commands-hidden">Cancel [item]</li>
-                <li class="voice-commands-hidden">Discard [item]</li>
-                <li class="voice-commands-hidden">Erase [item]</li>
-                <li class="voice-commands-hidden">Eliminate [item]</li>
-                <li class="voice-commands-hidden">Clear [item]</li>
-                <li class="voice-commands-hidden">Take out [item]</li>
-                <a style="text-decoration: none;" href="javascript:void(0);" id="toggle-link"
-                    onclick="toggleAboutCommandsLessMore()">Show more</a>
-            </ul>
-
-            <p><strong>Additional Features:</strong></p>
-            <ul>
-                <li><strong>Responsive Design:</strong> The game interface adapts to different screen sizes, including
-                    mobile devices.</li>
-                <li><strong>Language Selector:</strong> Choose between different English dialects (American or British)
-                    for voice recognition.</li>
-            </ul>
-
-            <p><strong>
-                    Imagine Act is more than just a game—it's a tool for personal growth and empowerment, helping you
-                    develop a prosperous mindset that can lead to real-life success.
-                </strong></p>
-        </div>
-    </div>
+    
+    <div id="loginContainer"></div>
 
     <div id="gameScreen" class="game-screen ia-background">
         <div class="item-list">
             <div class="item" onclick="toggleContent(event, 'Voice Command Purchases')">
-                <div class="audio-container item-header">
-                    <h3 class="responsive">Voice Command Purchases</h3>
-                    <canvas id="audioCanvas"></canvas>
-                </div> 
+                <div class="item-header">Voice Command Purchases</div>
                 <div class="item-content">
+                    <button class="btn btn-close" onclick="onCloseContent(event, 'Voice Command Purchases')">Close</button>
+                    <canvas id="audioCanvas"></canvas>
+                    <p>Interact with the app using voice commands for a hands-free experience.</p>
                     <div class="game-content">
                         <div id="speechContainer">
                             <button id="controlSpeechButton" aria-pressed="true">🎤</button>
@@ -194,7 +99,7 @@
                                 <div class="sound-bar"></div>
                             </div>
 
-                            <div id="instructionContainer">
+                            <div id="instructionContainer">                                 
                                 <div id="recognizedText">Press the speech button to start purchasing using voice
                                     commands</div>
                             </div>
@@ -217,15 +122,14 @@
                                 yourself and believe in the game, the more you'll see its magic unfold in your life.
                                 Play, believe, and watch your experience come to life!"</div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
-
-            <div class="item" onclick="toggleContent(event, '3D Sphere')">
-                <div class="item-header">
-                    <h3 class="responsive">Shopping Sphere</h3>
-                </div>
+            
+            <div class="item" onclick="toggleContent(event, '3D Sphere')">                
+                <div class="item-header">Shopping Sphere</div>
                 <div class="item-content">
+                    <button class="btn btn-close" onclick="onCloseContent(event, '3D Sphere')">Close</button>
                     <style>
                         canvas {
                             display: block;
@@ -235,10 +139,9 @@
                 </div>
             </div>
             <div class="item budget" onclick="toggleContent(event, 'Fun Budget Creation')">
-                <div class="item-header">
-                    <h3 class="responsive">Fun Budget Creation</h3>
-                </div>
+                <div class="item-header">Fun Budget Creation</div>
                 <div class="item-content">
+                    <button class="btn btn-close" onclick="onCloseContent(event, 'Fun Budget Creation')">Close</button>
                     <div class="container-budget">
                         <h4 class="responsive">Welcome to Fun Budget Creation!</h4>
 
@@ -287,6 +190,7 @@
                     <h3 class="responsive">AI Mental Health Model</h3>
                 </div>
                 <div class="item-content">
+                    <button class="btn btn-close" onclick="onCloseContent(event, 'AI Mental Health Model')">Close</button>
                     <div class="container">
                         <h1>Core Ideas for an AI Mental Health Model</h1>
 
@@ -371,7 +275,7 @@
                     <h3 class="responsive">Spending Tips</h3>
                 </div>
                 <div class="item-content">
-
+                    <button class="btn btn-close" onclick="onCloseContent(event, 'Spending Tips')">Close</button>
                 </div>
             </div>
         </div>
@@ -484,9 +388,9 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="assets/js/audioLevels.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
-    <script src="assets/js/audioLevels.js"></script>
 </body>
 
 </html>

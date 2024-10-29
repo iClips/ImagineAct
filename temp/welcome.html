@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Animation Example</title>
+    <style>
+        /* Basic SVG and CSS setup */
+        #character, #items g, #text {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Entrance animations */
+        .show {
+            opacity: 1;
+        }
+        
+        /* Floating animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        #items g {
+            animation: float 2s infinite;
+        }
+        
+        /* Text styling */
+        .text-style {
+            font-size: 20px;
+            fill: #333;
+            text-anchor: middle; /* Center the text */
+        }
+        
+        /* Center the SVG in the viewport */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+            background-color: #f0f0f0; /* Light background */
+        }
+    </style>
+</head>
+<body>
+
+    <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Character holding a wallet -->
+        <g id="character" transform="translate(50, 120)">
+            <circle cx="20" cy="20" r="20" fill="#FFDD67"/> <!-- head -->
+            <rect x="15" y="40" width="10" height="20" fill="#333"/> <!-- body -->
+        </g>
+    
+        <!-- Floating items in a dream cloud -->
+        <g id="items" transform="translate(150, 80)">
+            <g id="house" transform="translate(0, -10)">
+                <rect x="0" y="0" width="20" height="20" fill="#FFBB00"/>
+            </g>
+            <g id="car" transform="translate(40, 10)">
+                <rect x="0" y="0" width="20" height="10" fill="#007AFF"/>
+            </g>
+            <g id="money" transform="translate(80, -5)">
+                <rect x="0" y="0" width="10" height="20" fill="#00C851"/>
+            </g>
+        </g>
+    
+        <!-- Text animation -->
+        <text id="text" x="150" y="180" class="text-style">Imagine, Create, Achieve</text>
+    </svg>
+    
+<script>
+    // Animation timing
+    setTimeout(() => document.getElementById("character").classList.add("show"), 500);
+    setTimeout(() => document.getElementById("items").classList.add("show"), 1000);
+    setTimeout(() => document.getElementById("text").classList.add("show"), 1500);
+</script>
+</body>
+</html>

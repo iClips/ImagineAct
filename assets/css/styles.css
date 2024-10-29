@@ -7,15 +7,15 @@
     --titlebar-border-radius: 8px;
     --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
     --titlebar-hover-shadow: 0 6px 8px rgba(255, 0, 0, 0.3), 0 -1px 8px rgba(0, 255, 0, 0.7) inset;
-    --titlebar-height: 40px;
+    --titlebar-height: 8vh;
     --title-color: #ffffff;
-    --titlebar-padding: var(--normal-padding);
+    --titlebar-padding: var(--padding-content);
     --titlebar-transition: all 0.3s ease;
 
     /* Button */
-    --button-background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
+    --button-background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
     --button-text-color: var(--text-color);
-    --button-hover-background: var(--primary-dark);
+    --button-hover-background: var(--primary);
 
     /* Input Fields */
     --input-background: #2c2f33;
@@ -39,18 +39,17 @@
     --tooltip-background: #1e1e1e;
     --tooltip-text-color: #ffffff;
 
-    /* Padding */
-    --normal-padding: 15px 20px;
-    --small-padding: 12px 8px;
-
     --red: #EA4335;
     --yellow: #FBBC05;
     --green: #34A853;
     --blue: #4285F4;
-
+    
+    /* Padding */
     --padding-content: 16px 24px;
     --padding-card: 12px 16px;
     --padding-box: 12px;
+    --padding-box-small: 6px;
+    --padding-box-big: 24px;
 }
 
 
@@ -264,7 +263,7 @@ body {
 .titlebar {
     background: var(--color-background-titlebar);
     box-shadow: var(--titlebar-shadow);
-    min-height: var(--titlebar-height);
+    height: var(--titlebar-height);
     color: var(--title-color);
     padding: var(--titlebar-padding);
     display: flex;
@@ -435,7 +434,7 @@ body {
 .dropdown-content a {
     display: block;
     color: var(--text-color);
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     text-decoration: none;
 }
 
@@ -493,7 +492,7 @@ body {
     overflow: auto;
     background-color: var(--popup-background);
     backdrop-filter: blur(3px);
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     word-wrap: break-word;
     max-width: 100%;
 }
@@ -543,7 +542,7 @@ body {
 #loginScreen {
     overflow: auto;
     height: 100%;
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     max-width: 100%;
 }
 
@@ -557,6 +556,44 @@ body {
 #loginScreen .login-input-container {
     max-width: 320px;
     margin: 60px auto;
+}
+
+#loginScreen .login-purpose {
+    margin: 40px 0;
+}
+
+#loginScreen input {
+    display: block;
+    width: calc(100% - 20px);
+    /* Bright green border */
+    border-radius: 5px;
+    background-color: var(--input-background);
+    color: var(--input-border);
+    font-size: 16px;
+    margin: 10px auto;
+}
+
+#loginScreen input::placeholder {
+    color: var(--text-color);
+}
+
+#loginButton {
+    background: var(--button-background);
+    color: var(--button-text-color);
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--button-background);
+    transition: background-color 0.3s, transform 0.2s;
+}
+border: none;
+
+#loginScreen button:hover {
+    background-color: var(--button-hover-background);
+}
+
+#loginScreen button:active {
+    transform: scale(0.95);
+    /* Slight scale down on click */
 }
 
 #loginScreen .login-purpose {
@@ -651,7 +688,6 @@ body {
         padding: var(--small-padding);
     }
 }
-
 /*********************** /Login ************************/
 
 
@@ -672,7 +708,7 @@ body {
 
 #audioCanvas {
     width: 100%;
-    height: 100%;
+    height: 80px;
     display: block;
 }
 
@@ -696,7 +732,7 @@ body {
     width: 50px;
     height: 50px;
     color: var(--button-text-color);
-    border: none;
+    border: 2px solid black;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -742,9 +778,6 @@ body {
     cursor: not-allowed;
 }
 
-
-
-/* Sound bars for voice detection */
 #soundBars {
     display: flex;
     flex-direction: column;
@@ -759,10 +792,8 @@ body {
     background: var(--button-background);
     transition: height 0.1s ease;
     height: 6px;
-    /* Start with minimum height */
 }
 
-/* Rectangular screen for feedback and instructions */
 #instructionContainer {
     width: 100%;
     height: 80px;
@@ -778,7 +809,7 @@ body {
 
 #gameScreen {
     display: none;
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     width: 100%;
     height: 100%;
     position: relative;
@@ -801,7 +832,7 @@ body {
     width: 550px;
     max-width: 100%;
     margin: 0 auto;
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
 }
 
 .account-type,
@@ -820,9 +851,10 @@ body {
 }
 
 #recognizedText {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
     color: var(--title-color);
+    width: 100%;
+    height: 100%;
 }
 
 #purchaseList {
@@ -877,14 +909,12 @@ body {
 }
 
 .receipt-container {
-    width: 300px;
-    max-width: 100%;
+    width: 100%;
     background-color: var(--receipt-background);
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     margin: 0 auto;
     border: 2px dashed var(--receipt-border-color);
-    border-radius: 10px;
-    font-family: 'Courier New', Courier, monospace;
+    border-radius: 10px;    
     color: var(--receipt-text-color);
     box-shadow: var(--titlebar-shadow);
 }
@@ -979,7 +1009,7 @@ body {
 
 .notification {
     border-radius: 5px;
-    padding: var(--normal-padding);
+    padding: var(--padding-content);
     margin-bottom: 10px;
     box-shadow: var(--titlebar-shadow);
     position: relative;
@@ -1003,29 +1033,20 @@ body {
 
 .error {
     background-color: #f8d7da;
-    /* Light red background */
     border: 1px solid #f5c6cb;
-    /* Light red border */
     color: #721c24;
-    /* Dark red text */
 }
 
 .warning {
     background-color: #fff3cd;
-    /* Light yellow background */
     border: 1px solid #ffeeba;
-    /* Light yellow border */
     color: #856404;
-    /* Dark yellow text */
 }
 
 .message {
     background-color: #d1ecf1;
-    /* Light blue background */
     border: 1px solid #bee5eb;
-    /* Light blue border */
     color: #0c5460;
-    /* Dark blue text */
 }
 
 .notification button {
@@ -1047,14 +1068,15 @@ body {
 /**************** Achievements *****************/
 .achievements {
     display: flex;
-    justify-content: space-around;
-    gap: 12px;
+    gap: 32px;
+    flex-direction: row;
+    align-items: center;
 }
 
 .achievement {
     width: 40px;
     height: 40px;
-    background-color: #444;
+    background-color: var(--receipt-border-color);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -1078,17 +1100,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3vh;
+    gap: 60px;
 }
 
 
 .item-list .item {
     width: 80%;
     max-width: 100%;
+    min-width: 400px;
     padding: var(--padding-card);
     text-align: center;
-    background: var(--button-background);
-    color: var(--button-text-color);
+    background: var(--color-background-titlebar);
     border-radius: 10px;
     border: 2 solid var(--titlebar-hover-shadow);
     transition: background-color 0.5s, color 1.0s, border 0.3s;
@@ -1099,17 +1121,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2vh;
-}
-
-.item-list .item:nth-child(1) {
-    background-image: url('/assets/images/vc_list_item.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    animation: bgMove 50s infinite ease-in-out;
-    transition: background-position 15.5s ease;
-    margin-top: 1.6vh;
+    gap: 20px;
 }
 
 @keyframes bgMove {
@@ -1134,26 +1146,68 @@ body {
     }
 }
 
+.item-header {
+    padding: var(--padding-card);
+    font-size: clamp(1.5rem, 1.8vw + 0.5rem, 3rem);
+    color: var(--title-color);
+    position: relative;
+}
+
 .item-list .item:hover,
 .item-list .item:focus-visible {
     box-shadow: var(--primary-color);
     font-weight: 600;
+    transform: scale(1.02);
 }
 
 .item-list .item-content {
     display: none;
-    /* background: var(--co); */
     width: 100%;
 }
 
-.item-list .item.active .item-content {
-    position: relative;    
+.item-list .item-content.active {
+    position: relative;
     display: block;
     background: var(--popup-background);
     border-radius: 10px;
     padding: var(--padding-box);
     box-shadow: var(--titlebar-hover-shadow);
     cursor: default;
+    height: 80vh;
+}
+
+.item-list .item.active .item-content:nth-child(1) {
+    background-image: url('../images/vc_list_item.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: bgMove 50s infinite ease-in-out;
+    transition: background-position 15.5s ease;
+    margin-top: 40px;
+}
+
+.btn {
+    background-color: var(--primary-color); /* Primary color */
+    color: var(--text-color);
+    border: none;
+    border-radius: 50%;
+    padding: 8px 16px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-close {
+    position: absolute;
+    top: -30px;
+    right: -20px;
+}
+
+.btn:hover {
+    background-color: #005a9e; /* Darker shade on hover */
 }
 
 @media (max-width: 600px) {
@@ -1181,25 +1235,6 @@ body {
 
 /******** Fun With BUDGET ***************/
 
-.item.budget {
-
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom right, var(--primary-color), var(--blue));
-    color: var(--background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.item.active {
-    /* background-color: var(--background-color);
-    color: var(--text-color); */
-    border: 2px solid var(--text-color);
-    /* font-weight: bold; */
-}
-
-/* Theme toggle menu styling */
 .menu {
     position: absolute;
     top: 2%;
@@ -1226,56 +1261,29 @@ form input {
 }
 
 .allocate-btn {
-    background-color: #4caf50;
-    /* Green background */
-    color: white;
-    /* White text */
-    padding: 15px 30px;
-    /* Button padding */
-    border: none;
-    /* Remove borders */
-    border-radius: 8px;
-    /* Rounded corners */
-    font-size: 16px;
-    /* Font size */
-    cursor: pointer;
-    /* Pointer cursor on hover */
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    /* Smooth background and scale transition */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
+    background-color: #4caf50;    
+    color: white;    
+    padding: 15px 30px;    
+    border: none;    
+    border-radius: 8px;    
+    font-size: 16px;    
+    cursor: pointer;    
+    transition: background-color 0.3s ease, transform 0.3s ease;    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);    
 }
 
 .allocate-btn:hover {
     background-color: #45a049;
-    /* Slightly darker green on hover */
     transform: scale(1.05);
-    /* Slight zoom on hover */
 }
 
 .allocate-btn:active {
     transform: scale(0.98);
-    /* Shrink slightly when clicked */
 }
 
 .allocate-btn:focus {
     outline: none;
-    /* Remove default focus outline */
     box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3);
-    /* Greenish focus ring */
-}
-
-/* Dark mode styles */
-body.dark-theme .allocate-btn {
-    background-color: #3e8e41;
-    /* Darker green for dark mode */
-    color: #f0f0f0;
-    /* Light text */
-}
-
-body.dark-theme .allocate-btn:hover {
-    background-color: #356e37;
-    /* Even darker green on hover in dark mode */
 }
 
 
@@ -1287,37 +1295,26 @@ body.dark-theme .allocate-btn:hover {
 .info-icon {
     font-size: 1.2em;
     color: #007bff;
-    /* Blue color */
     cursor: pointer;
 }
 
 .info-icon:hover {
     color: #0056b3;
-    /* Darker blue on hover */
 }
 
 .item-button {
-    background-color: #28a745;
-    /* Green background */
-    color: white;
-    /* White text */
-    border: none;
-    /* No border */
-    padding: 10px 15px;
-    /* Padding */
-    margin: 5px;
-    /* Margin between buttons */
-    border-radius: 5px;
-    /* Rounded corners */
-    cursor: pointer;
-    /* Pointer cursor */
-    transition: background-color 0.3s;
-    /* Smooth background color transition */
+    background-color: #28a745;    
+    color: white;    
+    border: none;    
+    padding: 10px 15px;    
+    margin: 5px;    
+    border-radius: 5px;    
+    cursor: pointer;    
+    transition: background-color 0.3s;    
 }
 
 .item-button:hover {
-    background-color: #218838;
-    /* Darker green on hover */
+    background-color: var(--button-hover-background);
 }
 
 
@@ -1375,9 +1372,6 @@ h3 {
     flex-wrap: wrap;
 }
 
-.container-budget .hidden {
-    display: none;
-}
 
 .container-budget input[type="number"] {
     padding: 10px;

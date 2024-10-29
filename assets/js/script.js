@@ -35,12 +35,10 @@ let themeSelect;
 let SpeechRecognition;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('doc loaded');
     resetGameLink = document.getElementById('resetGame');
     resetLevelLink = document.getElementById('resetLevel');
     
-    loginScreen = document.getElementById('loginScreen');
-    loginButton = document.getElementById('loginButton');
+    
     
     gameScreen = document.getElementById('gameScreen');
     
@@ -55,41 +53,64 @@ document.addEventListener('DOMContentLoaded', () => {
     popupClose = document.getElementById('closePopup');
     soundBars = document.querySelectorAll('.sound-bar');
     
+    
     registerEventListeners();
     
     const theme = localStorage.getItem('theme');
-    const storedUsername = localStorage.getItem('username');
-    initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+    
     
     if (popupClose  !== 'undefined') {
         popupClose.addEventListener('click', () => {
             aboutPopup.style.display = 'none';
         });
     }
-
-    window.onclick = (event) => {
-        if (event.target === aboutPopup) {
-            aboutPopup.style.display = 'none';
-        }
-        if (!btn_menu.contains(event.target) && !dropdown_content.contains(event.target)) {
-            dropdown_content.style.display = 'none';
-        }
-    };
-
-    if (storedUsername && !isNaN(initialDeposit)) {
-        loginScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
-
-        // gsap.timeline()
-        // .to('.step-1', { duration: 1.5, opacity: 1, y: -50, delay: 0.5 })
-        // .to('.step-2', { duration: 1.5, opacity: 1, y: -50, delay: 2 })
-        // .to('.step-3', { duration: 1.5, opacity: 1, y: -50, delay: 2 })
-        // .to('.step-4', { duration: 1.5, opacity: 1, y: -50, delay: 2 });
-    } else {
-        loginScreen.style.display = 'block';
-        gameScreen.style.display = 'none';
-    }
+    
+    if (!loadLoginScreen()) {
+        return;
+    }     
 });
+
+async function loadLoginScreen() {
+    try {
+        const response = await fetch('inc/loginScreen.html');
+        const markup = await response.text();
+        const container = document.getElementById('loginContainer');
+        if (!container) {
+            return false;
+        }
+        container.innerHTML = markup;
+        
+        loginScreen = document.getElementById('loginScreen');
+        loginButton = document.getElementById('loginButton');        
+
+        const storedUsername = localStorage.getItem('username');
+        initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+
+        if (storedUsername && !isNaN(initialDeposit)) {
+            loginScreen.style.display = 'none';
+            gameScreen.style.display = 'block';            
+        } else {
+            loginScreen.style.display = 'block';
+            gameScreen.style.display = 'none';
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error loading Login Screen:', error);
+        showNote('Error', 'Error loading Login Screen: ' + error);
+
+        return false;
+    }
+}
+
+window.onclick = (event) => {
+    if (event.target === aboutPopup) {
+        aboutPopup.style.display = 'none';
+    }
+    if (!btn_menu.contains(event.target) && !dropdown_content.contains(event.target)) {
+        dropdown_content.style.display = 'none';
+    }
+};
 
 function includeHTML() {
     var z, i, elmnt, file, xhttp;
@@ -119,17 +140,6 @@ function includeHTML() {
     }
 }
 function registerEventListeners() {
-    if (controlSpeechButton) {
-        controlSpeechButton.addEventListener('click', () => {
-            console.log('controlSpeechButton was clicked');
-            if (recognitionActive) {
-                stopVoiceRecognition();                
-            } else {
-                startVoiceRecognition();
-            }
-        });
-    }
-    
     languageSelect.addEventListener('change', () => {
         recognitionLang = languageSelect.value;
         recognition.lang = recognitionLang;
@@ -137,6 +147,9 @@ function registerEventListeners() {
             stopVoiceRecognition();
             recognition.onend = () => { 
                 startVoiceRecognition();
+                if (recognizedTextLabel) {
+                    recognizedTextLabel.textContent = "Listening";
+                }
             };
         }
     });
@@ -144,56 +157,58 @@ function registerEventListeners() {
         setTheme(themeSelect.value);
     });
 
-    loginButton.addEventListener('click', () => {
-        const username = document.getElementById('username').value;
-        initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
+    if (loginButton != null) {
+        loginButton.addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
+            
+            const currencyInput = document.getElementById('currency');
+            const selectedCurrencySymbol = currencyInput.value;
+            console.log('selectedCurrencySymbol: ' + selectedCurrencySymbol);
+            let selectedCurrencyObj = null;
+            
+            const datalistOptions = document.querySelectorAll('#currencies option');
+            console.log(JSON.stringify(datalistOptions));
+            
+            datalistOptions.forEach(option => {
+                if (option.value === selectedCurrencySymbol) {
+                    const currencyName = option.textContent.split(' - ')[1];
+                    selectedCurrencyObj = {
+                        name: currencyName,
+                        symbol: selectedCurrencySymbol
+                    };
+                    console.log('selectedCurrencyText: ' + option.textContent);
+                }
+            });
         
-        const currencyInput = document.getElementById('currency');
-        const selectedCurrencySymbol = currencyInput.value;
-        console.log('selectedCurrencySymbol: ' + selectedCurrencySymbol);
-        let selectedCurrencyObj = null;
-        
-        const datalistOptions = document.querySelectorAll('#currencies option');
-        console.log(JSON.stringify(datalistOptions));
-        
-        datalistOptions.forEach(option => {
-            if (option.value === selectedCurrencySymbol) {
-                const currencyName = option.textContent.split(' - ')[1];
-                selectedCurrencyObj = {
-                    name: currencyName,
-                    symbol: selectedCurrencySymbol
-                };
-                console.log('selectedCurrencyText: ' + option.textContent);
+            if (selectedCurrencyObj) {
+                localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
+                selectedCurrency = selectedCurrencyObj;
+                console.log('selectedCurrency is saved to storage: ' + JSON.stringify(selectedCurrency));
+            } else {
+                alert('Please select a valid currency.');
+                return;
             }
-        });
-    
-        if (selectedCurrencyObj) {
-            localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
-            selectedCurrency = selectedCurrencyObj;
-            console.log('selectedCurrency is saved to storage: ' + JSON.stringify(selectedCurrency));
-        } else {
-            alert('Please select a valid currency.');
-            return;
-        }
-    
-        if (!initialDeposit || initialDeposit <= 0) {
-            alert('You have to start with an initial balance.');
-            return;
-        }
-    
-        if (!username || isNaN(initialDeposit) || !selectedCurrency) {
-            alert('Kindly fill in all fields to initialize the game.');
-            return;
-        }
-    
-        localStorage.setItem('username', username);
-        localStorage.setItem('balance', initialDeposit.toFixed(2));
-        localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));        
-        localStorage.setItem('purchases', JSON.stringify([]));
+        
+            if (!initialDeposit || initialDeposit <= 0) {
+                alert('You have to start with an initial balance.');
+                return;
+            }
+        
+            if (!username || isNaN(initialDeposit) || !selectedCurrency) {
+                alert('Kindly fill in all fields to initialize the game.');
+                return;
+            }
+        
+            localStorage.setItem('username', username);
+            localStorage.setItem('balance', initialDeposit.toFixed(2));
+            localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));        
+            localStorage.setItem('purchases', JSON.stringify([]));
 
-        loginScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
-    });
+            loginScreen.style.display = 'none';
+            gameScreen.style.display = 'block';
+        });
+    }
 
     
     resetGameLink.addEventListener('click', () => {
@@ -316,7 +331,23 @@ function setTheme(theme) {
 
 function initSpeechRecognition() {
     if (controlSpeechButton !== null) {
-        controlSpeechButton = document.getElementById('controlSpeechButton');        
+        controlSpeechButton = document.getElementById('controlSpeechButton');       
+        if (controlSpeechButton) {
+            controlSpeechButton.addEventListener('click', () => {
+                console.log('controlSpeechButton was clicked');
+                if (recognitionActive) {
+                    stopVoiceRecognition();     
+                    if (recognizedTextLabel) {
+                        recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
+                    }           
+                } else {
+                    startVoiceRecognition();
+                    if (recognizedTextLabel) {
+                        recognizedTextLabel.textContent = "Listening";
+                    }
+                }
+            });
+        } 
         SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     } else {
         console.log('Oops! there is no reference');
@@ -357,18 +388,13 @@ function initSpeechRecognition() {
     recognition.onerror = function(event) {
         stopVoiceRecognition();
         showNote('error', 'Speech recognition error detected: ' + event.error ? event.error : 'unknown');
-    };
-    
-    startVoiceRecognition();
+    };    
 }
 
 function startVoiceRecognition() {
     recognitionActive = true;
     recognition.start();
 
-    if (recognizedTextLabel) {
-        recognizedTextLabel.textContent = "Listening";
-    }
     if (controlSpeechButton) {
         controlSpeechButton.classList.add('active-control');
     } else {
@@ -380,9 +406,7 @@ function stopVoiceRecognition() {
     recognitionActive = false;
     recognition.stop();
 
-    if (recognizedTextLabel) {
-        recognizedTextLabel.textContent = "Sleeping";
-    }
+    
     
     if (controlSpeechButton) {
        controlSpeechButton.classList.remove('active-control');
@@ -424,7 +448,9 @@ function toggleMenuPopup() {
 function processVoiceCommand(text) {
     if (text.toLowerCase() === 'stop listening') {
         stopVoiceRecognition();
-        recognizedTextLabel.textContent = "Sleeping";
+        if (recognizedTextLabel) {
+            recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
+        }
         return 100; // No accuracy needed for stopping
     }
     
@@ -877,50 +903,66 @@ function setActiveItem(clickedItem) {
 }
 
 
+function onCloseContent(event, feature) {
+    event.stopPropagation(); // Prevents triggering parent click event
+    const content = event.currentTarget.closest('.item-content');
+    if (content && content.classList.contains('active')) {
+        content.classList.remove('active');
+        if (feature === 'Voice Command Purchases') {
+            stopVoiceRecognition();
+        }
+    }
+}
+
 function toggleContent(event, feature) {
+    event.stopPropagation(); // Prevents event bubbling
     const item = event.currentTarget;
-    if (item.classList.contains('active')) {
-        return;
+    const content = item.querySelector('.item-content');
+    
+    if (content) {
+        // Toggle the 'active' class for content visibility
+        if (!content.classList.contains('active')) {            
+            content.classList.add('active');
+        }
     }
 
-
-    const content = item.querySelector('.item-content');
-
-    item.classList.add('active');
-    content.style.display = "block";
-
     if (feature === 'Voice Command Purchases') {
-        starting_balance = document.querySelector('#starting_balance');
-        balanceAmount = document.getElementById('balanceAmount');
-        total_purchases = document.getElementById('total_purchases');
-        purchaseList = document.getElementById('purchaseList');
-
-        const theme = localStorage.getItem('theme');
-        const storedUsername = localStorage.getItem('username');
-        initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
         
-        if (storedUsername) {
-            displayName = storedUsername;
-        }
+        if (!starting_balance) {
+            startAudioVisuals();
             
-        const storedBalance = parseFloat(localStorage.getItem('balance'));
-        const storedCurrency = JSON.parse(localStorage.getItem('currency'));
-
-        if (isCurrencyObject(storedCurrency)) {
-            selectedCurrency = storedCurrency;
-            selectedCurrencyName = getLastWord(selectedCurrency.name);
-        } else {
-            alert(JSON.stringify(storedCurrency));
-            setDefaultCurrency();
+            starting_balance = document.querySelector('#starting_balance');
+            balanceAmount = document.getElementById('balanceAmount');
+            total_purchases = document.getElementById('total_purchases');
+            purchaseList = document.getElementById('purchaseList');
+    
+            const theme = localStorage.getItem('theme');
+            const storedUsername = localStorage.getItem('username');
+            initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
+            
+            if (storedUsername) {
+                displayName = storedUsername;
+            }
+                
+            const storedBalance = parseFloat(localStorage.getItem('balance'));
+            const storedCurrency = JSON.parse(localStorage.getItem('currency'));
+    
+            if (isCurrencyObject(storedCurrency)) {
+                selectedCurrency = storedCurrency;
+                selectedCurrencyName = getLastWord(selectedCurrency.name);
+            } else {
+                alert(JSON.stringify(storedCurrency));
+                setDefaultCurrency();
+            }
+    
+            starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
+            balance = storedBalance;
+            balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;        
+            
+            loadPurchases();
+            
+            initSpeechRecognition();
         }
-
-        starting_balance.textContent = `Initial Balance: ${selectedCurrency.symbol}${parseFloat(initialDeposit)}`;
-        balance = storedBalance;
-        balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;        
-        
-        loadPurchases();
-        
-        initSpeechRecognition();
     }
 
     if (feature === '3D Sphere') {

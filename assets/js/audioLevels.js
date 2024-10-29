@@ -7,6 +7,7 @@ function initAudioVisualization(stream) {
     analyser.fftSize = 256; // Resolution for frequency data
 
     const canvas = document.getElementById('audioCanvas');
+
     const ctx = canvas.getContext('2d');
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -31,7 +32,6 @@ function initAudioVisualization(stream) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     
         analyser.getByteFrequencyData(dataArray);
-    
         const barWidth = canvas.width / 20;
         const middleY = canvas.height / 2 ; // Middle line for symmetry
     
@@ -70,11 +70,12 @@ function initAudioVisualization(stream) {
     drawVisualizer();
 }
 
-// Get microphone input and start visualization
-navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(function(stream) {
-      initAudioVisualization(stream); // Pass stream directly
-  })
-  .catch(function(err) {
-      console.error('Error accessing microphone: ', err);
-  });
+function startAudioVisuals() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(function(stream) {
+          initAudioVisualization(stream); // Pass stream directly
+      })
+      .catch(function(err) {
+          console.error('Error accessing microphone: ', err);
+      });
+}

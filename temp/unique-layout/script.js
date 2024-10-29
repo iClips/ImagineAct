@@ -14,3 +14,16 @@ function toggleContent(event) {
         content.style.display = "block";
     }
 }
+
+// Select elements you want to target
+const elements = document.querySelectorAll('.target-elements');
+
+// Add the bound style to all selected elements
+elements.forEach(element => element.classList.add('bound-style'));
+
+// Or, toggle it on click or another event:
+elements.forEach(element => {
+    element.addEventListener('click', () => {
+        element.classList.toggle('bound-style');
+    });
+});
