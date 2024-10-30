@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guided Voice Command Purchase</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #111;
+        color: #fff;
+    }
+
+    .voice-command-button {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background: #333;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.3s, box-shadow 0.3s;
+        border: 5px solid #555; /* 3D effect */
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .voice-command-button:active {
+        background: #444;
+    }
+
+    .progress-circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 120px; /* Inner circle width */
+        height: 120px; /* Inner circle height */
+        border-radius: 50%;
+        border: 10px solid transparent; /* For progress display */
+        border-top-color: #4caf50; /* Color of the progress */
+        transform: translate(-50%, -50%);
+        animation: rotate 68s linear infinite;
+        z-index: 1; /* Place progress circle above the button */
+    }
+
+    @keyframes rotate {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .marker {
+        position: absolute;
+        width: 2px;
+        height: 10px;
+        background: #fff;
+        border-radius: 1px;
+        transform: translate(-50%, -50%);
+        z-index: 0; /* Behind the progress circle */
+    }
+
+    .instructions {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 1em;
+    }
+</style>
+</head>
+<body>
+
+<div class="instructions" id="instructions">Press and hold to start your voice-command purchase.</div>
+<div class="voice-command-button" id="voiceButton">
+    🧠 Imagine & Believe
+    <div class="progress-circle" id="progressCircle"></div>
+    <div class="progress-indicator" id="progressIndicator"></div>
+</div>
+
+<script>
+    let progress = 0;
+    let progressInterval;
+    const instructions = document.getElementById("instructions");
+    const progressIndicator = document.getElementById("progressIndicator");
+    const progressCircle = document.getElementById("progressCircle");
+
+    // Create markers every 17 seconds
+    for (let i = 0; i < 4; i++) {
+        const marker = document.createElement('div');
+        const angle = (i * 17 * 360 / 68) * (Math.PI / 180); 
+        const x = 75 * Math.cos(angle) + 75; 
+        const y = 75 * Math.sin(angle) + 75; 
+        marker.style.left = `${x}px`;
+        marker.style.top = `${y}px`;
+        marker.classList.add('marker');
+        document.body.appendChild(marker);
+    }
+
+    function startVisualization() {
+        instructions.innerText = "Step 1: Visualize the scenario - imagine the setting, cashier, and product.";
+        progressIndicator.innerText = "Visualizing...";
+    }
+
+    function startEmotion() {
+        instructions.innerText = "Step 2: Add emotions - feel the excitement as if it's real.";
+        progressIndicator.innerText = "Feeling...";
+    }
+
+    function startCommand() {
+        instructions.innerText = "Step 3: Release and voice your command to complete the purchase.";
+        progressIndicator.innerText = "Ready to Command...";
+    }
+
+    function resetButton() {
+        clearInterval(progressInterval);
+        progress = 0;
+        instructions.innerText = "Press and hold to start your voice-command purchase.";
+        progressIndicator.innerText = "";
+        progressCircle.style.borderTopColor = "transparent"; // Reset progress
+    }
+
+    // Button hold logic
+    const guideButton = document.getElementById("voiceButton");
+
+    guideButton.addEventListener("mousedown", startGuidedVCPurchase);
+    guideButton.addEventListener("mouseup", resetButton);    
+    guideButton.addEventListener("touchstart", startGuidedVCPurchase);
+    guideButton.addEventListener("touchend", resetButton);
+
+    function startGuidedVCPurchase() {
+        progressInterval = setInterval(() => {
+            progress += 1;
+            if (progress <= 33) {
+                startVisualization();
+            } else if (progress <= 66) {
+                startEmotion();
+            } else if (progress <= 100) {
+                startCommand();
+            }
+
+            // Update progress circle
+            if (progress <= 68) {
+                progressCircle.style.borderTopColor = "#4caf50"; // Light up progress
+            }
+            if (progress >= 68) {
+                clearInterval(progressInterval);
+                promptVoiceCommand();
+            }
+        }, 1000);
+    }
+    function promptVoiceCommand() {
+        instructions.innerText = "Listening for command... please speak clearly.";
+        guideButton.style.background = "#555";
+    }
+</script>
+
+</body>
+</html>

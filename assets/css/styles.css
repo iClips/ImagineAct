@@ -269,7 +269,7 @@ body {
     box-shadow: var(--titlebar-shadow);
     height: var(--titlebar-height);
     color: var(--title-color);
-    padding: var(--titlebar-padding);
+    padding: var(--padding-box);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -303,8 +303,6 @@ body {
 }
 
 .titlebar h1 {
-    margin: 0;
-    margin-left: 12px;
     color: var(--title-color);
 }
 
@@ -552,11 +550,21 @@ body {
     box-shadow: 0 0 8px #ff0;
 }
 
+.break-title {
+    display: inline; /* Default hidden for larger screens */
+}
 
 @media (max-width: 780px) {
     .titlebar .buttons {
         gap: 10px;
     }
+    
+    .break-title {
+        display: inline-block;
+        width: 100%;
+        line-height: 0;
+    }
+
     .achievements {
         gap: 8px;
     }
@@ -588,7 +596,6 @@ body {
 }
 
 #loginScreen h2 {
-    font-size: 24px;
     margin-bottom: 20px;
     color: var(--button-bg);
     text-shadow: 0 0 10px var(--button-bg);
@@ -640,15 +647,11 @@ body {
 }
 
 .login-purpose {
-    margin: 60px;
-    max-width: 100%;
+    margin-top: 60px;
+    width: 100%;
     color: var(--text-color);
     background-color: var(--bg-color);
-    padding: 20px;
-    border: 1px solid var(--input-border);
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+    padding: var(--padding-content);    
 }
 
 @media (max-width: 768px) {
@@ -659,33 +662,24 @@ body {
     }
 
     .login-purpose {
-        margin: 20px;
         padding: 15px;
     }
 
-    #loginScreen h2 {
-        font-size: 20px;
-    }
-
     #loginScreen button {
-        font-size: 16px;
         padding: 8px 16px;
     }
 }
 
 @media (max-width: 480px) {
     #loginScreen h2 {
-        font-size: 18px;
         margin-bottom: 15px;
     }
 
     #loginScreen button {
-        font-size: 14px;
         padding: 6px 12px;
     }
 
     .login-purpose {
-        margin: 10px;
         padding: var(--small-padding);
     }
 }
@@ -709,7 +703,7 @@ body {
 
 #audioCanvas {
     width: 100%;
-    height: 80px;
+    height: 120px;
     display: block;
 }
 
@@ -952,10 +946,6 @@ body {
 }
 
 @media (max-width: 600px) {
-    .titlebar h1 {
-        font-size: 20px;
-    }
-
     #balance {
         font-size: 28px;
     }
@@ -1072,6 +1062,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 60px;
+    margin-top: 80px;
 }
 
 
@@ -1086,7 +1077,7 @@ body {
     transition: background-color 0.5s, color 1.0s, border 0.3s;
     overflow: hidden;
     cursor: pointer;
-
+    background: var(--color-bg-titlebar);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1126,6 +1117,7 @@ body {
     height: 100%;
     width: 100%;
     border-radius: var(--border-radius);
+    text-shadow: 0px 0px 5px #fff;
 }
 
 .item-list .item:hover,
@@ -1144,6 +1136,10 @@ body {
     cursor: default;
     height: 80vh;
     font-weight: 600;
+}
+
+.item-content.active + .item-header {
+    font-weight: 700;
 }
 
 .item-list .item-content.active {
@@ -1396,6 +1392,22 @@ h3 {
 
 /******** /BUDGET CHALLENGE ***************/
 
+
+/******** Sphere ***************/
+#orbitControl {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid #00aaff;
+    transform: translate(-50%, -50%);
+    cursor: pointer; /* Change cursor to pointer */
+}
+/******** /Sphere ***************/
+
 /***************** AI Prevents / Cure Mental Health ****************/
 .mental .container {
     max-width: 800px;
@@ -1408,14 +1420,12 @@ h3 {
 
 .mental h1 {
     color: #0078d4;
-    font-size: 28px;
     text-align: center;
     margin-bottom: 20px;
 }
 
 .mental h2 {
     color: #005a9e;
-    font-size: 22px;
     margin-top: 20px;
 }
 

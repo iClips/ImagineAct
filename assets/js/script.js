@@ -37,15 +37,10 @@ let SpeechRecognition;
 document.addEventListener('DOMContentLoaded', () => {
     resetGameLink = document.getElementById('resetGame');
     resetLevelLink = document.getElementById('resetLevel');
-    
-    
-    
     gameScreen = document.getElementById('gameScreen');
-    
     recognizedTextLabel = document.getElementById('recognizedText');
     languageSelect = document.getElementById('language');
     themeSelect = document.getElementById('theme');
-
     dropdown_content = document.getElementById('dropdown_content');
     btn_menu = document.getElementById('btn_menu');
     aboutLink = document.getElementById('aboutLink');
@@ -53,54 +48,103 @@ document.addEventListener('DOMContentLoaded', () => {
     popupClose = document.getElementById('closePopup');
     soundBars = document.querySelectorAll('.sound-bar');
     
-    
     registerEventListeners();
     
     const theme = localStorage.getItem('theme');
+    if (theme) {
+        setTheme(theme);
+    }
     
-    
-    if (popupClose  !== 'undefined') {
+    if (popupClose) {
         popupClose.addEventListener('click', () => {
             aboutPopup.style.display = 'none';
         });
     }
     
-    if (!loadLoginScreen()) {
-        return;
-    }     
+    loadLoginScreen();
 });
 
 async function loadLoginScreen() {
     try {
         const response = await fetch('inc/loginScreen.html');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
         const markup = await response.text();
         const container = document.getElementById('loginContainer');
-        if (!container) {
-            return false;
-        }
+        if (!container) return;
+        
         container.innerHTML = markup;
         
         loginScreen = document.getElementById('loginScreen');
-        loginButton = document.getElementById('loginButton');        
-
+        loginButton = document.getElementById('loginButton');
+        
         const storedUsername = localStorage.getItem('username');
         initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
-
+        
         if (storedUsername && !isNaN(initialDeposit)) {
             loginScreen.style.display = 'none';
-            gameScreen.style.display = 'block';            
+            gameScreen.style.display = 'block';
         } else {
             loginScreen.style.display = 'block';
             gameScreen.style.display = 'none';
         }
 
-        return true;
+        if (loginButton) {
+            loginButton.addEventListener('click', handleLogin);
+        } else {
+            console.error('Login button not found.');
+        }
+        
     } catch (error) {
         console.error('Error loading Login Screen:', error);
-        showNote('Error', 'Error loading Login Screen: ' + error);
-
-        return false;
+        showNote('Error', `Error loading Login Screen: ${error}`);
     }
+}
+
+function handleLogin() {
+    const username = document.getElementById('username').value;
+    initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
+    
+    const currencyInput = document.getElementById('currency');
+    const selectedCurrencySymbol = currencyInput.value;
+    let selectedCurrencyObj = null;
+    
+    const datalistOptions = document.querySelectorAll('#currencies option');
+    
+    datalistOptions.forEach(option => {
+        if (option.value === selectedCurrencySymbol) {
+            const currencyName = option.textContent.split(' - ')[1];
+            selectedCurrencyObj = {
+                name: currencyName,
+                symbol: selectedCurrencySymbol
+            };
+        }
+    });
+
+    if (!selectedCurrencyObj) {
+        alert('Please select a valid currency.');
+        return;
+    }
+    
+    if (!initialDeposit || initialDeposit <= 0) {
+        alert('You have to start with an initial balance.');
+        return;
+    }
+    
+    if (!username) {
+        alert('Please enter your username.');
+        return;
+    }
+    
+    localStorage.setItem('username', username);
+    localStorage.setItem('balance', initialDeposit.toFixed(2));
+    localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));        
+    localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
+    localStorage.setItem('purchases', JSON.stringify([]));
+
+    loginScreen.style.display = 'none';
+    gameScreen.style.display = 'block';
+    showNote('message', "Welcome to Imagine Act, or I Act.");
 }
 
 window.onclick = (event) => {
@@ -112,33 +156,6 @@ window.onclick = (event) => {
     }
 };
 
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-      elmnt = z[i];
-      /*search for elements with a certain atrribute:*/
-      file = elmnt.getAttribute("w3-include-html");
-      if (file) {
-        /* Make an HTTP request using the attribute value as the file name: */
-        xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4) {
-            if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-            if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-            /* Remove the attribute, and call this function once more: */
-            elmnt.removeAttribute("w3-include-html");
-            includeHTML();
-          }
-        }
-        xhttp.open("GET", file, true);
-        xhttp.send();
-        /* Exit the function: */
-        return;
-      }
-    }
-}
 function registerEventListeners() {
     languageSelect.addEventListener('change', () => {
         recognitionLang = languageSelect.value;
@@ -156,75 +173,30 @@ function registerEventListeners() {
     themeSelect.addEventListener('change', () => {
         setTheme(themeSelect.value);
     });
-
-    if (loginButton != null) {
-        loginButton.addEventListener('click', () => {
-            const username = document.getElementById('username').value;
-            initialDeposit = parseFloat(document.getElementById('initialDeposit').value);
-            
-            const currencyInput = document.getElementById('currency');
-            const selectedCurrencySymbol = currencyInput.value;
-            let selectedCurrencyObj = null;
-            
-            const datalistOptions = document.querySelectorAll('#currencies option');
-            
-            datalistOptions.forEach(option => {
-                if (option.value === selectedCurrencySymbol) {
-                    const currencyName = option.textContent.split(' - ')[1];
-                    selectedCurrencyObj = {
-                        name: currencyName,
-                        symbol: selectedCurrencySymbol
-                    };
-                }
-            });
-        
-            if (selectedCurrencyObj) {
-                localStorage.setItem('currency', JSON.stringify(selectedCurrencyObj));
-                selectedCurrency = selectedCurrencyObj;
-            } else {
-                alert('Please select a valid currency.');
-                return;
-            }
-        
-            if (!initialDeposit || initialDeposit <= 0) {
-                alert('You have to start with an initial balance.');
-                return;
-            }
-        
-            if (!username || isNaN(initialDeposit) || !selectedCurrency) {
-                alert('Kindly fill in all fields to initialize the game.');
-                return;
-            }
-        
-            localStorage.setItem('username', username);
-            localStorage.setItem('balance', initialDeposit.toFixed(2));
-            localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));        
-            localStorage.setItem('purchases', JSON.stringify([]));
-
-            loginScreen.style.display = 'none';
-            gameScreen.style.display = 'block';
-            showNote('message', "Welcome to Imagine Act, or I Act.");
+    
+    if (resetGameLink) {
+        resetGameLink.addEventListener('click', () => {
+            resetGame();
         });
-    } else {
-        showNote('error', 'Error: Login Button Failed')
+    }
+    if (resetLevelLink) {
+        resetLevelLink.addEventListener('click', () => {
+            resetLevel();
+        });
+    }
+    
+    if (aboutLink) {
+        aboutLink.addEventListener('click', () => {
+            dropdown_content.style.display = 'none';
+            aboutPopup.style.display = 'block';
+        });
     }
 
-    
-    resetGameLink.addEventListener('click', () => {
-        resetGame();
-    });
-    resetLevelLink.addEventListener('click', () => {
-        resetLevel();
-    });
-    
-    aboutLink.addEventListener('click', () => {
-        dropdown_content.style.display = 'none';
-        aboutPopup.style.display = 'block';
-    });
-
-    btn_menu.addEventListener('click', () => {
-        toggleMenuPopup();
-    });
+    if (btn_menu) {
+        btn_menu.addEventListener('click', () => {
+            toggleMenuPopup();
+        });
+    }
 }
 
 function showNote(type, message) {
@@ -969,59 +941,5 @@ function toggleContent(event, feature) {
     }
 }
 
-let scene, camera, renderer, sphere, controls;
-
-
-function init3DSphere() {
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, 300);
-    document.getElementById('earth-container').appendChild(renderer.domElement);
-
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshBasicMaterial({
-        color: 0x00aaff, // Blue color for simplicity
-        wireframe: true  // Use wireframe to see the structure
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
-
-    // OrbitControls to enable zoom and rotation
-    controls = new THREE.OrbitControls(camera, renderer.domElement);    
-
-    // Adjust the zoom and rotation limits
-    controls.enableZoom = true;
-    controls.enableDamping = true;  // Smooth damping (inertia)
-    controls.dampingFactor = 0.25;  // Controls the inertia effect
-    controls.minDistance = 1;       // Minimum zoom (close to the sphere)
-    controls.maxDistance = 10;      // Maximum zoom (far from the sphere)
-    controls.enablePan = false;     // Disable panning to focus on rotation
-    controls.touches = {
-        ONE: THREE.TOUCH.ROTATE,    // One-finger rotates the sphere
-        TWO: THREE.TOUCH.DOLLY_ROTATE // Two-finger zooms and rotates
-    };
-
-    // Position the camera initially
-    camera.position.z = 3;
-
-    animate();
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-
-    controls.update(); // Update controls to allow rotation and zoom
-    renderer.render(scene, camera);
-}
-
-// Handle window resizing
-window.addEventListener('resize', () => {
-    if (renderer) {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-    }
-});
 
 

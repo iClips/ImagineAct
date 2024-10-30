@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Mall Navigation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        #earth-container {
+            width: 100%;
+            height: 100vh;
+        }
+        #orbitControl {
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid #00aaff;
+            transform: translate(-50%, -50%);
+            cursor: pointer; /* Change cursor to pointer */
+        }
+    </style>    
+</head>
+<body>
+    <div id="orbitControl"></div>
+    <div id="earth-container">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, sphere, controls, orbitControl;
+      
+        document.addEventListener('DOMContentLoaded', () => {
+            orbitControl = document.getElementById('orbitControl');
+            init3DSphere();
+        });
+
+        function init3DSphere() {
+            // Create scene and camera
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('earth-container').appendChild(renderer.domElement);
+
+            const floorGrid = new THREE.GridHelper(500, 100);
+            scene.add(floorGrid);
+
+            const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+            scene.add(ambientLight);
+
+            // Create top light (directional light)
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // White light
+            directionalLight.position.set(0, 50, 0); // Position the light above the scene
+            directionalLight.castShadow = true; // Optional: enable shadows
+            scene.add(directionalLight);
+
+            // Create left side grid
+            const leftGrid = new THREE.GridHelper(500, 300);
+            leftGrid.rotation.z = Math.PI / 2; // Rotate to face the left side
+            leftGrid.position.x = -250; // Move left to align with the floor grid
+            leftGrid.position.y = 250; // Set height to 0 to align with the floor
+            scene.add(leftGrid);
+
+            // Create back side grid
+            const backGrid = new THREE.GridHelper(500, 20);
+            backGrid.rotation.x = Math.PI / 2;
+            backGrid.position.z = -250;
+            backGrid.position.y = 250; 
+            scene.add(backGrid);
+
+            // Create a sphere representing the earth
+            const geometry = new THREE.SphereGeometry(100, 32, 32);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x00aaff, 
+                wireframe: true 
+            });
+            sphere = new THREE.Mesh(geometry, material);
+            sphere.position.y = 100;
+            scene.add(sphere);
+
+            // Create the mall building
+            const mallGeometry = new THREE.BoxGeometry(1, 0.5, 1); // Mall size
+            const mallMaterial = new THREE.MeshBasicMaterial({ color: 0xffcc00 });
+            const mall = new THREE.Mesh(mallGeometry, mallMaterial);
+            mall.position.y = 200.5; // Position the mall above the sphere
+            scene.add(mall);
+
+            // Create shops inside the mall
+            const shopGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // Each shop size
+            const shopMaterial = new THREE.MeshBasicMaterial({ color: 0x888888 });
+
+            for (let i = 0; i < 27; i++) {
+                const shop = new THREE.Mesh(shopGeometry, shopMaterial);
+                // Calculate positions for shops (random layout)
+                shop.position.x = (Math.random() - 0.5) * 1.5; // Random x position
+                shop.position.y = 0; // On ground level
+                shop.position.z = (Math.random() - 0.5) * 1.5; // Random z position
+                mall.add(shop);
+            }
+
+            // OrbitControls to enable zoom and rotation
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = true; 
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.25;
+            controls.enablePan = true;
+
+            camera.position.z = 150;
+
+            // Add event listeners for dragging (to rotate sphere)
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            function onMouseDown(event) {
+                isDragging = true;
+            }
+
+            function onMouseMove(event) {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: event.clientX - previousMousePosition.x,
+                        y: event.clientY - previousMousePosition.y,
+                    };
+                    // Rotate the sphere
+                    sphere.rotation.y += deltaMove.x * 0.01; // Rotate based on mouse movement
+                    sphere.rotation.x += deltaMove.y * 0.01; // Rotate based on mouse movement
+                }
+                previousMousePosition = {
+                    x: event.clientX,
+                    y: event.clientY,
+                };
+            }
+
+            function onMouseUp() {
+                isDragging = false;
+            }
+
+            window.addEventListener('mousedown', onMouseDown);
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('mouseup', onMouseUp);
+
+            // Handle touch events for mobile
+            let touchStart = { x: 0, y: 0 };
+            let isTouching = false;
+
+            function onTouchStart(event) {
+                isTouching = true;
+                touchStart.x = event.touches[0].clientX;
+                touchStart.y = event.touches[0].clientY;
+            }
+
+            function onTouchMove(event) {
+                if (isTouching) {
+                    const deltaMove = {
+                        x: event.touches[0].clientX - touchStart.x,
+                        y: event.touches[0].clientY - touchStart.y,
+                    };
+                    // Rotate the sphere
+                    sphere.rotation.y += deltaMove.x * 0.01; // Rotate based on touch movement
+                    sphere.rotation.x += deltaMove.y * 0.01; // Rotate based on touch movement
+                }
+            }
+
+            function onTouchEnd() {
+                isTouching = false;
+            }
+
+            window.addEventListener('touchstart', onTouchStart);
+            window.addEventListener('touchmove', onTouchMove);
+            window.addEventListener('touchend', onTouchEnd);
+
+            animate();
+        }
+
+        
+        let isDragging = false;
+
+        orbitControl.addEventListener('mousedown', (event) => {
+            isDragging = true;
+            orbitControl.style.pointerEvents = 'none'; // Disable pointer events on the circle
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            orbitControl.style.pointerEvents = 'auto'; // Re-enable pointer events
+        });
+
+        orbitControl.addEventListener('mousemove', (event) => {
+            if (isDragging) {
+                // Calculate mouse movement
+                const deltaX = event.movementX;
+                const deltaY = event.movementY;
+
+                // Update orbit controls based on mouse movement
+                controls.rotateLeft(deltaX * 0.01);
+                controls.rotateUp(deltaY * 0.01);
+            }
+        });
+        function handleKeyDown(event) {
+            const key = event.key; // Get the key that was pressed
+
+            // Move the sphere based on key presses
+            switch (key) {
+                case 'ArrowUp':    // Move up
+                    sphere.position.y += 1;
+                    break;
+                case 'ArrowDown':  // Move down
+                    sphere.position.y -= 1;
+                    break;
+                case 'ArrowLeft':  // Move left
+                    sphere.position.x -= 1;
+                    break;
+                case 'ArrowRight': // Move right
+                    sphere.position.x += 1;
+                    break;
+                case 'w':         // Move forward (in Z)
+                    sphere.position.z -= 1;
+                    break;
+                case 's':         // Move backward (in Z)
+                    sphere.position.z += 1;
+                    break;
+            }
+        }
+
+        // Add event listener for keydown events
+        window.addEventListener('keydown', handleKeyDown);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update(); 
+            // sphere.position.x += 0.1;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            if (renderer) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            }
+        });        
+    </script>
+</body>
+</html>

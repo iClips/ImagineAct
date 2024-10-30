@@ -12,7 +12,7 @@ const material = new THREE.MeshBasicMaterial({
     wireframe: true  // Use wireframe to see the structure
 });
 const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
+scene.add(planet);
 
 // OrbitControls to enable zoom and rotation
 const controls = new THREE.OrbitControls(camera, renderer.domElement);

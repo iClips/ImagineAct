@@ -87,7 +87,7 @@
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Voice Command Purchases')">❌</button>
                     <canvas id="audioCanvas"></canvas>
-                    <p>Interact with the app using voice commands for a hands-free experience.</p>
+                    <p>Interact with the app using voice commands. The big button is for a guided experience.</p>
                     <div class="game-content">
                         <div id="speechContainer">
                             <button id="controlSpeechButton" aria-pressed="true">🎤</button>
@@ -103,6 +103,12 @@
                                 <div id="recognizedText">Press the speech button to start purchasing using voice
                                     commands</div>
                             </div>
+                        </div>
+                        <div class="instructions" id="instructions">Press and hold to start your guided voice-command purchase.</div>
+                        <div class="voice-command-button" id="voiceButton">
+                            🧠 Imagine & Believe
+                            <div class="progress-circle" id="progressCircle"></div>
+                            <div class="progress-indicator" id="progressIndicator"></div>
                         </div>
 
                         <div id="balanceContainer">
@@ -130,6 +136,7 @@
                 <div class="item-header">Shopping Sphere</div>
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, '3D Sphere')">❌</button>
+                    <div id="orbitControl"></div>
                     <div style="display: block;" id="earth-container"></div>
                 </div>
             </div>
@@ -380,6 +387,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="assets/js/audioLevels.js"></script>
+    <script src="assets/js/3DSphere.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
 </body>
