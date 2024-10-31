@@ -72,6 +72,55 @@
         text-align: center;
         font-size: 1em;
     }
+
+    .button-container {
+        margin: 60px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .glow-button {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: radial-gradient(circle at center, #ff005a, #430089, #140033); /* Gradient for inner color */
+        box-shadow: 0 0 20px rgba(255, 0, 90, 0.6), 0 0 40px rgba(67, 0, 137, 0.5), 0 0 60px rgba(20, 0, 51, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        animation: glow-pulse 2s infinite ease-in-out;
+        border: 5px solid #555555b7;
+    }
+
+    .glow-button:hover {
+        box-shadow: 0 0 30px rgba(255, 0, 90, 0.8), 0 0 60px rgba(67, 0, 137, 0.7), 0 0 80px rgba(20, 0, 51, 0.6);
+    }
+
+    .inner-circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #ffeb3b;
+        box-shadow: 0 0 10px #ffeb3b, inset 0 0 15px #ffeb3b;
+        transition: transform 0.3s;
+    }
+
+    .glow-button:active .inner-circle {
+        transform: scale(0.9);
+    }
+
+    /* Animation for glowing pulse effect */
+    @keyframes glow-pulse {
+        0%, 100% {
+            box-shadow: 0 0 20px rgba(255, 0, 90, 0.6), 0 0 40px rgba(67, 0, 137, 0.5), 0 0 60px rgba(20, 0, 51, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 40px rgba(255, 0, 90, 0.8), 0 0 60px rgba(67, 0, 137, 0.7), 0 0 80px rgba(20, 0, 51, 0.6);
+        }
+    }
 </style>
 </head>
 <body>
@@ -81,6 +130,11 @@
     🧠 Imagine & Believe
     <div class="progress-circle" id="progressCircle"></div>
     <div class="progress-indicator" id="progressIndicator"></div>
+</div>
+<div class="button-container">
+    <div class="glow-button" onclick="buttonAction()">
+        <div class="inner-circle"></div>
+    </div>
 </div>
 
 <script>

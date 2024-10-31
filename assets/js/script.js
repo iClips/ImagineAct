@@ -93,6 +93,7 @@ async function loadLoginScreen() {
             loginButton.addEventListener('click', handleLogin);
         } else {
             console.error('Login button not found.');
+            showNote('error', 'Login button not found.');
         }
         
     } catch (error) {

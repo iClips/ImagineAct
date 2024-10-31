@@ -104,13 +104,16 @@
                                     commands</div>
                             </div>
                         </div>
-                        <div class="instructions" id="instructions">Press and hold to start your guided voice-command purchase.</div>
-                        <div class="voice-command-button" id="voiceButton">
-                            🧠 Imagine & Believe
-                            <div class="progress-circle" id="progressCircle"></div>
-                            <div class="progress-indicator" id="progressIndicator"></div>
+                        <div class="button-container">
+                            <div class="instructions" id="instructions"><p class="responsive">Press and hold to start your guided voice-command purchase.</p></div>
+                            <div class="glow-button" onclick="buttonAction()">
+                                <div class="inner-circle"></div>
+                                🧠 Imagine & Believe
+                                <div class="progress-circle" id="progressCircle"></div>
+                                <div class="progress-indicator" id="progressIndicator"></div>
+                            </div>
                         </div>
-
+                        
                         <div id="balanceContainer">
                             <div class="account-type">
                                 <h3 class="responsive">Balance</h3>
@@ -279,111 +282,97 @@
         </div>
     </div>
     <div id="aboutPopup" class="popup">
-        <span id="closePopup" class="popup-close">&times;</span>
-        <h2 class="responsive">About the Game</h2>
-        <p><strong>Welcome to Imagine Act!</strong></p>
-        <ul>
-            <li>The goal is to use your imagination and believe in making purchases real in your reality.</li>
-            <li>The more you play, the more likely you are to buy items for real. Make each purchase as realistic as
-                possible.</li>
-        </ul>
-
-        <p><strong>Overview of the Game:</strong></p>
-        <ul>
-            <li><strong>Theme:</strong> Retro, arcade-inspired appearance with a dark theme, bright colors, and
-                nostalgic fonts.</li>
-            <li><strong>Objective:</strong> Manage your virtual balance while making purchases using voice commands. The
-                game tracks your balance and displays your bought items.</li>
-        </ul>
-
-        <p><strong>How to Play:</strong></p>
-        <ul>
-            <li><strong>1. Start the Game:</strong>
-                <ul>
-                    <li>Enter your display name and initial deposit (starting balance) on the login screen.</li>
-                    <li>Click <em>"Let’s start"</em> to proceed to the main game screen.</li>
-                </ul>
-            </li>
-            <li>
-                <h3 class="responsive">2. Buying/Acquiring/Paying for an Item</h3>
-                <h4>How to Speak It:</h4>
-                <p>
-                    <strong>Basic Format:</strong> "I [buy/purchase/get/pay
-                    for/acquire/obtain/order/book/reserve/take/give away/give] [item name] for [amount] [currency]."
-                </p>
-                <p><strong>Examples:</strong></p>
-                <ul>
-                    <li>"I buy a laptop for 1,000 [currency]."</li>
-                    <li>"I purchase the book for 15 [currency]."</li>
-                    <li>"I get a car for fifty thousand [currency]."</li>
-                    <li>"I pay for a meal for twenty [currency]."</li>
-                    <li>"I acquire a house for 250,000 [currency]."</li>
-                    <li>"I reserve a hotel room for one hundred [currency]."</li>
-                    <li>"I take the package for 75 [currency]."</li>
-                </ul>
-                <p><strong>Notes:</strong></p>
-                <ul>
-                    <li>The command must start with "I" followed by any of the listed verbs.</li>
-                    <li>The item name can be anything, and the amount can be a numeric value or a spelled-out number.
-                    </li>
-                    <li>The currency can be optional but if included, it can be in various formats like dollars, euros,
-                        pounds, etc.</li>
-                </ul>
-            </li>
-            <li>
-                <h3 class="responsive">3. Removing an Item</h3>
-                <h4>How to Speak It:</h4>
-                <p><strong>Basic Format:</strong> "[remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]
-                    [item name]" or "[Item name] [remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]."
-                </p>
-                <p><strong>Examples:</strong></p>
-                <ul>
-                    <li>"Remove the laptop."</li>
-                    <li>"Delete the booking."</li>
-                    <li>"Drop the reservation."</li>
-                    <li>"Cancel the order."</li>
-                    <li>"Erase the meal from the list."</li>
-                    <li>"Take out the package."</li>
-                    <li>"The hotel room, remove."</li>
-                </ul>
-                <p><strong>Notes:</strong></p>
-                <ul>
-                    <li>This command can be phrased either by starting with the action verb followed by the item or by
-                        stating the item first followed by the action verb.</li>
-                    <li>The item name should correspond to something already in your list or inventory.</li>
-                </ul>
-            </li>
-            <li><strong>Balance Management:</strong> Your virtual balance updates based on your purchases, subtracting
-                the spent amount.</li>
-            <li><strong>Receipt Display:</strong> Successful purchases are listed in a receipt format, showing what
-                you've bought.</li>
-            <li><strong>Controls:</strong>
-                <ul>
-                    <li><strong>Speech Recognition:</strong> Control the game through voice commands. Press the
-                        <em>"Start"</em> button to activate the voice command feature.</li>
-                    <li><strong>Menu Options:</strong> Use the dropdown menu at the top to view game information
-                        (<em>"About"</em>) or reset the game to start over.</li>
-                </ul>
-            </li>
-        </ul>
-        <p><strong>Winning/Losing:</strong></p>
-        <ul>
-            <li>There’s no traditional win/lose condition. Focus on managing your balance while interacting with the
-                system. The game could end when you run out of money or decide to stop playing.</li>
-        </ul>
-        <p><strong>Additional Features:</strong></p>
-        <ul>
-            <li><strong>Language Selector:</strong> Choose between different English dialects (American or British) for
-                voice recognition.</li>
-            <li><strong>Responsive Design:</strong> The interface adapts to different screen sizes, including mobile
-                devices.</li>
-        </ul>
-
-        <p class="summary-about"><strong>In summary,</strong> Imagine Act is an interactive shopping simulation game
-            where you use your voice to buy items and manage your balance. It offers an engaging way to practice
-            decision-making and budgeting in a virtual environment.</p>
-        <br /><br /><br />
+        <div class="popup-content">
+    
+            <span id="closePopup" class="popup-close">&times;</span>
+            <h2>About the Game</h2>
+            <p><strong>Welcome to Imagine Act!</strong></p>
+            <ul>
+                <li>The goal is to use your imagination and believe in making purchases real in your reality.</li>
+                <li>The more you play, the more likely you are to buy items for real. Make each purchase as realistic as possible.</li>
+            </ul>
+        
+            <p><strong>Overview of the Game:</strong></p>
+            <ul>
+                <li><strong>Theme:</strong> Retro, arcade-inspired appearance with a dark theme, bright colors, and nostalgic fonts.</li>
+                <li><strong>Objective:</strong> Manage your virtual balance while making purchases using voice commands. The game tracks your balance and displays your bought items.</li>
+            </ul>
+        
+            <p><strong>How to Play:</strong></p>
+            <ul>
+                <li><strong>1. Start the Game:</strong>
+                    <ul>
+                        <li>Enter your display name and initial deposit (starting balance) on the login screen.</li>
+                        <li>Click <em>"Let’s start"</em> to proceed to the main game screen.</li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>2. Buying/Acquiring/Paying for an Item</h3>
+                    <h4>How to Speak It:</h4>
+                    <p>
+                        <strong>Basic Format:</strong> "I [buy/purchase/get/pay for/acquire/obtain/order/book/reserve/take/give away/give] [item name] for [amount] [currency]."
+                    </p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"I buy a laptop for 1,000 [currency]."</li>
+                        <li>"I purchase the book for 15 [currency]."</li>
+                        <li>"I get a car for fifty thousand [currency]."</li>
+                        <li>"I pay for a meal for twenty [currency]."</li>
+                        <li>"I acquire a house for 250,000 [currency]."</li>
+                        <li>"I reserve a hotel room for one hundred [currency]."</li>
+                        <li>"I take the package for 75 [currency]."</li>
+                    </ul>
+                    <p><strong>Notes:</strong></p>
+                    <ul>
+                        <li>The command must start with "I" followed by any of the listed verbs.</li>
+                        <li>The item name can be anything, and the amount can be a numeric value or a spelled-out number.</li>
+                        <li>The currency can be optional but if included, it can be in various formats like dollars, euros, pounds, etc.</li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>3. Removing an Item</h3>
+                    <h4>How to Speak It:</h4>
+                    <p><strong>Basic Format:</strong> "[remove/delete/drop/cancel/discard/erase/eliminate/clear/take out] [item name]" or "[Item name] [remove/delete/drop/cancel/discard/erase/eliminate/clear/take out]."</p>
+                    <p><strong>Examples:</strong></p>
+                    <ul>
+                        <li>"Remove the laptop."</li>
+                        <li>"Delete the booking."</li>
+                        <li>"Drop the reservation."</li>
+                        <li>"Cancel the order."</li>
+                        <li>"Erase the meal from the list."</li>
+                        <li>"Take out the package."</li>
+                        <li>"The hotel room, remove."</li>
+                    </ul>
+                    <p><strong>Notes:</strong></p>
+                    <ul>
+                        <li>This command can be phrased either by starting with the action verb followed by the item or by stating the item first followed by the action verb.</li>
+                        <li>The item name should correspond to something already in your list or inventory.</li>
+                    </ul>
+                </li>
+                <li><strong>Balance Management:</strong> Your virtual balance updates based on your purchases, subtracting the spent amount.</li>
+                <li><strong>Receipt Display:</strong> Successful purchases are listed in a receipt format, showing what you've bought.</li>
+                <li><strong>Controls:</strong>
+                    <ul>
+                        <li><strong>Speech Recognition:</strong> Control the game through voice commands. Press the <em>"Start"</em> button to activate the voice command feature.</li>
+                        <li><strong>Menu Options:</strong> Use the dropdown menu at the top to view game information (<em>"About"</em>) or reset the game to start over.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Winning/Losing:</strong></p>
+            <ul>
+                <li>There’s no traditional win/lose condition. Focus on managing your balance while interacting with the system. The game could end when you run out of money or decide to stop playing.</li>
+            </ul>
+            <p><strong>Additional Features:</strong></p>
+            <ul>
+                <li><strong>Language Selector:</strong> Choose between different English dialects (American or British) for voice recognition.</li>
+                <li><strong>Responsive Design:</strong> The interface adapts to different screen sizes, including mobile devices.</li>
+            </ul>
+        
+            <p class="summary-about"><strong>In summary,</strong> Imagine Act is an interactive shopping simulation game where you use your voice to buy items and manage your balance. It offers an engaging way to practice decision-making and budgeting in a virtual environment.</p>
+            <br/><br/><br/>        
+        </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="assets/js/audioLevels.js"></script>

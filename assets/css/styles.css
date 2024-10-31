@@ -7,7 +7,7 @@
     --titlebar-border-radius: 8px;
     --titlebar-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(255, 255, 255, 0.2) inset;
     --titlebar-hover-shadow: 0 6px 8px rgba(255, 0, 0, 0.3), 0 -1px 8px rgba(0, 255, 0, 0.7) inset;
-    --titlebar-height: 8vh;
+    --titlebar-height: 80px;
     --title-color: #ffffff;
     --titlebar-padding: var(--padding-content);
     --titlebar-transition: all 0.3s ease;
@@ -76,8 +76,10 @@
     --receipt-border-color: #555;
     --dropdown-bg: #1e1e1e;
     --dropdown-text-color: var(--primary-color);
+
     --popup-bg: rgba(44, 47, 51, 0.75);
     --popup-content-color: #ffffff;
+    
     --link-color: var(--primary-color);
     --tooltip-bg: #1e1e1e;
     --tooltip-text-color: #ffffff;
@@ -110,17 +112,16 @@
 }
 
 .retro-theme {
-    --primary-color: #ff00ff;
-    --primary-dark: #cc00cc;
-    --primary-light: #ff66ff;
+    --primary-color: #ff21cc;
+    --primary-dark: #b10288;
+    --primary-light: #fd7ddf;
 
-    --bg-color: #000000;
-    --text-color: var(--primary-color);
-
+    --bg-color: #2b1345;
+    
     --color-bg-titlebar: linear-gradient(145deg, var(--primary-dark), var(--primary-light));
     --titlebar-shadow: 0 4px 8px rgba(255, 0, 255, 0.5), 0 -1px 2px rgba(0, 0, 0, 0.5) inset;
     --titlebar-hover-shadow: 0 6px 12px rgba(255, 0, 255, 0.8), 0 -1px 3px rgba(0, 0, 0, 0.8) inset;
-    --title-color: var(--primary-color);
+    --title-color: #ffe017;
 
     --button-bg: var(--primary-color);
     --button-text-color: var(--primary-light);
@@ -136,12 +137,12 @@
     --dropdown-bg: #000000;
     --dropdown-text-color: var(--primary-light);
 
-    --popup-bg: rgba(0, 0, 0, 0.75);
-    --popup-content-color: #ffffff;
+    --popup-bg: 	#4c16ffbf;
+    --popup-content-color: #ffe017;
 
     --link-color: var(--primary-color);
 
-    --tooltip-bg: #111111;
+    --tooltip-bg: #4c16ff;
     --tooltip-text-color: var(--primary-light);
 }
 
@@ -497,10 +498,10 @@ body {
     padding: var(--padding-content);
     word-wrap: break-word;
     max-width: 100%;
+    background-color: var(--popup-content-bg);
 }
 
 .popup-content {
-    background-color: var(--popup-content-bg);
     color: var(--popup-content-color);
     margin: 5% auto;
     padding: 20px;
@@ -819,6 +820,92 @@ body {
     justify-content: space-between;
 }
 
+
+.progress-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px; /* Inner circle width */
+    height: 120px; /* Inner circle height */
+    border-radius: 50%;
+    border: 10px solid transparent; /* For progress display */
+    border-top-color: #4caf50; /* Color of the progress */
+    transform: translate(-50%, -50%);
+    animation: rotate 68s linear infinite;
+    z-index: 1; /* Place progress circle above the button */
+}
+
+@keyframes rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.marker {
+    position: absolute;
+    width: 2px;
+    height: 10px;
+    background: #fff;
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+    z-index: 0; /* Behind the progress circle */
+}
+
+.instructions {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.button-container {
+    height: 240px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.glow-button {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #ff005a, #430089, #140033);
+    box-shadow: 0 0 20px rgba(255, 0, 90, 0.6), 0 0 40px rgba(67, 0, 137, 0.5), 0 0 60px rgba(20, 0, 51, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    animation: glow-pulse 2s infinite ease-in-out;
+    border: 5px solid #555555b7;    
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 30px rgba(255, 0, 90, 0.8), 0 0 60px rgba(67, 0, 137, 0.7), 0 0 80px rgba(20, 0, 51, 0.6);
+}
+
+.inner-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #ffeb3b;
+    box-shadow: 0 0 10px #ffeb3b, inset 0 0 15px #ffeb3b;
+    transition: transform 0.3s;
+}
+
+.glow-button:active .inner-circle {
+    transform: scale(0.9);
+}
+
+/* Animation for glowing pulse effect */
+@keyframes glow-pulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 0, 90, 0.6), 0 0 40px rgba(67, 0, 137, 0.5), 0 0 60px rgba(20, 0, 51, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 0, 90, 0.8), 0 0 60px rgba(67, 0, 137, 0.7), 0 0 80px rgba(20, 0, 51, 0.6);
+    }
+}
+
 #balanceContainer {
     display: flex;
     flex-direction: row;
@@ -1110,14 +1197,13 @@ body {
 
 .item-header {
     padding: var(--padding-card);
-    font-size: clamp(1.5rem, 1.8vw + 0.5rem, 3rem);
+    font-size: clamp(1.5rem, 1.9vw + 0.5rem, 3rem);
     color: var(--title-color);
     position: relative;
-    background-color: #ff9800;
     height: 100%;
     width: 100%;
     border-radius: var(--border-radius);
-    text-shadow: 0px 0px 5px #fff;
+    text-shadow: 0px 0px 5px #ff9800;
 }
 
 .item-list .item:hover,
@@ -1134,7 +1220,7 @@ body {
     border-radius: var(--border-radius);
     padding: var(--padding-box-big);
     cursor: default;
-    height: 80vh;
+    min-height: 80vh;
     font-weight: 600;
 }
 
