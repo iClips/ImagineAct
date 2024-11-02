@@ -37,6 +37,7 @@ guideButton.addEventListener("touchstart", startGuidedVCPurchase);
 guideButton.addEventListener("touchend", resetButton);
 
 function startGuidedVCPurchase() {
+    showNote('message', 'starting I Act in guide');
     progressInterval = setInterval(() => {
         progress += 1;
         if (progress <= 33) {
