@@ -146,6 +146,7 @@ function handleLogin() {
     loginScreen.style.display = 'none';
     gameScreen.style.display = 'block';
     showNote('message', "Welcome to Imagine Act, or I Act.");
+    
 }
 
 window.onclick = (event) => {
@@ -234,6 +235,7 @@ function showNote(type, message) {
 
 function extractVoicePurchaseDetails(text) {
     console.log('Command text: ' + text);
+    showNote('message', text);
     
     let itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))\s+of\s+)?(?:a |an |the |that |at |[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))?/i;
 
@@ -262,8 +264,11 @@ function extractVoicePurchaseDetails(text) {
     const currency = currencyMatch ? currencyMatch[1].trim() : null;
 
     console.log("Item:", item);
+    showNote('message', item);
     console.log("Amount:", amount);
+    showNote('message', amount);
     console.log("Currency:", currency);
+    showNote('message', currency);
 
     return {
         item,
@@ -307,6 +312,7 @@ function initSpeechRecognition() {
         if (controlSpeechButton) {
             controlSpeechButton.addEventListener('click', () => {
                 console.log('controlSpeechButton was clicked');
+                showNote('message', 'controlSpeechButton was clicked');
                 if (recognitionActive) {
                     stopVoiceRecognition();     
                     if (recognizedTextLabel) {
@@ -323,6 +329,7 @@ function initSpeechRecognition() {
         SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     } else {
         console.log('Oops! there is no reference');
+        showNote('message', 'Oops! there is no reference');
     }
 
     if (!SpeechRecognition) {
@@ -453,6 +460,7 @@ function processVoiceCommand(text) {
     // showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
     const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
     console.log('nonNullCount: ' + nonNullCount);
+    showNote('message', nonNullCount);
     if (captureResult.currency !== selectedCurrencyName) {
         // showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
         
@@ -462,6 +470,7 @@ function processVoiceCommand(text) {
         return (nonNullCount + 1) * 20;
     } else if (nonNullCount === 3) {
         console.log('nonNullCount === 3');
+        showNote('message', 3);
         const item = captureResult.item.replace(selectedCurrency.symbol, '');
         const amountText = captureResult.amount;
         let amount;
@@ -472,6 +481,7 @@ function processVoiceCommand(text) {
             amount = wordsToNumbers(amountText.toLowerCase());
         }
         console.log('amount: ' + amount);
+        showNote('message', amount);
         if (isNaN(amount)) {
             console.log('Invalid amount');
             showNote('warning', 'Invalid amount. value: ' + amount);
@@ -479,6 +489,7 @@ function processVoiceCommand(text) {
             return 60; // Partial accuracy for invalid amount
         } else if (amount <= balance) {
             console.log('should be purchase..');
+            showNote('message', 'should be purchase..');
             if (!isItemInPurchaseList(item, amount)) {
                 balance -= amount;
                 balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
@@ -487,12 +498,13 @@ function processVoiceCommand(text) {
                 return 100; // Full accuracy for valid purchase
             } else {
                 console.log('guess not');
+                showNote('message', 'guess not');
                 recognizedTextLabel.textContent = `This item is already purchased. ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`;
             }
         }
     }
-    showNote('warning', 'Insufficient balance');
     console.log('Insufficient balance');
+    showNote('warning', 'Insufficient balance');
     return 20;
     
 }
@@ -502,6 +514,7 @@ function isNumber(value) {
 }
 function handleZeroBalance() {
     console.log('balance is less than 0. balance: ' + balance);
+    showNote('message', balance);
     // controlSpeechButton.classList.remove('active-control');
     
     localStorage.removeItem('purchases');
@@ -660,6 +673,7 @@ function doubleBalanceAndProceed() {
     //             recognizedTextLabel.textContent = `Well done! Your balance has increased to ${selectedCurrency.symbol}${balance.toFixed(2)} for the next level.`;
     //         } else {
     //             console.log("The operation was declined.");
+    showNote('message', declined);
     //         }
     //     });} , 3000);
 }
@@ -705,6 +719,7 @@ function wordsToNumbers(words) {
 
     result += current;
     console.log('currency name: ' + result);
+    showNote('message', result);
     return result;
 }
 
@@ -731,6 +746,7 @@ function startAutomationTest() {
                 balance -= item.price;
                 balanceAmount.textContent = balance.toFixed(2);
                 console.log('I buy ' + item.name + ' for '+ item.price + ' ' + selectedCurrencyName);
+                showNote('message', selectedCurrencyName);
                 processVoiceCommand('I buy ' + item.name + ' for '+ item.price + ' ' + selectedCurrencyName);
             } else {
                 recognizedTextLabel.textContent = `Insufficient balance to purchase "${item.name}".`;
@@ -775,6 +791,7 @@ function promptRepeatPhrase() {
             if (text.includes("I appreciate the money coming to me from multiple sources")) {
                 repeatCount++;
                 console.log(`Phrase repeated ${repeatCount} times`);
+                showNote('message', `Phrase repeated ${repeatCount} times`);
                 
                 if (repeatCount >= targetRepeatMantraCount) {
                     resolve(true);
@@ -785,6 +802,7 @@ function promptRepeatPhrase() {
         // Override the processVoiceCommand function to include our logic
         function customProcessVoiceCommand(text) {
             console.log('text: ' + text);
+            showNote('message', text);
             processVoiceCommand(text); // Call existing logic
             
             // Handle the repetition of the phrase
@@ -798,6 +816,7 @@ function promptRepeatPhrase() {
 
 function simulateVoiceCommand(commandText) {
     console.log('Simulated Command: ' + commandText);
+    showNote('message', commandText);
     processVoiceCommand(commandText);
 }
 
