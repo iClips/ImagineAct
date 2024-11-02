@@ -5,18 +5,6 @@ const instructions = document.getElementById("instructions");
 const progressIndicator = document.getElementById("progressIndicator");
 const progressCircle = document.getElementById("progressCircle");
 
-// Create markers every 17 seconds
-for (let i = 0; i < 4; i++) {
-    const marker = document.createElement('div');
-    const angle = (i * 17 * 360 / 68) * (Math.PI / 180); 
-    const x = 75 * Math.cos(angle) + 75; 
-    const y = 75 * Math.sin(angle) + 75; 
-    marker.style.left = `${x}px`;
-    marker.style.top = `${y}px`;
-    marker.classList.add('marker');
-    document.body.appendChild(marker);
-}
-
 function startVisualization() {
     instructions.innerText = "Step 1: Visualize the scenario - imagine the setting, cashier, and product.";
     progressIndicator.innerText = "Visualizing...";
@@ -41,7 +29,7 @@ function resetButton() {
 }
 
 // Button hold logic
-const guideButton = document.getElementById("voiceButton");
+const guideButton = document.getElementById("button_vc_guide");
 
 guideButton.addEventListener("mousedown", startGuidedVCPurchase);
 guideButton.addEventListener("mouseup", resetButton);    

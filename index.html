@@ -29,7 +29,7 @@
                 <span class="b">i</span>
                 <span class="y">n</span>
                 <span class="y">e</span>
-                <span class="break-title">&nbsp;</span>
+                <span>&nbsp;</span>
                 <span class="g">A</span>
                 <span class="r">c</span>
                 <span class="b">t</span>
@@ -48,11 +48,11 @@
                 </div>
             </div>
             <button id="btn_menu" aria-label="Menu" class="menu-button">☰</button>
-            <div class="dropdown">
+            <div class="dropdown" id="dropdown_menu">
                 <div class="dropdown-content" id="dropdown_content">
                     <a href="#" id="aboutLink">About</a>
                     <a href="#">
-                        <div class="language-selector">
+                        <div class="language-selector selector">
                             <label for="language">Choose language:</label>
                             <select id="language">
                                 <option value="en-US">American English</option>
@@ -61,7 +61,7 @@
                         </div>
                     </a>
                     <a href="#">
-                        <div class="theme-selector">
+                        <div class="theme-selector selector">
                             <label for="theme">Themes:</label>
                             <select id="theme">
                                 <option value="dark-theme">Dark</option>
@@ -106,9 +106,10 @@
                         </div>
                         <div class="button-container">
                             <div class="instructions" id="instructions"><p class="responsive">Press and hold to start your guided voice-command purchase.</p></div>
-                            <div class="glow-button" onclick="buttonAction()">
-                                <div class="inner-circle"></div>
-                                🧠 Imagine & Believe
+                            <div id="button_vc_guide" class="glow-button" onclick="startGuidedVCPurchase()">
+                                <div class="inner-circle">
+                                    Imagine & Believe
+                                </div>
                                 <div class="progress-circle" id="progressCircle"></div>
                                 <div class="progress-indicator" id="progressIndicator"></div>
                             </div>

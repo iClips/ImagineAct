@@ -21,7 +21,7 @@ let total_purchases;
 let balanceAmount;      
 let purchaseList;
 
-let dropdown_content;
+let dropdown_menu;
 let btn_menu;
 let aboutLink;
 let aboutPopup;
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     recognizedTextLabel = document.getElementById('recognizedText');
     languageSelect = document.getElementById('language');
     themeSelect = document.getElementById('theme');
-    dropdown_content = document.getElementById('dropdown_content');
+    dropdown_menu = document.getElementById('dropdown_menu');
     btn_menu = document.getElementById('btn_menu');
     aboutLink = document.getElementById('aboutLink');
     aboutPopup = document.getElementById('aboutPopup');
@@ -152,8 +152,8 @@ window.onclick = (event) => {
     if (event.target === aboutPopup) {
         aboutPopup.style.display = 'none';
     }
-    if (!btn_menu.contains(event.target) && !dropdown_content.contains(event.target)) {
-        dropdown_content.style.display = 'none';
+    if (!btn_menu.contains(event.target) && !dropdown_menu.contains(event.target)) {
+        dropdown_menu.style.display = 'none';
     }
 };
 
@@ -410,10 +410,10 @@ function resetLevel() {
 }
 
 function toggleMenuPopup() {
-    if (dropdown_content.style.display === 'none' || dropdown_content.style.display === '') {
-        dropdown_content.style.display = 'block';
+    if (dropdown_menu.style.display === 'none' || dropdown_menu.style.display === '') {
+        dropdown_menu.style.display = 'block';
     } else {
-        dropdown_content.style.display = 'none';
+        dropdown_menu.style.display = 'none';
     }
 }
 
