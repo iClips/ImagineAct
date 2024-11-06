@@ -58,7 +58,7 @@ function startGuidedVCPurchase() {
         }
     }, 1000);
 }
-function promptVoiceCommand() {
+function startListening() {
     instructions.innerText = "Listening for command... please speak clearly.";
     guideButton.style.background = "#555";
 }

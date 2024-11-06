@@ -1,3 +1,14 @@
+.mantra {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700; /* Gold color for a 'premium' feel */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+  
 :root {
     --primary-color: #00ff00;
     --primary-dark: #008000;
@@ -449,7 +460,7 @@ body {
 }
 
 .dropdown-content a {
-    color: var(--text-color);
+    color: var(--popup-content-color);
     height: 40px;
     display: flex;
     padding: var(--padding-box-big);
@@ -470,15 +481,36 @@ body {
     color: var(--text-color);
 }
 
-.popup .selector {
+.dropdown #closeDropdown {
+    position: absolute;
+    top: -16px;
+    right: -12px;
+    background: var(--input-bg);
+    border-radius: 50%;
+    padding: 12px;
+}
+
+.selector {
     height: 100%;
     width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     color: var(--text-color);
     font-size: 1.2rem;
 }
+
+.dropdown-content .selector select {
+    width: 120px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: var(--input-bg);
+    color: var(--popup-content-color);
+    font-size: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+    border: 2px solid var(--input-border);
+}
+
 
 .popup {
     display: none;
@@ -512,17 +544,16 @@ body {
 .popup-close {
     color: var(--popup-content-color);
     position: absolute;
-    right: 20px;
+    right: 0;
     top: 0;
     font-size: 34px;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .popup-close:hover,
 .popup-close:focus {
-    color: var(--popup-content-color);
+    font-weight: 600;
     text-decoration: none;
-    cursor: pointer;
 }
 
 .summary-about {
@@ -1147,8 +1178,8 @@ body {
 
 
 .item-list .item {
-    width: 80%;
-    max-width: 100%;
+    width: 100%;
+    max-width: 600px;
     min-width: 400px;
     padding: var(--padding-box-big);
     text-align: center;
@@ -1207,7 +1238,6 @@ body {
 
 .item-list .item:hover .item-header,
 .item-list .item:focus-visible .item-header {
-    box-shadow: 0 2px 10px var(--primary-dark);
     transform: scale(1.02);
     animation: colorChange 6s linear infinite;
 }

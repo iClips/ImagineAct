@@ -2,8 +2,6 @@ let balance = 0;
 let recognitionActive = false;
 let initialDeposit = 0;
 let selectedCurrency = {};
-let selectedCurrencyName = 'Rand';
-let displayName = '';
 let currentPurchase = '';
 let recognition;
 let repeatCount = 0;
@@ -33,6 +31,9 @@ let recognizedTextLabel;
 let languageSelect;
 let themeSelect;
 let SpeechRecognition;
+
+let selectedCurrencyName;
+let displayName;
 
 document.addEventListener('DOMContentLoaded', () => {
     resetGameLink = document.getElementById('resetGame');
@@ -64,6 +65,64 @@ document.addEventListener('DOMContentLoaded', () => {
     loadLoginScreen();
 });
 
+// Array of mantras for I.Act
+const mantras = [
+    "I am the spark that ignites dreams.",
+    "With each step, I create my reality.",
+    "I attract abundance with ease.",
+    "I am in control, building my path.",
+    "Each move takes me higher and higher.",
+    "The world is mine to shape and design.",
+    "I am empowered, unstoppable, inspired.",
+    "Every command brings my vision to life.",
+    "I receive what I desire, effortlessly.",
+    "I am the key to limitless potential."
+  ];
+  
+  // Function to animate mantra
+  function showMantra() {
+    // Randomly select a mantra from the array
+    const mantraText = mantras[Math.floor(Math.random() * mantras.length)];
+  
+    // Create a new mantra element
+    const mantraElement = document.createElement("div");
+    mantraElement.classList.add("mantra");
+    mantraElement.textContent = mantraText;
+    gameScreen.appendChild(mantraElement); // Add to the game screen container
+  
+    // Randomize initial position and scaling
+    const initialScale = Math.random() * 0.5 + 0.75; // Scale between 0.75 and 1.25
+    mantraElement.style.transform = `scale(${initialScale})`;
+    mantraElement.style.left = `${Math.random() * 80}vw`;
+    mantraElement.style.top = `${Math.random() * 80}vh`;
+  
+    // Animate to random position with varying scale
+    const finalScale = Math.random() * 1.5 + 0.5; // Scale between 0.5 and 2
+    mantraElement.animate(
+      [
+        {
+          transform: `scale(${initialScale}) translate(0, 0)`,
+          opacity: 1,
+        },
+        {
+          transform: `scale(${finalScale}) translate(${Math.random() * 100 - 50}vw, ${Math.random() * 100 - 50}vh)`,
+          opacity: 0,
+        },
+      ],
+      {
+        duration: 3000, // Animation duration
+        easing: "ease-in-out",
+        fill: "forwards",
+      }
+    );
+  
+    // Remove the mantra element after animation completes
+    setTimeout(() => {
+      mantraElement.remove();
+    }, 3000);
+}
+  
+  
 async function loadLoginScreen() {
     try {
         const response = await fetch('inc/loginScreen.html');
@@ -234,34 +293,42 @@ function showNote(type, message) {
 }
 
 function extractVoicePurchaseDetails(text) {
-    console.log('Command text: ' + text);
+    console.log('Command text before regex process: ' + text);
     showNote('message', text);
+    // Enhanced itemRegex to support "I get 3,000 Rand worth of groceries"
+// let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)\s+)?(?:a|an|the|that|at|of\s+|[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand))?/i;
+let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(\d+(?:,\d{3})*(?:\.\d{2})?)\s+(R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)?\s*(?:a|an|the|that|at|of\s+|[ ])?(.*)/i;
+
+// Enhanced amountRegex for numbers and word-based amounts
+const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
+
+// Check if command is matched and define specific itemRegex variants
+if (itemRegex) {
+    const itemBeforeAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:a|an|the|that|at|[ ])?(.*?)(?:\sfor|\swith|\sat)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)?/i;
     
-    let itemRegex = /(?:I (?:buy|purchase|get|pay for|pay|acquire|order|spent))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))\s+of\s+)?(?:a |an |the |that |at |[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound))?/i;
+    const itemAfterAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?\s+(.*)/i;
 
-    const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
-
-    if (itemRegex) {
-        const itemBeforeAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+(?:a|an|the|that|at|[ ])?(.*?)(?:\sfor|\swith|\sat)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)?/i;
-
-        const itemAfterAmountRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\sup|snag|give\saway|remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout))\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|Rand|ZAR|South\sAfrican\sRand)\s+of\s+(.*)/i;
-
-        if (itemAfterAmountRegex) {
-            itemRegex = itemAfterAmountRegex;
-        }
-        if (itemBeforeAmountRegex) {
-            itemRegex = itemBeforeAmountRegex;
-        }
+    // Set itemRegex based on detected phrase structure
+    if (itemAfterAmountRegex) {
+        itemRegex = itemAfterAmountRegex;
     }
-    const currencyRegex = /\b(R|Rand|USD|Dollar|US\sDollar|CAD|Canadian\sDollar|AUD|Australian\sDollar|EUR|Euro|GBP|British\sPound|Pound|JPY|Japanese\sYen|Yen|CHF|Swiss\sFranc|Franc|CNY|Chinese\sYuan|Yuan|₹|INR|Indian\sRupee|Rupee)\b/i;
+    if (itemBeforeAmountRegex) {
+        itemRegex = itemBeforeAmountRegex;
+    }
+}
 
-    const itemMatch = text.match(itemRegex);
-    const amountMatch = text.match(amountRegex);
-    const currencyMatch = text.match(currencyRegex);
+// Enhanced currencyRegex to capture various currency formats
+const currencyRegex = /\b(R|Rand|USD|Dollar|US\sDollar|CAD|Canadian\sDollar|AUD|Australian\sDollar|EUR|Euro|GBP|British\sPound|Pound|JPY|Japanese\sYen|Yen|CHF|Swiss\sFranc|Franc|CNY|Chinese\sYuan|Yuan|₹|INR|Indian\sRupee|Rupee|ZAR|South\sAfrican\sRand)\b/i;
 
-    const item = itemMatch ? itemMatch[1].trim() : null;
-    const amount = amountMatch ? amountMatch[1].trim() : null;
-    const currency = currencyMatch ? currencyMatch[1].trim() : null;
+// Extract matches for item, amount, and currency
+const itemMatch = text.match(itemRegex);
+const amountMatch = text.match(amountRegex);
+const currencyMatch = text.match(currencyRegex);
+
+const item = itemMatch ? itemMatch[1].trim() : null;
+const amount = amountMatch ? amountMatch[1].trim() : null;
+const currency = currencyMatch ? currencyMatch[1].trim() : null;
+
 
     console.log("Item:", item);
     showNote('message', item);
@@ -457,12 +524,12 @@ function processVoiceCommand(text) {
     }
 
     const captureResult = extractVoicePurchaseDetails(text);
-    // showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
+    showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
     const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
     console.log('nonNullCount: ' + nonNullCount);
-    showNote('message', nonNullCount);
+    
     if (captureResult.currency !== selectedCurrencyName) {
-        // showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
+        showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
         
         return (nonNullCount + 1) * 20;
     } else if (nonNullCount < 3) {
@@ -488,19 +555,17 @@ function processVoiceCommand(text) {
             
             return 60; // Partial accuracy for invalid amount
         } else if (amount <= balance) {
-            console.log('should be purchase..');
-            showNote('message', 'should be purchase..');
-            if (!isItemInPurchaseList(item, amount)) {
-                balance -= amount;
-                balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
-                localStorage.setItem('balance', balance.toFixed(2));
-                addItemToPurchaseList(item, amount);
-                return 100; // Full accuracy for valid purchase
-            } else {
-                console.log('guess not');
-                showNote('message', 'guess not');
-                recognizedTextLabel.textContent = `This item is already purchased. ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`;
-            }
+            balance -= amount;
+            balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
+            localStorage.setItem('balance', balance.toFixed(2));
+            addItemToPurchaseList(item, amount);
+            
+            recognizedTextLabel.textContent = `successfully purchased. ${captureResult.item}, Amount: ${captureResult.amount}`;
+            
+            showMantra();
+
+            return 100;
+            
         }
     }
     console.log('Insufficient balance');
