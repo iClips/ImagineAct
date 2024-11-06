@@ -294,7 +294,6 @@ function showNote(type, message) {
 
 function extractVoicePurchaseDetails(text) {
     console.log('Command text before regex process: ' + text);
-    showNote('message', text);
     // Enhanced itemRegex to support "I get 3,000 Rand worth of groceries"
 // let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)\s+)?(?:a|an|the|that|at|of\s+|[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand))?/i;
 let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(\d+(?:,\d{3})*(?:\.\d{2})?)\s+(R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)?\s*(?:a|an|the|that|at|of\s+|[ ])?(.*)/i;
@@ -331,11 +330,8 @@ const currency = currencyMatch ? currencyMatch[1].trim() : null;
 
 
     console.log("Item:", item);
-    showNote('message', item);
     console.log("Amount:", amount);
-    showNote('message', amount);
     console.log("Currency:", currency);
-    showNote('message', currency);
 
     return {
         item,
@@ -379,7 +375,6 @@ function initSpeechRecognition() {
         if (controlSpeechButton) {
             controlSpeechButton.addEventListener('click', () => {
                 console.log('controlSpeechButton was clicked');
-                showNote('message', 'controlSpeechButton was clicked');
                 if (recognitionActive) {
                     stopVoiceRecognition();     
                     if (recognizedTextLabel) {
@@ -784,7 +779,6 @@ function wordsToNumbers(words) {
 
     result += current;
     console.log('currency name: ' + result);
-    showNote('message', result);
     return result;
 }
 
@@ -811,7 +805,6 @@ function startAutomationTest() {
                 balance -= item.price;
                 balanceAmount.textContent = balance.toFixed(2);
                 console.log('I buy ' + item.name + ' for '+ item.price + ' ' + selectedCurrencyName);
-                showNote('message', selectedCurrencyName);
                 processVoiceCommand('I buy ' + item.name + ' for '+ item.price + ' ' + selectedCurrencyName);
             } else {
                 recognizedTextLabel.textContent = `Insufficient balance to purchase "${item.name}".`;
