@@ -295,8 +295,11 @@ function showNote(type, message) {
 function extractVoicePurchaseDetails(text) {
     console.log('Command text before regex process: ' + text);
     // Enhanced itemRegex to support "I get 3,000 Rand worth of groceries"
-// let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)\s+)?(?:a|an|the|that|at|of\s+|[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand))?/i;
-let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(\d+(?:,\d{3})*(?:\.\d{2})?)\s+(R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)?\s*(?:a|an|the|that|at|of\s+|[ ])?(.*)/i;
+let itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(?:\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)\s+)?(?:a|an|the|that|at|of\s+|[ ])?(.*?)(?:(?:\s+for)?\s+\d+(?:,\d{3})*(?:\.\d{2})?\s+(?:R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand))?/i;
+
+if (!itemRegex) {
+    itemRegex = /(?:I\s(?:buy|purchase|get|pay\sfor|pay|acquire|order|spent|obtain|grab|pick\s*up|snag|give\s*away|take\s*out))\s+(?:(\d+(?:,\d{3})*(?:\.\d{2})?)\s+(R|Rand|USD|Dollar|Euro|Pound|¥|₹|CHF|AUD|CAD|Franc|Yen|Rupee|ZAR|South\sAfrican\sRand)\s*(?:worth\s*of)?)?\s*(?:a|an|the|that|at|of\s+|[ ])?(.*)/i;
+}
 
 // Enhanced amountRegex for numbers and word-based amounts
 const amountRegex = /\b(\d+(?:,\d{3})*(?:\.\d{2})?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|million)\b/i;
@@ -370,32 +373,28 @@ function setTheme(theme) {
 }
 
 function initSpeechRecognition() {
-    if (controlSpeechButton !== null) {
+    if (!controlSpeechButton) {
         controlSpeechButton = document.getElementById('controlSpeechButton');       
-        if (controlSpeechButton) {
-            controlSpeechButton.addEventListener('click', () => {
-                console.log('controlSpeechButton was clicked');
-                if (recognitionActive) {
-                    stopVoiceRecognition();     
-                    if (recognizedTextLabel) {
-                        recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
-                    }           
-                } else {
-                    startVoiceRecognition();
-                    if (recognizedTextLabel) {
-                        recognizedTextLabel.textContent = "Listening";
-                    }
-                }
-            });
-        } 
-        SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    } else {
-        console.log('Oops! there is no reference');
-        showNote('message', 'Oops! there is no reference');
     }
-
     if (!SpeechRecognition) {
-        alert('Speech Recognition API is not supported in this browser.');
+        SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    }
+    controlSpeechButton.addEventListener('click', () => {
+        if (recognitionActive) {
+            stopVoiceRecognition();     
+            if (recognizedTextLabel) {
+                recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
+            }           
+        } else {
+            startVoiceRecognition();
+            if (recognizedTextLabel) {
+                recognizedTextLabel.textContent = "Listening";
+            }
+        }
+    });
+    
+    if (!SpeechRecognition || !controlSpeechButton) {
+        alert('Speech Recognition API is not supported in this browser. Or speech button error.');
         return;
     }
 
@@ -438,6 +437,7 @@ function startVoiceRecognition() {
 
     if (controlSpeechButton) {
         controlSpeechButton.classList.add('active-control');
+        controlSpeechButton.classList.add('active');
     } else {
         showNote("error", "Element with ID 'speechContainer' not found in the DOM.");
     }
@@ -451,6 +451,7 @@ function stopVoiceRecognition() {
     
     if (controlSpeechButton) {
        controlSpeechButton.classList.remove('active-control');
+       controlSpeechButton.classList.remove('active');
     } else {
         showNote("error", "Element with ID 'controlSpeechButton' not found in the DOM.");
     }
@@ -460,6 +461,7 @@ function setDefaultCurrency() {
     selectedCurrency = { name: 'ZAR - South African Rand', symbol: 'R' };
     localStorage.setItem('currency', JSON.stringify(selectedCurrency));
     recognizedTextLabel.textContent = 'The currency is set to the default - Rand.';
+    showNote('message', 'The currency is set to the default - Rand.');
 }
 
 function resetGame() {
@@ -487,6 +489,7 @@ function toggleMenuPopup() {
 }
 
 function processVoiceCommand(text) {
+    recognizedTextLabel.textContent = text;
     if (text.toLowerCase() === 'stop listening') {
         stopVoiceRecognition();
         if (recognizedTextLabel) {
@@ -999,6 +1002,7 @@ function toggleContent(event, feature) {
             if (isCurrencyObject(storedCurrency)) {
                 selectedCurrency = storedCurrency;
                 selectedCurrencyName = getLastWord(selectedCurrency.name);
+                showNote('message', `Your currency is ${selectedCurrencyName}`);
             } else {
                 alert(JSON.stringify(storedCurrency));
                 setDefaultCurrency();

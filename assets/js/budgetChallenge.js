@@ -1,151 +1,151 @@
-// Variable Declarations
+
 let selectedTemplate = '';
 let budgetAmount = 0;
 let categories = {};
 
-// let initialBudget = 1000; // Starting budget
-// let spendingGoal = 0.90; // Spend 90% of the budget
-// let totalSpent = 0;
-// let remainingBudget = initialBudget;
-// let categoryLimits = {
-//     Food: initialBudget * 0.40, // 40% limit for Food
-//     Clothing: initialBudget * 0.30, // 30% limit for Clothing
-//     Electronics: initialBudget * 0.20, // 20% limit for Electronics
-//     Entertainment: initialBudget * 0.10 // 10% limit for Entertainment
-// };
-// let categoryTotals = {
-//     Food: 0,
-//     Clothing: 0,
-//     Electronics: 0,
-//     Entertainment: 0
-// };
+let initialBudget = 1000; // Starting budget
+let spendingGoal = 0.90; // Spend 90% of the budget
+let totalSpent = 0;
+let remainingBudget = initialBudget;
+let categoryLimits = {
+    Food: initialBudget * 0.40, // 40% limit for Food
+    Clothing: initialBudget * 0.30, // 30% limit for Clothing
+    Electronics: initialBudget * 0.20, // 20% limit for Electronics
+    Entertainment: initialBudget * 0.10 // 10% limit for Entertainment
+};
+let categoryTotals = {
+    Food: 0,
+    Clothing: 0,
+    Electronics: 0,
+    Entertainment: 0
+};
 
-// const itemOptions = [
-//     { name: "Pizza", price: 200, category: "Food" },
-//     { name: "Jeans", price: 150, category: "Clothing" },
-//     { name: "Headphones", price: 300, category: "Electronics" },
-//     { name: "Movie Ticket", price: 100, category: "Entertainment" }
-// ];
-
-
-// // Function to create item buttons
-// function createItemButtons(itemOptions) {
-//     var buttonsHTML = itemOptions.map(function (item) {
-//         return "<button class='item-button' onclick='selectItem(" + JSON.stringify(item) + ")'>" +
-//             item.name + " - " + item.price +
-//             "</button>";
-//     }).join('');
-
-//     return buttonsHTML;
-// }
-// function selectItem(item) {
-//     const itemPrice = item.price;
-//     const category = item.category;
-
-//     // Check if adding this item exceeds category limits
-//     if (categoryTotals[category] + itemPrice > categoryLimits[category]) {
-//         notifyUser("Category limit exceeded");
-//         return;
-//     }
-
-//     // Add item to totals
-//     totalSpent += itemPrice;
-//     categoryTotals[category] += itemPrice;
-//     remainingBudget = initialBudget - totalSpent;
-
-//     // Update UI
-//     updateBudgetDisplay();
-
-//     // Check for challenge completion
-//     if (totalSpent / initialBudget >= spendingGoal) {
-//         challengeComplete("Success");
-//     }
-// }
-
-// function updateBudgetDisplay() {
-//     document.getElementById('total-spent').innerText = totalSpent;
-//     document.getElementById('remaining-budget').innerText = remainingBudget;
-// }
-
-// function notifyUser(message) {
-//     document.getElementById('message').innerText = message;
-// }
-
-// function challengeComplete(result) {
-//     const messageElement = document.getElementById('message');
-//     if (result === "Success") {
-//         messageElement.innerText = "Congratulations! You've successfully allocated your budget!";
-//         initialBudget *= 2; // Reward by doubling the budget
-//         resetChallenge(); // Reset for the next challenge
-//     } else {
-//         messageElement.innerText = "Challenge failed! Please try again.";
-//     }
-// }
-
-// function resetChallenge() {
-//     totalSpent = 0;
-//     remainingBudget = initialBudget;
-//     categoryTotals = {
-//         Food: 0,
-//         Clothing: 0,
-//         Electronics: 0,
-//         Entertainment: 0
-//     };
-//     updateBudgetDisplay();
-// }
+const itemOptions = [
+    { name: "Pizza", price: 200, category: "Food" },
+    { name: "Jeans", price: 150, category: "Clothing" },
+    { name: "Headphones", price: 300, category: "Electronics" },
+    { name: "Movie Ticket", price: 100, category: "Entertainment" }
+];
 
 
-// function allocateFunds() {
-//     let savingAmt = parseFloat(document.getElementById("savings").value);
-//     let essentialAmt = parseFloat(document.getElementById("essentials").value);
-//     let discretionaryAmt = parseFloat(document.getElementById("discretionary").value);
-//     let investmentAmt = parseFloat(document.getElementById("investments").value);
-//     let total = savingAmt + essentialAmt + discretionaryAmt + investmentAmt;
-//     let feedback = document.getElementById("budgetFeedback");
+// Function to create item buttons
+function createItemButtons(itemOptions) {
+    var buttonsHTML = itemOptions.map(function (item) {
+        return "<button class='item-button' onclick='selectItem(" + JSON.stringify(item) + ")'>" +
+            item.name + " - " + item.price +
+            "</button>";
+    }).join('');
 
-//     if (total > initialBalance) {
-//         feedback.innerHTML = `<p style="color: red;">You have exceeded your available balance! Please reallocate.</p>`;
-//         return;
-//     }
+    return buttonsHTML;
+}
+function selectItem(item) {
+    const itemPrice = item.price;
+    const category = item.category;
 
-//     savings = savingAmt;
-//     essentials = essentialAmt;
-//     discretionary = discretionaryAmt;
-//     investments = investmentAmt;
+    // Check if adding this item exceeds category limits
+    if (categoryTotals[category] + itemPrice > categoryLimits[category]) {
+        notifyUser("Category limit exceeded");
+        return;
+    }
 
-//     checkBudgetStatus();
-// }
+    // Add item to totals
+    totalSpent += itemPrice;
+    categoryTotals[category] += itemPrice;
+    remainingBudget = initialBudget - totalSpent;
 
-// function checkBudgetStatus() {
-//     let feedback = document.getElementById("budgetFeedback");
-//     feedback.innerHTML = "<h3>Budget Feedback:</h3>";
+    // Update UI
+    updateBudgetDisplay();
 
-//     if (savings >= initialBalance * 0.2) {
-//         feedback.innerHTML += `<p>You've saved 20% or more of your income. Great job!</p>`;
-//     } else {
-//         feedback.innerHTML += `<p>Try saving more of your income.</p>`;
-//     }
+    // Check for challenge completion
+    if (totalSpent / initialBudget >= spendingGoal) {
+        challengeComplete("Success");
+    }
+}
 
-//     if (discretionary <= initialBalance * 0.3) {
-//         feedback.innerHTML += `<p>Your discretionary spending is within a reasonable limit.</p>`;
-//     } else {
-//         feedback.innerHTML += `<p>Your discretionary spending is too high.</p>`;
-//     }
+function updateBudgetDisplay() {
+    document.getElementById('total-spent').innerText = totalSpent;
+    document.getElementById('remaining-budget').innerText = remainingBudget;
+}
 
-//     handleUnexpectedEvents();
-// }
+function notifyUser(message) {
+    document.getElementById('message').innerText = message;
+}
 
-// function handleUnexpectedEvents() {
-//     let unexpectedExpense = 200;
-//     let remainingBalance = initialBalance - (savings + essentials + discretionary + investments);
-//     let feedback = document.getElementById("budgetFeedback");
+function challengeComplete(result) {
+    const messageElement = document.getElementById('message');
+    if (result === "Success") {
+        messageElement.innerText = "Congratulations! You've successfully allocated your budget!";
+        initialBudget *= 2; // Reward by doubling the budget
+        resetChallenge(); // Reset for the next challenge
+    } else {
+        messageElement.innerText = "Challenge failed! Please try again.";
+    }
+}
 
-//     if (remainingBalance < unexpectedExpense) {
-//         feedback.innerHTML += `<p style="color: red;">You don't have enough funds to cover an unexpected expense! Reallocate your budget.</p>`;
-//     } else {
-//         feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
-//     }
-// }
+function resetChallenge() {
+    totalSpent = 0;
+    remainingBudget = initialBudget;
+    categoryTotals = {
+        Food: 0,
+        Clothing: 0,
+        Electronics: 0,
+        Entertainment: 0
+    };
+    updateBudgetDisplay();
+}
+
+
+function allocateFunds() {
+    let savingAmt = parseFloat(document.getElementById("savings").value);
+    let essentialAmt = parseFloat(document.getElementById("essentials").value);
+    let discretionaryAmt = parseFloat(document.getElementById("discretionary").value);
+    let investmentAmt = parseFloat(document.getElementById("investments").value);
+    let total = savingAmt + essentialAmt + discretionaryAmt + investmentAmt;
+    let feedback = document.getElementById("budgetFeedback");
+
+    if (total > initialBalance) {
+        feedback.innerHTML = `<p style="color: red;">You have exceeded your available balance! Please reallocate.</p>`;
+        return;
+    }
+
+    savings = savingAmt;
+    essentials = essentialAmt;
+    discretionary = discretionaryAmt;
+    investments = investmentAmt;
+
+    checkBudgetStatus();
+}
+
+function checkBudgetStatus() {
+    let feedback = document.getElementById("budgetFeedback");
+    feedback.innerHTML = "<h3>Budget Feedback:</h3>";
+
+    if (savings >= initialBalance * 0.2) {
+        feedback.innerHTML += `<p>You've saved 20% or more of your income. Great job!</p>`;
+    } else {
+        feedback.innerHTML += `<p>Try saving more of your income.</p>`;
+    }
+
+    if (discretionary <= initialBalance * 0.3) {
+        feedback.innerHTML += `<p>Your discretionary spending is within a reasonable limit.</p>`;
+    } else {
+        feedback.innerHTML += `<p>Your discretionary spending is too high.</p>`;
+    }
+
+    handleUnexpectedEvents();
+}
+
+function handleUnexpectedEvents() {
+    let unexpectedExpense = 200;
+    let remainingBalance = initialBalance - (savings + essentials + discretionary + investments);
+    let feedback = document.getElementById("budgetFeedback");
+
+    if (remainingBalance < unexpectedExpense) {
+        feedback.innerHTML += `<p style="color: red;">You don't have enough funds to cover an unexpected expense! Reallocate your budget.</p>`;
+    } else {
+        feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
+    }
+}
 
 
 // Event Listeners
@@ -238,6 +238,8 @@ function saveBudgetToLocalStorage() {
     const budgetHistory = JSON.parse(localStorage.getItem('budgetHistory')) || [];
     budgetHistory.push(budgetData);
     localStorage.setItem('budgetHistory', JSON.stringify(budgetHistory));
+
+    showNote('message', 'All your money are saved successfully');
 }
 
 function addCustomCategory() {
@@ -250,4 +252,45 @@ function addCustomCategory() {
     } else {
         alert("Invalid category or percentage.");
     }
+}
+
+
+
+
+
+function selectTemplate(template) {
+    selectedTemplate = template;
+    document.getElementById('selectedTemplateDisplay').textContent = selectedTemplate;
+    nextStep(2);
+}
+
+function nextStep(stepNumber) {
+    document.querySelectorAll('.step').forEach(step => {
+        step.classList.add('hidden');
+        step.classList.remove('active');
+    });
+    document.querySelector(`.step-${stepNumber}`).classList.remove('hidden');
+    document.querySelector(`.step-${stepNumber}`).classList.add('active');
+}
+
+function generateSuggestedBudget() {
+    let budget = parseFloat(document.getElementById('budgetAmount').value);
+    let categoriesHTML = '';
+    if (selectedTemplate === '50-20-30') {
+        categories = { Needs: 50, Wants: 30, Savings: 20 };
+    } else if (selectedTemplate === 'zero-based') {
+        categories = { Rent: 25, Groceries: 25, Utilities: 20, Savings: 30 };
+    } else if (selectedTemplate === 'envelope-system') {
+        categories = { Groceries: 25, Rent: 25, Utilities: 20, Fun: 15, Savings: 15 };
+    }
+    for (let category in categories) {
+        let allocation = (budget * categories[category]) / 100;
+        categoriesHTML += `<p>${category}: ${allocation.toFixed(2)}</p>`;
+    }
+    document.getElementById('suggestedBudget').innerHTML = categoriesHTML;
+    nextStep(4);
+}
+
+function saveBudget() {
+    alert('Budget saved successfully!');
 }

@@ -151,48 +151,47 @@
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Fun Budget Creation')">❌</button>
                     <div class="container-budget">
                         <h4 class="responsive">Welcome to Fun Budget Creation!</h4>
-
+            
                         <!-- Step 1: Template Selection -->
-                        <div class="step step-1">
+                        <div class="step step-1 active">
                             <h4 class="responsive">Select a Budgeting Template</h4>
                             <div class="template-options">
-                                <button class="template-btn" data-template="50-20-30">50/20/30 Rule</button>
-                                <button class="template-btn" data-template="zero-based">Zero-Based Budget</button>
-                                <button class="template-btn" data-template="envelope-system">Envelope System</button>
+                                <button class="template-btn" data-template="50-20-30" onclick="selectTemplate('50-20-30')">50/20/30 Rule</button>
+                                <button class="template-btn" data-template="zero-based" onclick="selectTemplate('zero-based')">Zero-Based Budget</button>
+                                <button class="template-btn" data-template="envelope-system" onclick="selectTemplate('envelope-system')">Envelope System</button>
                             </div>
                         </div>
-
+            
                         <!-- Step 2: Enter Budget Amount -->
                         <div class="step step-2 hidden">
                             <h3 class="responsive">Enter Your Budget Amount</h3>
                             <input type="number" id="budgetAmount" placeholder="Enter amount in your currency" min="0">
-                            <button class="next-btn">Next</button>
+                            <button class="next-btn" onclick="nextStep(3)">Next</button>
                         </div>
-
+            
                         <!-- Step 3: Fun Budget Creation -->
                         <div class="step step-3 hidden">
                             <h3 class="responsive">Complete Your Budget</h3>
-                            <p>Your selected template: <span id="selectedTemplate"></span></p>
+                            <p>Your selected template: <span id="selectedTemplateDisplay"></span></p>
                             <div class="categories-container">
                                 <h4 class="responsive">Categories</h4>
                                 <div id="categories"></div>
-                                <button class="add-category-btn">Add Custom Category</button>
+                                <button class="add-category-btn" onclick="addCustomCategory()">Add Custom Category</button>
                             </div>
-                            <button class="generate-btn">Generate Budget</button>
+                            <button class="generate-btn" onclick="generateSuggestedBudget()">Generate Budget</button>
                         </div>
-
+            
                         <!-- Step 4: Suggested Budget -->
                         <div class="step step-4 hidden">
                             <h3 class="responsive">Suggested Budget</h3>
                             <div id="suggestedBudget"></div>
-                            <button class="save-btn">Save Budget</button>
-                            <button class="back-btn">Go Back</button>
+                            <button class="save-btn" onclick="saveBudget()">Save Budget</button>
+                            <button class="back-btn" onclick="nextStep(3)">Go Back</button>
                         </div>
                     </div>
-
                 </div>
             </div>
-            <div class="item" onclick="toggleContent(event, 'AI Mental Health Model')">
+            <div class="item" onclick="toggleContent(event, 'AI Mental Health Model')" hidden>
                 <div class="item-header">AI Mental Health Model</div>
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'AI Mental Health Model')">❌</button>
@@ -377,7 +376,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="assets/js/audioLevels.js"></script>
+    <!-- <script src="assets/js/audioLevels.js"></script> -->
     <script src="assets/js/3DSphere.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
