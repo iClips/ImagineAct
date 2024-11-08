@@ -26,7 +26,7 @@ function init3DScene() {
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    camera.position.set(0, 200, 500);
+    camera.position.set(500, 1200, 1500);
     scene.add(new THREE.AmbientLight(0x404040));
     
     animate();

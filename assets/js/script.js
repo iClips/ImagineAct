@@ -495,7 +495,7 @@ function processVoiceCommand(text) {
         if (recognizedTextLabel) {
             recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
         }
-        return 100; // No accuracy needed for stopping
+        return 100; // a accuracy needed for stopping
     }
     
     const removeRegex = /(?<=\b(remove|delete|drop|cancel|discard|erase|eliminate|clear|take\sout)\s)(.*)/i;
@@ -981,8 +981,6 @@ function toggleContent(event, feature) {
     if (feature === 'Voice Command Purchases') {
         
         if (!starting_balance) {
-            startAudioVisuals();
-            
             starting_balance = document.querySelector('#starting_balance');
             balanceAmount = document.getElementById('balanceAmount');
             total_purchases = document.getElementById('total_purchases');

@@ -85,11 +85,11 @@
         <div class="item-list">
             <div class="item" onclick="toggleContent(event, 'Voice Command Purchases')">
                 <div class="item-header">Voice Command Purchases</div>
-                <div class="item-content">
+                <div class="item-content voice-purchase">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Voice Command Purchases')">❌</button>
-                    <canvas id="audioCanvas"></canvas>
-                    <p>Interact with the app using voice commands. The big button is for a guided experience.</p>
                     <div class="game-content">
+                        <canvas id="audioCanvas"></canvas>
+                        <p>Interact with the app using voice commands. The big button is for a guided experience.</p>
                         <div id="speechContainer">
                             <button id="controlSpeechButton" aria-pressed="true">🎤</button>
                             <div id="soundBars">
@@ -150,7 +150,7 @@
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Fun Budget Creation')">❌</button>
                     <div class="container-budget">
-                        <h4 class="responsive">Welcome to Fun Budget Creation!</h4>
+                        <h3 class="responsive">Welcome to Fun Budget Creation!</h3>
             
                         <!-- Step 1: Template Selection -->
                         <div class="step step-1 active">
@@ -191,7 +191,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item" onclick="toggleContent(event, 'AI Mental Health Model')" hidden>
+            <div class="item" onclick="toggleContent(event, 'AI Mental Health Model')" style="display: none;">
                 <div class="item-header">AI Mental Health Model</div>
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'AI Mental Health Model')">❌</button>
@@ -376,7 +376,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <!-- <script src="assets/js/audioLevels.js"></script> -->
+    <script src="assets/js/audioLevels.js"></script>
     <script src="assets/js/3DSphere.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>

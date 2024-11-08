@@ -33,11 +33,10 @@ const guideButton = document.getElementById("button_vc_guide");
 
 guideButton.addEventListener("mousedown", startGuidedVCPurchase);
 guideButton.addEventListener("mouseup", resetButton);    
-guideButton.addEventListener("touchstart", startGuidedVCPurchase);
+guideButton.addEventListener("touchmove", startGuidedVCPurchase);
 guideButton.addEventListener("touchend", resetButton);
 
 function startGuidedVCPurchase() {
-    showNote('message', 'starting I Act in guide');
     progressInterval = setInterval(() => {
         progress += 1;
         if (progress <= 33) {
@@ -52,10 +51,7 @@ function startGuidedVCPurchase() {
         if (progress <= 68) {
             progressCircle.style.borderTopColor = "#4caf50"; // Light up progress
         }
-        if (progress >= 68) {
-            clearInterval(progressInterval);
-            promptVoiceCommand();
-        }
+        
     }, 1000);
 }
 function startListening() {

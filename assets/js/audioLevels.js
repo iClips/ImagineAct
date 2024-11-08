@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+    startAudioVisuals();
+});
+
 function initAudioVisualization(stream) {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioCtx.createAnalyser();
