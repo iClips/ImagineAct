@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-    startAudioVisuals();
+    try {
+        startAudioVisuals();
+    } catch (ex) {
+        showNote('error', ex.toString());
+    }
 });
 
 function initAudioVisualization(stream) {
@@ -8,7 +12,7 @@ function initAudioVisualization(stream) {
     const source = audioCtx.createMediaStreamSource(stream);
 
     source.connect(analyser);
-    analyser.fftSize = 256; // Resolution for frequency data
+    analyser.fftSize = 256; 
 
     const canvas = document.getElementById('audioCanvas');
 
@@ -16,40 +20,36 @@ function initAudioVisualization(stream) {
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
-    // Canvas setup
-
     function resizeCanvas() {
-        canvas.width = canvas.offsetWidth;  // Update canvas width to match its parent
-        canvas.height = canvas.offsetHeight; // Update height if needed
+        canvas.width = canvas.offsetWidth;  
+        canvas.height = canvas.offsetHeight; 
     }
     
-    // Call resizeCanvas initially and on window resize
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     const frequencyBoost = 1.6; 
 
-    // Assuming you have access to an analyser node from your Web Audio API setup
     function drawVisualizer() {
         requestAnimationFrame(drawVisualizer);
     
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
     
         analyser.getByteFrequencyData(dataArray);
-        const barWidth = canvas.width / 20;
-        const middleY = canvas.height / 2 ; // Middle line for symmetry
+        const barWidth = canvas.width / 40;
+        const middleY = canvas.height / 2 ; 
     
-        // Draw horizontal line (stroke)
+        
         ctx.beginPath();
         ctx.moveTo(0, middleY);
         ctx.lineTo(canvas.width, middleY);
-        ctx.strokeStyle = '#fff';  // White stroke for the middle line
+        ctx.strokeStyle = '#fff';  
         ctx.lineWidth = 2;
         ctx.stroke();
     
-        // Draw the vertical bars (symmetrical)
+        
         for (let i = 0; i < dataArray.length; i++) {
-            // Apply exponential scaling to boost higher frequencies
+            
             const normalizedFrequency = Math.pow(dataArray[i] / 255, frequencyBoost);
             
             const barHeight = normalizedFrequency * middleY;
@@ -65,9 +65,9 @@ function initAudioVisualization(stream) {
             
             const x = i * barWidth;
     
-            // Draw top and bottom bars
-            ctx.fillRect(x, middleY - barHeight, barWidth, barHeight); // Top
-            ctx.fillRect(x, middleY, barWidth, barHeight); // Bottom
+            
+            ctx.fillRect(x, middleY - barHeight, barWidth, barHeight); 
+            ctx.fillRect(x, middleY, barWidth, barHeight); 
         }
     }
 
@@ -77,7 +77,7 @@ function initAudioVisualization(stream) {
 function startAudioVisuals() {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(function(stream) {
-          initAudioVisualization(stream); // Pass stream directly
+          initAudioVisualization(stream); 
       })
       .catch(function(err) {
           console.error('Error accessing microphone: ', err);

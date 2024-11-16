@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagine Act: Modern Banking App with 3D Shop Navigation</title>
+    <style>
+        /* Your previous CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            Imagine Act Banking
+            <button class="settings-button" onclick="toggleSettings()">Settings</button>
+            <div class="settings-section" id="settingsSection">
+                <div class="settings-content">
+                    <h3>Settings</h3>
+                    <div class="theme-switcher">
+                        <input type="checkbox" id="themeSwitch" onchange="toggleTheme()" />
+                        <label for="themeSwitch">Dark Theme</label>
+                    </div>
+                    <div class="profile-form">
+                        <h3>Update Profile</h3>
+                        <label for="updateUsername">Username:</label>
+                        <input type="text" id="updateUsername" placeholder="Enter new username" />
+                        <label for="updatePassword">Password:</label>
+                        <input type="password" id="updatePassword" placeholder="Enter new password" />
+                        <button onclick="updateProfile()">Update Profile</button>
+                    </div>
+                    <div>
+                        <h3>Rules of the Game</h3>
+                        <p>The rules of the game are simple. You receive a fictional amount of money and spend it on various items. The goal is to imagine these purchases and observe how your balance changes in real life. The more detailed and realistic your spending, the more effective it is.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Category Navigation -->
+            <div id="categoryNavigation" class="card">
+                <h2>Choose Category</h2>
+                <button class="category-button" onclick="showCategory('electronics')">Electronics</button>
+                <button class="category-button" onclick="showCategory('clothing')">Clothing</button>
+                <button class="category-button" onclick="showCategory('furniture')">Furniture</button>
+                <button class="category-button" onclick="showCategory('toys')">Toys</button>
+                <button class="category-button" onclick="showCategory('books')">Books</button>
+            </div>
+
+            <!-- Item Selection -->
+            <div id="itemSelection" class="card hidden">
+                <h2 id="categoryTitle">Category</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for items" />
+                    <button onclick="searchItems()">Search</button>
+                </div>
+                <div id="itemList"></div>
+                <div id="itemDetails" class="hidden">
+                    <h3 id="itemName"></h3>
+                    <p>Price: <span id="itemPrice"></span></p>
+                    <input type="number" id="itemPriceInput" placeholder="Enter price" />
+                    <button onclick="buyItem()">Buy Now</button>
+                </div>
+            </div>
+
+            <!-- Bank Interface -->
+            <div id="bankInterface" class="card">
+                <h2>Bank Interface</h2>
+                <div class="balance">
+                    Balance: <span id="userBalance">1000</span> ZAR
+                </div>
+                <div class="purchase-list" id="purchaseList"></div>
+                <div class="joyful-notification" id="notification"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript functionality
+
+        // Toggle settings
+        function toggleSettings() {
+            const settingsSection = document.getElementById('settingsSection');
+            settingsSection.style.display = settingsSection.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Update profile (mock function)
+        function updateProfile() {
+            const username = document.getElementById('updateUsername').value;
+            const password = document.getElementById('updatePassword').value;
+            alert(`Profile updated: ${username}, ${password}`);
+        }
+
+        // Show category
+        function showCategory(category) {
+            document.getElementById('categoryNavigation').classList.add('hidden');
+            document.getElementById('itemSelection').classList.remove('hidden');
+            document.getElementById('categoryTitle').textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            loadItems(category);
+        }
+
+        // Load items for a category (mock data)
+        function loadItems(category) {
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = ''; // Clear existing items
+            // Mock items
+            const items = {
+                electronics: ['Laptop', 'Smartphone', 'Headphones'],
+                clothing: ['T-shirt', 'Jeans', 'Jacket'],
+                furniture: ['Sofa', 'Table', 'Chair'],
+                toys: ['Action Figure', 'Puzzle', 'Doll'],
+                books: ['Novel', 'Comics', 'Biography']
+            };
+            items[category].forEach(item => {
+                const button = document.createElement('button');
+                button.textContent = item;
+                button.className = 'interactive-item';
+                button.onclick = () => showItemDetails(item, category);
+                itemList.appendChild(button);
+            });
+        }
+
+        // Show item details
+        function showItemDetails(item, category) {
+            document.getElementById('itemDetails').classList.remove('hidden');
+            document.getElementById('itemName').textContent = item;
+            document.getElementById('itemPrice').textContent = '0'; // Mock price
+        }
+
+        // Search items
+        function searchItems() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const items = Array.from(document.querySelectorAll('#itemList button'));
+            items.forEach(item => {
+                if (item.textContent.toLowerCase().includes(searchInput)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Buy item
+        function buyItem() {
+            const itemName = document.getElementById('itemName').textContent;
+            const itemPrice = parseFloat(document.getElementById('itemPriceInput').value);
+            if (!isNaN(itemPrice) && itemPrice > 0) {
+                const userBalance = parseFloat(document.getElementById('userBalance').textContent);
+                if (userBalance >= itemPrice) {
+                    document.getElementById('userBalance').textContent = (userBalance - itemPrice).toFixed(2);
+                    addPurchase(itemName, itemPrice);
+                    document.getElementById('notification').textContent = `Successfully purchased ${itemName} for ${itemPrice} ZAR`;
+                } else {
+                    document.getElementById('notification').textContent = 'Insufficient balance';
+                }
+            } else {
+                document.getElementById('notification').textContent = 'Invalid price';
+            }
+        }
+
+        // Add purchase to the list
+        function addPurchase(itemName, itemPrice) {
+            const purchaseList = document.getElementById('purchaseList');
+            const purchaseItem = document.createElement('div');
+            purchaseItem.className = 'purchase-item';
+            purchaseItem.textContent = `${itemName} - ${itemPrice.toFixed(2)} ZAR`;
+            purchaseList.appendChild(purchaseItem);
+        }
+    </script>
+</body>
+</html>

@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Imagine Act Game</title>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -16,7 +16,7 @@
 
     gtag('config', 'G-0ER5PGJ9PY');
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script> -->
 
 <body class="dark-theme">
     <div class="titlebar">
@@ -38,23 +38,22 @@
         <div class="buttons">
             <div class="achievements">
                 <div class="achievement">
-                    <p class="responsive">🏆</p>
+                    <p class="button responsive">🏆</p>
                 </div>
                 <div class="achievement">
-                    <p class="responsive">⭐</p>
+                    <p class="button responsive">⭐</p>
                 </div>
                 <div class="achievement">
-                    <p class="responsive">💎</p>
+                    <p class="button responsive">💎</p>
                 </div>
             </div>
             <button id="btn_menu" aria-label="Menu" class="menu-button">☰</button>
             <div class="dropdown" id="dropdown_menu">
                 <div class="dropdown-content" id="dropdown_content">
-                    <a href="#" id="closeDropdown">X</a>
                     <a href="#" id="aboutLink">About</a>
                     <a href="#">
                         <div class="language-selector selector">
-                            <label for="language">Choose language:</label>
+                            <label for="language">Language</label>
                             <select id="language">
                                 <option value="en-US">American English</option>
                                 <option value="en-GB">British English</option>
@@ -63,7 +62,7 @@
                     </a>
                     <a href="#">
                         <div class="theme-selector selector">
-                            <label for="theme">Themes:</label>
+                            <label for="theme">Theme</label>
                             <select id="theme">
                                 <option value="dark-theme">Dark</option>
                                 <option value="light-theme">Light</option>
@@ -374,10 +373,10 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script> -->
     <script src="assets/js/audioLevels.js"></script>
-    <script src="assets/js/3DSphere.js"></script>
+    <!-- <script src="assets/js/3DSphere.js"></script> -->
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
     <script src="assets/js/guideButton.js"></script>

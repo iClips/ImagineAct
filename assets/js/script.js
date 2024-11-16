@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const theme = localStorage.getItem('theme');
     if (theme) {
+        console.log('reading stored theme: ' + theme);
+        themeSelect.value = theme;
         setTheme(theme);
     }
     
@@ -364,7 +366,6 @@ function setTheme(theme) {
             theme = 'retro-theme';
         }
         document.body.classList.remove('dark-theme', 'light-theme', 'retro-theme');
-        // Add the selected theme class
         document.body.classList.add(theme);
         localStorage.setItem('theme', theme);
     } catch (ex) {

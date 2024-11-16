@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagine Act</title>
+  <style>
+      body {
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#balance {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+#speechButton {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#buyButton {
+  background-color: #008CBA;
+  color: white;
+}
+
+#buyButton:hover, #speechButton:hover {
+  opacity: 0.8;
+}
+
+#error {
+  color: red;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+  </style>
+  
+</head>
+<body>
+  <div class="app-container">
+    <h1>Imagine Act</h1>
+    <p id="balance">Balance: 1000 USD</p>
+    <button id="buyButton">Buy Item</button>
+    <button id="speechButton">Activate Speech</button>
+    <div id="error" class="hidden">Error Message</div>
+  </div>
+
+  <script>
+      class ImagineAct {
+  constructor() {
+    this.userData = {
+      balance: 1000,
+      currency: 'USD',
+      achievements: [],
+      theme: 'light-theme', // can be 'dark-theme', 'retro-theme', etc.
+    };
+    this.init();
+  }
+
+  init() {
+    this.loadTheme();
+    this.bindEventListeners();
+    this.initSpeechRecognition();
+    console.log('Welcome to Imagine Act');
+  }
+
+  loadTheme() {
+    const theme = this.userData.theme;
+    document.body.classList.add(theme);
+    console.log(`Theme loaded: ${theme}`);
+  }
+
+  bindEventListeners() {
+    document.querySelector('#buyButton').addEventListener('click', this.buyItem.bind(this));
+    document.querySelector('#speechButton').addEventListener('click', this.toggleSpeech.bind(this));
+  }
+
+  buyItem() {
+    let itemCost = this.calculateCost();
+    if (this.userData.balance >= itemCost) {
+      this.userData.balance -= itemCost;
+      console.log(`Item bought! New balance: ${this.userData.balance} ${this.userData.currency}`);
+      this.updateBalanceUI();
+    } else {
+      console.error('Insufficient funds.');
+      this.showError('Not enough balance to buy this item.');
+    }
+  }
+
+  calculateCost() {
+    // Example cost logic, can be replaced with more complex logic
+    return 100;
+  }
+
+  updateBalanceUI() {
+    document.querySelector('#balance').innerText = `${this.userData.balance} ${this.userData.currency}`;
+  }
+
+  toggleSpeech() {
+    // Example for toggling speech recognition
+    console.log('Speech recognition toggled.');
+  }
+
+  initSpeechRecognition() {
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.lang = 'en-US';
+      recognition.onresult = (event) => {
+        const transcript = event.results[event.resultIndex][0].transcript.trim();
+        console.log(`Speech recognized: ${transcript}`);
+        this.handleSpeechCommand(transcript);
+      };
+      recognition.start();
+      console.log('Speech recognition started.');
+    }
+  }
+
+  handleSpeechCommand(command) {
+    if (command.includes('buy')) {
+      this.buyItem();
+    }
+  }
+
+  showError(message) {
+    const errorElement = document.querySelector('#error');
+    errorElement.innerText = message;
+    errorElement.classList.add('visible');
+    setTimeout(() => errorElement.classList.remove('visible'), 5000);
+  }
+}
+
+const app = new ImagineAct();
+
+  </script>
+</body>
+</html>

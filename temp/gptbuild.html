@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagine Act (IA) UI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    }
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .titlebar h1 {
+      font-size: 1.5rem;
+    }
+    .speech-btn {
+      width: 40px;
+      height: 40px;
+      background: #555;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 10px #0ff;
+      cursor: pointer;
+    }
+    .balance {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .balance h2 {
+      font-size: 2rem;
+      margin: 0;
+    }
+    .categories {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    .category {
+      text-align: center;
+    }
+    .category img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+    }
+    .progress {
+      width: 100%;
+      height: 10px;
+      background-color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      width: 60%; /* Adjust based on progress */
+      height: 100%;
+      background-color: #0ff;
+    }
+    .achievements {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+    .achievement {
+      width: 40px;
+      height: 40px;
+      background-color: #444;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 8px #ff0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Title Bar with 3D Speech Button -->
+    <div class="titlebar">
+      <h1>Imagine Act</h1>
+      <div class="speech-btn">🎤</div>
+    </div>
+
+    <!-- Balance Display -->
+    <div class="balance">
+      <h2>Balance: $2,500</h2>
+    </div>
+
+    <!-- Categories Section -->
+    <div class="categories">
+      <div class="category">
+        <img src="food-icon.png" alt="Food Category">
+        <p>Food</p>
+      </div>
+      <div class="category">
+        <img src="clothing-icon.png" alt="Clothing Category">
+        <p>Clothing</p>
+      </div>
+      <div class="category">
+        <img src="electronics-icon.png" alt="Electronics Category">
+        <p>Electronics</p>
+      </div>
+    </div>
+
+    <!-- Progress Bar Section -->
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="achievements">
+      <div class="achievement">🏆</div>
+      <div class="achievement">⭐</div>
+      <div class="achievement">💎</div>
+    </div>
+  </div>
+
+</body>
+</html>

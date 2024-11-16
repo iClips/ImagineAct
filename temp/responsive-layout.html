@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Themed Page with Dynamic Content</title>
+    <style>
+        /* Root Variables */
+        :root {
+            --bg-color: white;
+            --text-color: black;
+        }
+
+        /* Dark Theme */
+        .dark-theme {
+            --bg-color: #1a1a1a;
+            --text-color: white;
+        }
+
+        /* Light Theme */
+        .light-theme {
+            --bg-color: white;
+            --text-color: black;
+        }
+
+        /* Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .item.active {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 2px solid var(--text-color);
+            font-weight: bold;
+        }
+        
+        /* Theme toggle menu styling */
+        .menu {
+            position: absolute;
+            top: 2%;
+            right: 5%;
+            z-index: 100;
+        }
+
+        .menu select {
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Centered Vertical List */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .item {
+            width: 80%;
+            max-width: 400px;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 2%;
+            margin: 1.5% 0;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .item:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 2px solid var(--text-color);
+        }
+
+        /* Dynamic content section */
+        .content-area {
+            display: none;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .content-text {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            .item {
+                width: 90%;
+                padding: 3%;
+            }
+
+            .menu select {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .item {
+                width: 70%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .menu select {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /**************** Budget Chellenge ********************/
+        /* Add padding for the form inputs */
+        form label {
+          display: inline-block;
+          width: 100px;
+          margin-bottom: 10px;
+        }
+        
+        form input {
+          padding: 5px;
+          width: 200px;
+          margin-bottom: 10px;
+        }
+        
+        .allocate-btn {
+          background-color: #4caf50; /* Green background */
+          color: white; /* White text */
+          padding: 15px 30px; /* Button padding */
+          border: none; /* Remove borders */
+          border-radius: 8px; /* Rounded corners */
+          font-size: 16px; /* Font size */
+          cursor: pointer; /* Pointer cursor on hover */
+          transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth background and scale transition */
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        
+        .allocate-btn:hover {
+          background-color: #45a049; /* Slightly darker green on hover */
+          transform: scale(1.05); /* Slight zoom on hover */
+        }
+        
+        .allocate-btn:active {
+          transform: scale(0.98); /* Shrink slightly when clicked */
+        }
+        
+        .allocate-btn:focus {
+          outline: none; /* Remove default focus outline */
+          box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3); /* Greenish focus ring */
+        }
+        
+        /* Dark mode styles */
+        body.dark-theme .allocate-btn {
+          background-color: #3e8e41; /* Darker green for dark mode */
+          color: #f0f0f0; /* Light text */
+        }
+        
+        body.dark-theme .allocate-btn:hover {
+          background-color: #356e37; /* Even darker green on hover in dark mode */
+        }
+
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        .info-icon {
+            font-size: 1.2em;
+            color: #007bff; /* Blue color */
+            cursor: pointer;
+        }
+        
+        .info-icon:hover {
+            color: #0056b3; /* Darker blue on hover */
+        }
+        
+        .item-button {
+            background-color: #28a745; /* Green background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding */
+            margin: 5px; /* Margin between buttons */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            transition: background-color 0.3s; /* Smooth background color transition */
+        }
+        
+        .item-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Theme Selection Menu -->
+    <div class="menu">
+        <label for="theme-select">Select Theme:</label>
+        <select id="theme-select">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+        </select>
+    </div>
+
+    <!-- Vertical List of Items -->
+    <div class="container">
+        <div class="item" onclick="loadContent('budget')">Budget Challenge</div>
+        <div class="item" onclick="loadContent('purchase')">Purchase Tutorial</div>
+        <div class="item" onclick="loadContent('spending')">Spending Tips</div>
+        <div class="item" onclick="loadContent('wealth')">Wealth Strategy</div>
+    </div>
+
+    <!-- Dynamic Content Area -->
+    <div id="content-area" class="content-area">
+        <div id="content-text"></div>
+    </div>
+
+    <script>
+        // Function to apply the theme
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+                document.body.classList.remove('light-theme');
+            } else {
+                document.body.classList.add('light-theme');
+                document.body.classList.remove('dark-theme');
+            }
+            // Save the theme to localStorage
+            localStorage.setItem('selectedTheme', theme);
+        }
+
+        // Function to load the theme from localStorage
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme');
+            const themeSelect = document.getElementById('theme-select');
+            if (savedTheme) {
+                themeSelect.value = savedTheme;
+                applyTheme(savedTheme);
+            }
+        }
+
+        // Load theme when the page is loaded
+        window.onload = function () {
+            loadTheme();
+        };
+
+        // Event listener for theme selection
+        document.getElementById('theme-select').addEventListener('change', function () {
+            const selectedTheme = this.value;
+            applyTheme(selectedTheme);
+        });
+
+        
+        // Function to handle active item styling
+        function setActiveItem(clickedItem) {
+            // Remove active class from all items
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => {
+                item.classList.remove('active');
+            });
+        
+            // Add active class to the clicked item
+            clickedItem.classList.add('active');
+        }
+        
+        // Update the loadContent function to set the active state
+        function loadContent(contentKey) {
+            const contentArea = document.getElementById('content-area');
+            const contentText = document.getElementById('content-text');
+            console.log(contentKey);
+            let content = '';
+            switch (contentKey) {
+                case 'budget':
+                    content = getBudgetChallenge();
+                    break;
+                case 'purchase':
+                    content = 'The Purchase Tutorial guides you through smart purchasing strategies.';
+                    break;
+                case 'spending':
+                    content = 'Spending Tips offer insights into reducing unnecessary expenses.';
+                    break;
+                case 'wealth':
+                    content = 'Wealth Strategy introduces proven techniques for growing your wealth.';
+                    break;
+                default:
+                    content = 'Select an option to see more details.';
+            }
+        
+            // Update the content and show the content area
+            contentArea.innerHTML = content;
+            contentArea.style.display = 'block';
+            console.log('content area loaded');
+            // Set the active class on the clicked item
+            setActiveItem(event.target);
+        }
+
+        ////////////////////// Budget Chellenge ////////////////////
+        let initialBudget = 1000; // Starting budget
+        let spendingGoal = 0.90; // Spend 90% of the budget
+        let totalSpent = 0;
+        let remainingBudget = initialBudget;
+        let categoryLimits = {
+            Food: initialBudget * 0.40, // 40% limit for Food
+            Clothing: initialBudget * 0.30, // 30% limit for Clothing
+            Electronics: initialBudget * 0.20, // 20% limit for Electronics
+            Entertainment: initialBudget * 0.10 // 10% limit for Entertainment
+        };
+        let categoryTotals = {
+            Food: 0,
+            Clothing: 0,
+            Electronics: 0,
+            Entertainment: 0
+        };
+        
+        const itemOptions = [
+            { name: "Pizza", price: 200, category: "Food" },
+            { name: "Jeans", price: 150, category: "Clothing" },
+            { name: "Headphones", price: 300, category: "Electronics" },
+            { name: "Movie Ticket", price: 100, category: "Entertainment" }
+        ];
+        
+        function getBudgetChallenge() {
+            var budgetChallengeHTML = "<h2>Budget Challenge<span class='info-icon' title='Select items to add to your budget. Spend your budget wisely!'>&#9432; </span></h2>" +
+                "<p>Your starting budget is: <span id='budget-display'>" + initialBudget + "</span></p>" +
+                "<div id='item-options'>" +
+                    "<h3>Select Items:</h3>" +
+                    createItemButtons(itemOptions) +
+                "</div>" +
+                "<div id='budget-status'>" +
+                    "<h3>Status:</h3>" +
+                    "<p>Total Spent: <span id='total-spent'>0</span></p>" +
+                    "<p>Remaining Budget: <span id='remaining-budget'>" + remainingBudget + "</span></p>" +
+                "</div>" +
+                "<div id='message'></div>";
+        
+            return budgetChallengeHTML;
+        }
+        
+        // Function to create item buttons
+        function createItemButtons(itemOptions) {
+            var buttonsHTML = itemOptions.map(function(item) {
+                return "<button class='item-button' onclick='selectItem(" + JSON.stringify(item) + ")'>" +
+                    item.name + " - " + item.price +
+                    "</button>";
+            }).join('');
+        
+            return buttonsHTML;
+        }
+        function selectItem(item) {
+            const itemPrice = item.price;
+            const category = item.category;
+        
+            // Check if adding this item exceeds category limits
+            if (categoryTotals[category] + itemPrice > categoryLimits[category]) {
+                notifyUser("Category limit exceeded");
+                return;
+            }
+        
+            // Add item to totals
+            totalSpent += itemPrice;
+            categoryTotals[category] += itemPrice;
+            remainingBudget = initialBudget - totalSpent;
+        
+            // Update UI
+            updateBudgetDisplay();
+        
+            // Check for challenge completion
+            if (totalSpent / initialBudget >= spendingGoal) {
+                challengeComplete("Success");
+            }
+        }
+
+        function updateBudgetDisplay() {
+            document.getElementById('total-spent').innerText = totalSpent;
+            document.getElementById('remaining-budget').innerText = remainingBudget;
+        }
+        
+        function notifyUser(message) {
+            document.getElementById('message').innerText = message;
+        }
+        
+        function challengeComplete(result) {
+            const messageElement = document.getElementById('message');
+            if (result === "Success") {
+                messageElement.innerText = "Congratulations! You've successfully allocated your budget!";
+                initialBudget *= 2; // Reward by doubling the budget
+                resetChallenge(); // Reset for the next challenge
+            } else {
+                messageElement.innerText = "Challenge failed! Please try again.";
+            }
+        }
+        
+        function resetChallenge() {
+            totalSpent = 0;
+            remainingBudget = initialBudget;
+            categoryTotals = {
+                Food: 0,
+                Clothing: 0,
+                Electronics: 0,
+                Entertainment: 0
+            };
+            updateBudgetDisplay();
+        }
+        
+
+        function allocateFunds() {
+            let savingAmt = parseFloat(document.getElementById("savings").value);
+            let essentialAmt = parseFloat(document.getElementById("essentials").value);
+            let discretionaryAmt = parseFloat(document.getElementById("discretionary").value);
+            let investmentAmt = parseFloat(document.getElementById("investments").value);
+            let total = savingAmt + essentialAmt + discretionaryAmt + investmentAmt;
+            let feedback = document.getElementById("budgetFeedback");
+            
+            if (total > initialBalance) {
+                feedback.innerHTML = `<p style="color: red;">You have exceeded your available balance! Please reallocate.</p>`;
+            return;
+            }
+            
+            savings = savingAmt;
+            essentials = essentialAmt;
+            discretionary = discretionaryAmt;
+            investments = investmentAmt;
+            
+            checkBudgetStatus();
+        }
+        
+        function checkBudgetStatus() {
+            let feedback = document.getElementById("budgetFeedback");
+            feedback.innerHTML = "<h3>Budget Feedback:</h3>";
+        
+             if (savings >= initialBalance * 0.2) {
+                feedback.innerHTML += `<p>You've saved 20% or more of your income. Great job!</p>`;
+            } else {
+                feedback.innerHTML += `<p>Try saving more of your income.</p>`;
+            }
+        
+            if (discretionary <= initialBalance * 0.3) {
+                feedback.innerHTML += `<p>Your discretionary spending is within a reasonable limit.</p>`;
+            } else {
+                feedback.innerHTML += `<p>Your discretionary spending is too high.</p>`;
+            }
+        
+            handleUnexpectedEvents();
+        }
+        
+        function handleUnexpectedEvents() {
+            let unexpectedExpense = 200; // Example unexpected cost
+            let remainingBalance = initialBalance - (savings + essentials + discretionary + investments);
+            let feedback = document.getElementById("budgetFeedback");
+            
+            if (remainingBalance < unexpectedExpense) {
+                feedback.innerHTML += `<p style="color: red;">You don't have enough funds to cover an unexpected expense! Reallocate your budget.</p>`;
+            } else {
+                feedback.innerHTML += `<p>An unexpected expense of $200 occurred. You have enough funds left.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

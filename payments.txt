@@ -1,0 +1,4 @@
+* pay Joaalin R15 for 3 look and feel design ideas.
+    - Add current initial deposit to local storage
+    - voice commands for remove and edit item
+    - update the ui to jo's recommends
