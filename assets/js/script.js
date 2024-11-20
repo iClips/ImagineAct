@@ -1,11 +1,11 @@
-let balance = 0;
-let recognitionActive = false;
-let initialDeposit = 0;
-let selectedCurrency = {};
-let currentPurchase = '';
+let balance;
+let recognitionActive;
+let initialDeposit;
+let selectedCurrency;
+let currentPurchase;
 let recognition;
-let repeatCount = 0;
-const targetRepeatMantraCount = 10;
+let repeatCount;
+let targetRepeatMantraCount;
 
 let resetGameLink;
 let resetLevelLink;
@@ -35,40 +35,57 @@ let SpeechRecognition;
 let selectedCurrencyName;
 let displayName;
 
-let isShopsInit = false;
 
-document.addEventListener('DOMContentLoaded', () => {
-    resetGameLink = document.getElementById('resetGame');
-    resetLevelLink = document.getElementById('resetLevel');
-    gameScreen = document.getElementById('gameScreen');
-    recognizedTextLabel = document.getElementById('recognizedText');
-    languageSelect = document.getElementById('language');
-    themeSelect = document.getElementById('theme');
-    dropdown_menu = document.getElementById('dropdown_menu');
-    btn_menu = document.getElementById('btn_menu');
-    aboutLink = document.getElementById('aboutLink');
-    aboutPopup = document.getElementById('aboutPopup');
-    popupClose = document.getElementById('closePopup');
-    soundBars = document.querySelectorAll('.sound-bar');
-    
-    registerEventListeners();
-    
+let isShopsInit = false, isVoiceInit = false;
+
+document.addEventListener('DOMContentLoaded', () => {    
     const theme = localStorage.getItem('theme');
     if (theme) {
-        console.log('reading stored theme: ' + theme);
+        themeSelect = document.getElementById('theme');
         themeSelect.value = theme;
         setTheme(theme);
     }
-    
+    popupClose = document.getElementById('closePopup');
     if (popupClose) {
         popupClose.addEventListener('click', () => {
             aboutPopup.style.display = 'none';
         });
     }
-    
-    loadLoginScreen();
+
+    authUser();
 });
 
+function initVCPurchases() {
+    initGlobalVars();
+    registerEventListeners();    
+}
+
+function initGlobalVars() {
+    balance = 0;
+    recognitionActive = false;
+    initialDeposit = 0;
+    selectedCurrency = {};
+    currentPurchase = '';
+    recognition;
+    repeatCount = 0;
+    targetRepeatMantraCount = 10;
+
+    resetGameLink = document.getElementById('resetGame');
+    resetLevelLink = document.getElementById('resetLevel');
+    
+    recognizedTextLabel = document.getElementById('recognizedText');
+    languageSelect = document.getElementById('language');
+    if (!themeSelect) {
+        themeSelect = document.getElementById('theme');
+    }
+    dropdown_menu = document.getElementById('dropdown_menu');
+    btn_menu = document.getElementById('btn_menu');
+    aboutLink = document.getElementById('aboutLink');
+    aboutPopup = document.getElementById('aboutPopup');    
+    soundBars = document.querySelectorAll('.sound-bar');
+
+    controlSpeechButton = document.getElementById('controlSpeechButton');        
+}
 // Array of mantras for I.Act
 const mantras = [
     "I am the spark that ignites dreams.",
@@ -127,7 +144,7 @@ const mantras = [
 }
   
   
-async function loadLoginScreen() {
+async function authUser() {
     try {
         const response = await fetch('inc/loginScreen.html');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -140,7 +157,8 @@ async function loadLoginScreen() {
         
         loginScreen = document.getElementById('loginScreen');
         loginButton = document.getElementById('loginButton');
-        
+        gameScreen = document.getElementById('gameScreen');
+
         const storedUsername = localStorage.getItem('username');
         initialDeposit = parseFloat(localStorage.getItem('initialDeposit'));
         
@@ -262,6 +280,24 @@ function registerEventListeners() {
             toggleMenuPopup();
         });
     }
+
+    controlSpeechButton.addEventListener('click', () => {
+        if (!SpeechRecognition) {
+            initSpeechRecognition();
+            return;
+        }
+        if (recognitionActive) {
+            stopVoiceRecognition();     
+            if (recognizedTextLabel) {
+                recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
+            }           
+        } else {
+            startVoiceRecognition();
+            if (recognizedTextLabel) {
+                recognizedTextLabel.textContent = "Listening";
+            }
+        }
+    });
 }
 
 function showNote(type, message) {
@@ -375,26 +411,9 @@ function setTheme(theme) {
     }
 }
 
-function initSpeechRecognition() {
-    if (!controlSpeechButton) {
-        controlSpeechButton = document.getElementById('controlSpeechButton');       
-    }
-    if (!SpeechRecognition) {
-        SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    }
-    controlSpeechButton.addEventListener('click', () => {
-        if (recognitionActive) {
-            stopVoiceRecognition();     
-            if (recognizedTextLabel) {
-                recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
-            }           
-        } else {
-            startVoiceRecognition();
-            if (recognizedTextLabel) {
-                recognizedTextLabel.textContent = "Listening";
-            }
-        }
-    });
+function initSpeechRecognition() {    
+    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    
     
     if (!SpeechRecognition || !controlSpeechButton) {
         alert('Speech Recognition API is not supported in this browser. Or speech button error.');
@@ -432,12 +451,18 @@ function initSpeechRecognition() {
         stopVoiceRecognition();
         showNote('error', 'Speech recognition error detected: ' + event.error ? event.error : 'unknown');
     };    
+
+    startAudioVisuals();
 }
 
 function startVoiceRecognition() {
-    recognitionActive = true;
     recognition.start();
+    
+    enableRecognition();
+}
 
+function enableRecognition() {
+    recognitionActive = true;
     if (controlSpeechButton) {
         controlSpeechButton.classList.add('active-control');
         controlSpeechButton.classList.add('active');
@@ -447,11 +472,13 @@ function startVoiceRecognition() {
 }
 
 function stopVoiceRecognition() {
-    recognitionActive = false;
     recognition.stop();
+    
+    disableRecognition();
+}
 
-    
-    
+function disableRecognition() {
+    recognitionActive = false;
     if (controlSpeechButton) {
        controlSpeechButton.classList.remove('active-control');
        controlSpeechButton.classList.remove('active');
@@ -971,8 +998,8 @@ function toggleContent(event, feature) {
         }
     }
 
-    if (feature === 'Voice Command Purchases') {
-        
+    if (feature === 'Voice Command Purchases' && !isVoiceInit) {
+        initVCPurchases();
         if (!starting_balance) {
             starting_balance = document.querySelector('#starting_balance');
             balanceAmount = document.getElementById('balanceAmount');
@@ -1004,9 +1031,8 @@ function toggleContent(event, feature) {
             balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;        
             
             loadPurchases();
-            
-            initSpeechRecognition();
         }
+        isVoiceInit = true;
     }
 
     if (feature === '3D Sphere') {
