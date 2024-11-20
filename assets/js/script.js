@@ -35,6 +35,8 @@ let SpeechRecognition;
 let selectedCurrencyName;
 let displayName;
 
+let isShopsInit = false;
+
 document.addEventListener('DOMContentLoaded', () => {
     resetGameLink = document.getElementById('resetGame');
     resetLevelLink = document.getElementById('resetLevel');
@@ -903,37 +905,27 @@ function updateSoundBars(accuracy) {
     }
     
     try {
-        if (accuracy >= 0 && accuracy < 0 ) {
-            soundBars[0].style.opacity = 1;
-            soundBars[1].style.opacity = 0;
-            soundBars[2].style.opacity = 0;
-            soundBars[3].style.opacity = 0;
-            soundBars[4].style.opacity = 0;
+        if (accuracy <= 0) {
+            
+            soundBars.forEach((bar, index) => {
+                bar.style.opacity = 0.3;
+            });
         } else if (accuracy >- 20 && accuracy < 40 ) {
-            soundBars[0].style.opacity = 1;
-            soundBars[1].style.opacity = 1;
-            soundBars[2].style.opacity = 0;
-            soundBars[3].style.opacity = 0;
-            soundBars[4].style.opacity = 0;
+            soundBars.forEach((bar, index) => {
+                bar.style.opacity = 0.4;
+            });
         } else if (accuracy >= 40 && accuracy < 60 ) {
-            soundBars[0].style.opacity = 1;
-            soundBars[1].style.opacity = 1;
-            soundBars[2].style.opacity = 1;
-            soundBars[3].style.opacity = 0;
-            soundBars[4].style.opacity = 0;
-            soundBars[5].style.opacity = 0;
+            soundBars.forEach((bar, index) => {
+                bar.style.opacity = 0.5;
+            });
         } else if (accuracy >= 60 && accuracy < 80 ) {
-            soundBars[0].style.opacity = 1;
-            soundBars[1].style.opacity = 1;
-            soundBars[2].style.opacity = 1;
-            soundBars[3].style.opacity = 1;
-            soundBars[4].style.opacity = 0;
-        } else if (accuracy >= 80 && accuracy < 1000 ) {
-            soundBars[0].style.opacity = 1;
-            soundBars[1].style.opacity = 1;
-            soundBars[2].style.opacity = 1;
-            soundBars[3].style.opacity = 1;
-            soundBars[4].style.opacity = 1;
+            soundBars.forEach((bar, index) => {
+                bar.style.opacity = 0.6;
+            });
+        } else if (accuracy >= 80 && accuracy <= 1000 ) {
+            soundBars.forEach((bar, index) => {
+                bar.style.opacity = 1;
+            });
         } else {
             showNote('warning', 'no if condition for accurancy value');
         }
@@ -1018,9 +1010,23 @@ function toggleContent(event, feature) {
     }
 
     if (feature === '3D Sphere') {
-        init3DSphere(); // Initialize the 3D sphere when opened
+        if (!isShopsInit) {
+            init3DScene(); 
+            isShopsInit = true;
+        }
     }
 }
 
+/*********************** Spending Tips ******************************/
 
+function openSavingsChallenge() {
+    alert("Join our 30-day savings challenge and see how much you can save!");
+    // Add logic to redirect to the savings challenge section
+}
 
+function analyzeSpendingHabits() {
+    alert("Analyzing your spending habits... Stay tuned for insights!");
+    // Add logic to open an analysis tool or display insights
+}
+
+/*********************** /Spending Tips ******************************/

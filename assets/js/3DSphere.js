@@ -11,18 +11,14 @@ const shopsData = [
 ];
 let selectedShopIndex = null;
 
-document.addEventListener("DOMContentLoaded", () => {
-    init3DScene();
-    setupShops();
-    setupAddItemForm();
-});
-
 function init3DScene() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    
+    const earthContainer = document.getElementById("earth-container");
+    earthContainer.appendChild(renderer.domElement);
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -31,6 +27,9 @@ function init3DScene() {
     
     animate();
     window.addEventListener("resize", onWindowResize);
+
+    setupShops();
+    setupAddItemForm();
 }
 
 function setupShops() {

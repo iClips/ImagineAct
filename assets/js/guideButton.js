@@ -8,16 +8,19 @@ const progressCircle = document.getElementById("progressCircle");
 function startVisualization() {
     instructions.innerText = "Step 1: Visualize the scenario - imagine the setting, cashier, and product.";
     progressIndicator.innerText = "Visualizing...";
+    console.log('Visualizing');
 }
 
 function startEmotion() {
     instructions.innerText = "Step 2: Add emotions - feel the excitement as if it's real.";
     progressIndicator.innerText = "Feeling...";
+    console.log('Feeling');
 }
 
 function startCommand() {
     instructions.innerText = "Step 3: Release and voice your command to complete the purchase.";
     progressIndicator.innerText = "Ready to Command...";
+    console.log('Command');
 }
 
 function resetButton() {
@@ -26,6 +29,7 @@ function resetButton() {
     instructions.innerText = "Press and hold to start your voice-command purchase.";
     progressIndicator.innerText = "";
     progressCircle.style.borderTopColor = "transparent"; // Reset progress
+    console.log('master guide have been reset');
 }
 
 // Button hold logic
@@ -33,7 +37,7 @@ const guideButton = document.getElementById("button_vc_guide");
 
 guideButton.addEventListener("mousedown", startGuidedVCPurchase);
 guideButton.addEventListener("mouseup", resetButton);    
-guideButton.addEventListener("touchmove", startGuidedVCPurchase);
+guideButton.addEventListener("touchstart", startGuidedVCPurchase);
 guideButton.addEventListener("touchend", resetButton);
 
 function startGuidedVCPurchase() {
@@ -57,4 +61,5 @@ function startGuidedVCPurchase() {
 function startListening() {
     instructions.innerText = "Listening for command... please speak clearly.";
     guideButton.style.background = "#555";
+    console.log('start listening');
 }

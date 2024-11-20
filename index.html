@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <!-- Google tag (gtag.js) -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ER5PGJ9PY"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -16,7 +16,7 @@
 
     gtag('config', 'G-0ER5PGJ9PY');
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
 <body class="dark-theme">
     <div class="titlebar">
@@ -106,7 +106,7 @@
                         </div>
                         <div class="button-container">
                             <div class="instructions" id="instructions"><p class="responsive">Press and hold to start your guided voice-command purchase.</p></div>
-                            <div id="button_vc_guide" class="glow-button" onclick="startGuidedVCPurchase()">
+                            <div id="button_vc_guide" class="glow-button">
                                 <div class="inner-circle">
                                     Imagine & Believe
                                 </div>
@@ -274,16 +274,38 @@
                 </div>
             </div>
             <div class="item" onclick="toggleContent(event, 'Spending Tips')">
-                <div class="item-header">Spending Tips</div>
+                <div class="item-header">💡 Spending Tips</div>
                 <div class="item-content">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Spending Tips')">❌</button>
+                    
+                    <div class="tips-container">
+                        <h4 class="responsive">Smart Spending Tips for a Better Future</h4>
+                        
+                        <ul class="spending-tips">
+                            <li><i class="fa fa-wallet"></i> <strong>Track Your Spending:</strong> Use budgeting tools or apps to keep track of every expense.</li>
+                            <li><i class="fa fa-percent"></i> <strong>Follow the 50/30/20 Rule:</strong> Allocate 50% for needs, 30% for wants, and 20% for savings or debt repayment.</li>
+                            <li><i class="fa fa-coins"></i> <strong>Save Before You Spend:</strong> Treat your savings like a fixed expense and pay yourself first.</li>
+                            <li><i class="fa fa-tags"></i> <strong>Look for Discounts:</strong> Use coupons, cashback offers, and discounts whenever possible.</li>
+                            <li><i class="fa fa-calendar"></i> <strong>Plan Big Purchases:</strong> Avoid impulse buys by giving yourself a 24-hour waiting period.</li>
+                            <li><i class="fa fa-hand-holding-usd"></i> <strong>Invest Wisely:</strong> Diversify your investments to grow your money.</li>
+                        </ul>
+            
+                        <div class="interactive-section">
+                            <h5>Take Action:</h5>
+                            <button class="interactive-btn" onclick="openSavingsChallenge()">💰 Start a Savings Challenge</button>
+                            <button class="interactive-btn" onclick="analyzeSpendingHabits()">📊 Analyze My Spending Habits</button>
+                        </div>
+            
+                        <div class="visuals-section">
+                            <img src="/assets/images/savings_tips.jpg" alt="Savings Tips" class="responsive spending-image">
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
     <div id="aboutPopup" class="popup">
-        <div class="popup-content">
-    
+        <div class="popup-content">    
             <span id="closePopup" class="popup-close">&times;</span>
             <h2>About the Game</h2>
             <p><strong>Welcome to Imagine Act!</strong></p>
@@ -373,10 +395,10 @@
         </div>
     </div>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="assets/js/audioLevels.js"></script>
-    <!-- <script src="assets/js/3DSphere.js"></script> -->
+    <script src="assets/js/3DSphere.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/budgetChallenge.js"></script>
     <script src="assets/js/guideButton.js"></script>

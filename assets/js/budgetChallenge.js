@@ -194,8 +194,9 @@ function toggleStep(currentStep, nextStep) {
 
 function loadCategories(template, budget) {
     const categoriesDiv = document.getElementById('categories');
-    categoriesDiv.innerHTML = ''; // Clear previous
-
+    categoriesDiv.innerHTML = '';
+    console.log(categories);
+    console.log(`Template: ${template}`);
     if (template === '50-20-30') {
         categories = { Essentials: 50, Savings: 20, Wants: 30 };
     } else if (template === 'zero-based') {
@@ -259,6 +260,7 @@ function addCustomCategory() {
 
 
 function selectTemplate(template) {
+    console.log(template);
     selectedTemplate = template;
     document.getElementById('selectedTemplateDisplay').textContent = selectedTemplate;
     nextStep(2);
