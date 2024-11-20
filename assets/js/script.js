@@ -284,18 +284,11 @@ function registerEventListeners() {
     controlSpeechButton.addEventListener('click', () => {
         if (!SpeechRecognition) {
             initSpeechRecognition();
-            return;
         }
         if (recognitionActive) {
-            stopVoiceRecognition();     
-            if (recognizedTextLabel) {
-                recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
-            }           
+            stopVoiceRecognition();                            
         } else {
-            startVoiceRecognition();
-            if (recognizedTextLabel) {
-                recognizedTextLabel.textContent = "Listening";
-            }
+            startVoiceRecognition();            
         }
     });
 }
@@ -459,6 +452,10 @@ function startVoiceRecognition() {
     recognition.start();
     
     enableRecognition();
+
+    if (recognizedTextLabel) {
+        recognizedTextLabel.textContent = "Listening";
+    }
 }
 
 function enableRecognition() {
@@ -475,6 +472,10 @@ function stopVoiceRecognition() {
     recognition.stop();
     
     disableRecognition();
+
+    if (recognizedTextLabel) {
+        recognizedTextLabel.textContent = "Sleeping. Tap the Speech button to active speech purchases.";
+    }
 }
 
 function disableRecognition() {
@@ -987,12 +988,11 @@ function onCloseContent(event, feature) {
 }
 
 function toggleContent(event, feature) {
-    event.stopPropagation(); // Prevents event bubbling
+    event.stopPropagation(); 
     const item = event.currentTarget;
     const content = item.querySelector('.item-content');
     
     if (content) {
-        // Toggle the 'active' class for content visibility
         if (!content.classList.contains('active')) {            
             content.classList.add('active');
         }
@@ -1054,5 +1054,3 @@ function analyzeSpendingHabits() {
     alert("Analyzing your spending habits... Stay tuned for insights!");
     // Add logic to open an analysis tool or display insights
 }
-
-/*********************** /Spending Tips ******************************/

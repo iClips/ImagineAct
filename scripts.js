@@ -1,3 +1,18 @@
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+
+document.addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    try {
+        raycaster.setFromCamera(mouse, camera);
+    } catch (error) {
+        console.error('Raycaster error:', error);
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     let balance = 0;
     let username = '';
@@ -51,66 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    // Create the Babylon.js scene
-    function createMaterial(name, color, scene) {
-        const material = new BABYLON.StandardMaterial(name, scene);
-        material.diffuseColor = color;
-        return material;
-    }
-
-    function getColorByName(colorName) {
-        const colorMap = {
-            red: BABYLON.Color3.Red(),
-            green: BABYLON.Color3.Green(),
-            blue: BABYLON.Color3.Blue(),
-            yellow: BABYLON.Color3.Yellow(),
-            orange: new BABYLON.Color3(1.0, 0.647, 0.0), // Custom orange color
-            purple: new BABYLON.Color3(0.5, 0.0, 0.5) // Custom purple color
-        };
-        return colorMap[colorName.toLowerCase()] || BABYLON.Color3.White(); // Default to white if color not found
-    }
-
-    function setupScene() {
-        const canvas = document.getElementById("renderCanvas");
-        const engine = new BABYLON.Engine(canvas, true);
-        const scene = new BABYLON.Scene(engine);
-
-        // Create a basic camera and light
-        const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
-        camera.attachControl(canvas, true);
-        const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
-
-        // Create the 3D cube
-        const box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
-
-        // Create materials for each side
-        const colors = ["Red", "Green", "Blue", "Yellow", "Orange", "Purple"];
-        const materials = colors.map(colorName => {
-            return createMaterial(colorName + "Mat", getColorByName(colorName), scene);
-        });
-
-        // Apply MultiMaterial to box
-        const multiMaterial = new BABYLON.MultiMaterial("multi", scene);
-        multiMaterial.subMaterials = materials;
-        box.material = multiMaterial;
-
-        // Setup SubMeshes
-        const faceCount = 6;
-        for (let i = 0; i < faceCount; i++) {
-            box.subMeshes.push(new BABYLON.SubMesh(i, 0, box.getTotalVertices(), i * 6, 6, box));
-            box.subMeshes[i].materialIndex = i;
-        }
-
-        // Render loop
-        engine.runRenderLoop(() => {
-            scene.render();
-        });
-
-        // Handle browser resize
-        window.addEventListener('resize', () => {
-            engine.resize();
-        });
-    }
+    
+    
 
     // Believe algorithm
     let beliefScore = 100;  // Start with a baseline belief score
