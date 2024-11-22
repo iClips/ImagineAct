@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initVCPurchases() {
     initGlobalVars();
-    registerEventListeners();    
+    registerEventListeners();        
 }
 
-function initGlobalVars() {
+async function initGlobalVars() {
     balance = 0;
     recognitionActive = false;
     initialDeposit = 0;
@@ -78,13 +78,24 @@ function initGlobalVars() {
     if (!themeSelect) {
         themeSelect = document.getElementById('theme');
     }
+    
     dropdown_menu = document.getElementById('dropdown_menu');
     btn_menu = document.getElementById('btn_menu');
+    
     aboutLink = document.getElementById('aboutLink');
-    aboutPopup = document.getElementById('aboutPopup');    
-    soundBars = document.querySelectorAll('.sound-bar');
-
-    controlSpeechButton = document.getElementById('controlSpeechButton');        
+    const response = await fetch('../../inc/about-content.html');
+    if (!response.ok) throw new Error(`HTTP error! About Content Error.  Status: ${response.status}`);
+    
+    const markup = await response.text();
+    aboutPopup = document.getElementById('aboutPopup');
+    if (!aboutPopup) {
+        
+    }    
+    aboutPopup.innerHTML = markup;
+    
+    
+    
+    soundBars = document.querySelectorAll('.sound-bar');    
 }
 // Array of mantras for I.Act
 const mantras = [
@@ -114,8 +125,8 @@ const mantras = [
     // Randomize initial position and scaling
     const initialScale = Math.random() * 0.5 + 0.75; // Scale between 0.75 and 1.25
     mantraElement.style.transform = `scale(${initialScale})`;
-    mantraElement.style.left = `${Math.random() * 80}vw`;
-    mantraElement.style.top = `${Math.random() * 80}vh`;
+    mantraElement.style.left = `${Math.random() * 50}vw`;
+    mantraElement.style.top = `${Math.random() * 50}vh`;
   
     // Animate to random position with varying scale
     const finalScale = Math.random() * 1.5 + 0.5; // Scale between 0.5 and 2
@@ -151,7 +162,10 @@ async function authUser() {
         
         const markup = await response.text();
         const container = document.getElementById('loginContainer');
-        if (!container) return;
+        if (!container) {
+            showNote('error', 'Login container not found.');
+            return;
+        }
         
         container.innerHTML = markup;
         
@@ -281,6 +295,19 @@ function registerEventListeners() {
         });
     }
 
+    window.onclick = (event) => {
+        if (event.target === aboutPopup) {
+            aboutPopup.style.display = 'none';
+        }
+        if (!btn_menu.contains(event.target) && !dropdown_menu.contains(event.target)) {
+            dropdown_menu.style.display = 'none';
+        }
+    };
+    controlSpeechButton = document.getElementById('controlSpeechButton');
+    if (!controlSpeechButton) {
+        showNote('error', 'Control Speech Button not found.');
+        return;
+    }
     controlSpeechButton.addEventListener('click', () => {
         if (!SpeechRecognition) {
             initSpeechRecognition();
@@ -555,7 +582,7 @@ function processVoiceCommand(text) {
     const captureResult = extractVoicePurchaseDetails(text);
     showNote('message', `Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
     const nonNullCount = Object.values(captureResult).filter(value => value !== null).length;
-    console.log('nonNullCount: ' + nonNullCount);
+    
     
     if (captureResult.currency !== selectedCurrencyName) {
         showNote('warning', 'Invalid currency. value: ' + captureResult.currency);
@@ -565,8 +592,7 @@ function processVoiceCommand(text) {
         showNote('warning', `Missing information in your purchase. Item: ${captureResult.item}, Amount: ${captureResult.amount}, Currency: ${captureResult.currency}`);
         return (nonNullCount + 1) * 20;
     } else if (nonNullCount === 3) {
-        console.log('nonNullCount === 3');
-        showNote('message', 3);
+        
         const item = captureResult.item.replace(selectedCurrency.symbol, '');
         const amountText = captureResult.amount;
         let amount;
@@ -576,10 +602,9 @@ function processVoiceCommand(text) {
         } else {
             amount = wordsToNumbers(amountText.toLowerCase());
         }
-        console.log('amount: ' + amount);
-        showNote('message', amount);
+        
+        
         if (isNaN(amount)) {
-            console.log('Invalid amount');
             showNote('warning', 'Invalid amount. value: ' + amount);
             
             return 60; // Partial accuracy for invalid amount
@@ -589,15 +614,13 @@ function processVoiceCommand(text) {
             localStorage.setItem('balance', balance.toFixed(2));
             addItemToPurchaseList(item, amount);
             
-            recognizedTextLabel.textContent = `successfully purchased. ${captureResult.item}, Amount: ${captureResult.amount}`;
-            
             showMantra();
 
             return 100;
             
         }
     }
-    console.log('Insufficient balance');
+
     showNote('warning', 'Insufficient balance');
     return 20;
     
@@ -1032,10 +1055,11 @@ function toggleContent(event, feature) {
             
             loadPurchases();
         }
+        startAudioVisuals();
         isVoiceInit = true;
     }
 
-    if (feature === '3D Sphere') {
+    if (feature === '3D Shops') {
         if (!isShopsInit) {
             init3DScene(); 
             isShopsInit = true;

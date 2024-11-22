@@ -12,7 +12,7 @@ const shopsData = [
     { name: "Gifts", position: { x: 150, y: 50, z: 150 }, items: [] }
 ];
 let selectedShopIndex = null;
-
+let earthContainer;
 
 function _init3DScene() {
     scene = new THREE.Scene();
@@ -23,7 +23,7 @@ function _init3DScene() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     
-    const earthContainer = document.getElementById("earth-container");
+    earthContainer = document.getElementById("earth-container");
     earthContainer.appendChild(renderer.domElement);
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -121,30 +121,32 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-document.addEventListener("click", (event) => {
-    console.log('clicked');
-    const mouse = new THREE.Vector2((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-    const raycaster = new THREE.Raycaster();
-    if (camera && mouse) {
-        raycaster.setFromCamera(mouse, camera);
-    } else {
-        showNote('error' , "Raycaster cannot set from camera. Mouse or camera error.");
-        return;
-    }
-
-    const intersects = raycaster.intersectObjects(scene.children);
-    if (intersects.length > 0 && intersects[0].object.onClick) {
-        intersects[0].object.onClick();
-    }
-    document.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    
-        try {
+document.addEventListener('DOMContentLoaded', () => {    
+    document.addEventListener("click", (event) => {
+        const mouse = new THREE.Vector2((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
+        const raycaster = new THREE.Raycaster();
+        if (camera && mouse) {
             raycaster.setFromCamera(mouse, camera);
-        } catch (error) {
-            console.error('Raycaster error:', error);
+        } else {
+            showNote('error' , "Raycaster cannot set from camera. Mouse or camera error.");
+            return;
         }
+    
+        const intersects = raycaster.intersectObjects(scene.children);
+        if (intersects.length > 0 && intersects[0].object.onClick) {
+            intersects[0].object.onClick();
+        }
+        document.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+            try {
+                raycaster.setFromCamera(mouse, camera);
+            } catch (error) {
+                console.error('Raycaster error:', error);
+            }
+        });
+        
     });
     
 });

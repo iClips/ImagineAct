@@ -1,0 +1,9 @@
+.mantra {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700; /* Gold color for a 'premium' feel */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    white-space: nowrap;
+}

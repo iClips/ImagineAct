@@ -124,3 +124,59 @@ function startAudioVisuals() {
     }
 }
 
+// Function to draw a seamless pattern
+function drawSeamlessPattern(context, canvasWidth, canvasHeight, motifWidth, motifHeight, gapX, gapY) {
+    const motifs = [];
+
+    // Step 1: Create the grid of motifs
+    for (let y = -motifHeight; y < canvasHeight + motifHeight; y += motifHeight + gapY) {
+        for (let x = -motifWidth; x < canvasWidth + motifWidth; x += motifWidth + gapX) {
+            const offsetX = Math.random() * 10 - 5; // Random jitter
+            const offsetY = Math.random() * 10 - 5;
+            const rotation = Math.random() * Math.PI / 6 - Math.PI / 12; // Random rotation (-15° to 15°)
+
+            motifs.push({
+                x: x + offsetX,
+                y: y + offsetY,
+                rotation: rotation,
+            });
+        }
+    }
+
+    // Step 2: Draw motifs
+    motifs.forEach(({ x, y, rotation }) => {
+        context.save();
+        context.translate(x + motifWidth / 2, y + motifHeight / 2); // Move to motif center
+        context.rotate(rotation);
+        context.translate(-motifWidth / 2, -motifHeight / 2); // Undo centering
+        drawMotif(context, motifWidth, motifHeight); // Draw motif
+        context.restore();
+    });
+}
+
+// Function to draw the motif (claw mark style for "Monster" logo)
+function drawMotif(context, width, height) {
+    context.fillStyle = 'green'; // Use the iconic Monster green color
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.lineTo(width * 0.2, height);
+    context.lineTo(width * 0.4, 0);
+    context.lineTo(width * 0.6, height);
+    context.lineTo(width * 0.8, 0);
+    context.lineTo(width, height);
+    context.closePath();
+    context.fill();
+}
+
+// Initialize the canvas and call the pattern drawing function
+document.addEventListener('DOMContentLoaded', () => {
+    // const canvas = document.getElementById('audioCanvas');
+    // const context = canvas.getContext('2d');
+
+    // // Set canvas size to match the window
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
+
+    // // Call the drawSeamlessPattern function
+    // drawSeamlessPattern(context, canvas.width, canvas.height, 100, 300, 50, 50); // Customize sizes and gaps
+});
