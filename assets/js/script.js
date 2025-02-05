@@ -56,46 +56,53 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initVCPurchases() {
-    initGlobalVars();
+    lobalVars();
     registerEventListeners();        
 }
 
 async function initGlobalVars() {
-    balance = 0;
-    recognitionActive = false;
-    initialDeposit = 0;
-    selectedCurrency = {};
-    currentPurchase = '';
-    recognition;
-    repeatCount = 0;
-    targetRepeatMantraCount = 10;
+    try {
+        balance = 0;
+        recognitionActive = false;
+        initialDeposit = 0;
+        selectedCurrency = {};
+        currentPurchase = '';
+        recognition;
+        repeatCount = 0;
+        targetRepeatMantraCount = 10;
 
-    resetGameLink = document.getElementById('resetGame');
-    resetLevelLink = document.getElementById('resetLevel');
-    
-    recognizedTextLabel = document.getElementById('recognizedText');
-    languageSelect = document.getElementById('language');
-    if (!themeSelect) {
-        themeSelect = document.getElementById('theme');
+        resetGameLink = document.getElementById('resetGame');
+        resetLevelLink = document.getElementById('resetLevel');
+        recognizedTextLabel = document.getElementById('recognizedText');
+        languageSelect = document.getElementById('language');
+
+        if (!themeSelect) {
+            themeSelect = document.getElementById('theme');
+        }
+
+        dropdown_menu = document.getElementById('dropdown_menu');
+        btn_menu = document.getElementById('btn_menu');
+        aboutLink = document.getElementById('aboutLink');
+
+        // Debugging the file path
+        console.log("Fetching about-content.html...");
+
+        const response = await fetch('/inc/about-content.html'); // Adjust path if needed
+        if (!response.ok) throw new Error(`HTTP error! About Content Error. Status: ${response.status}`);
+
+        const markup = await response.text();
+        aboutPopup = document.getElementById('aboutPopup');
+
+        if (aboutPopup) {
+            aboutPopup.innerHTML = markup;
+        } else {
+            console.error("aboutPopup element not found!");
+        }
+
+        soundBars = document.querySelectorAll('.sound-bar');
+    } catch (error) {
+        console.error('Error in initGlobalVars:', error);
     }
-    
-    dropdown_menu = document.getElementById('dropdown_menu');
-    btn_menu = document.getElementById('btn_menu');
-    
-    aboutLink = document.getElementById('aboutLink');
-    const response = await fetch('../../inc/about-content.html');
-    if (!response.ok) throw new Error(`HTTP error! About Content Error.  Status: ${response.status}`);
-    
-    const markup = await response.text();
-    aboutPopup = document.getElementById('aboutPopup');
-    if (!aboutPopup) {
-        
-    }    
-    aboutPopup.innerHTML = markup;
-    
-    
-    
-    soundBars = document.querySelectorAll('.sound-bar');    
 }
 // Array of mantras for I.Act
 const mantras = [
