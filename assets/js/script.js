@@ -608,17 +608,21 @@ function processVoiceCommand(text) {
             showNote('warning', 'Invalid amount. value: ' + amount);
             
             return 60; // Partial accuracy for invalid amount
-        } else if (amount <= balance) {
+        else if (amount <= balance) {
             balance -= amount;
             balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
             localStorage.setItem('balance', balance.toFixed(2));
             addItemToPurchaseList(item, amount);
             
             showMantra();
-
+        
+            if (balance === 0) {  
+                handleZeroBalance(); // Move to next level
+            }
+        
             return 100;
-            
         }
+
     }
 
     showNote('warning', 'Insufficient balance');
@@ -630,9 +634,8 @@ function isNumber(value) {
     return !isNaN(Number(value));
 }
 function handleZeroBalance() {
-    console.log('balance is less than 0. balance: ' + balance);
-    showNote('message', balance);
-    // controlSpeechButton.classList.remove('active-control');
+    console.log('Balance is 0. Proceeding to next level.');
+    showNote('message', 'Level completed. Doubling your balance...');
     
     localStorage.removeItem('purchases');
     
@@ -773,29 +776,14 @@ function removePurchase(itemToRemove, amountToRemove) { [];
 function doubleBalanceAndProceed() {
     initialDeposit *= 2;
     balance = initialDeposit;
-    balanceAmount.textContent = balance.toFixed(2);
-    recognizedTextLabel.textContent = `Congratulations! You have completed this level. Your balance has been doubled to ${selectedCurrency.symbol}${balance.toFixed(2)} for the next level.`;
+    balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
+    
+    recognizedTextLabel.textContent = `Congratulations! Your balance has doubled to ${selectedCurrency.symbol}${balance.toFixed(2)}.`;
+    
     localStorage.setItem('balance', balance.toFixed(2));
     localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));
-    
-    
-    // setTimeout(() => {
-    //     promptRepeatPhrase().then((success) => {
-    //         if (success) {
-    //             initialDeposit *= 1.5;
-    //             balance = initialDeposit;
-    //             balanceAmount.textContent = balance.toFixed(2);
-    //             localStorage.setItem('balance', balance.toFixed(2));
-    //             localStorage.setItem('initialDeposit', initialDeposit.toFixed(2));     
-    //             recognizedTextLabel.textContent = `Well done! Your balance has increased to ${selectedCurrency.symbol}${balance.toFixed(2)} for the next level.`;
-    //         } else {
-    //             console.log("The operation was declined.");
-    showNote('message', declined);
-    //         }
-    //     });} , 3000);
 }
-
-
+  
 window.removeItem = function (button) {
     console.log('window.removeItem = function (button) {');
     const li = button.parentElement;
