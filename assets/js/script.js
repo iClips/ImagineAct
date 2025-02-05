@@ -608,7 +608,7 @@ function processVoiceCommand(text) {
             showNote('warning', 'Invalid amount. value: ' + amount);
             
             return 60; // Partial accuracy for invalid amount
-        else if (amount <= balance) {
+        } else if (amount <= balance) {
             balance -= amount;
             balanceAmount.textContent = `${selectedCurrency.symbol}${balance.toFixed(2)}`;
             localStorage.setItem('balance', balance.toFixed(2));
