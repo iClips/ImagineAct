@@ -88,10 +88,8 @@
                 <div class="item-content voice-purchase">
                     <button class="btn btn-close" onclick="onCloseContent(event, 'Voice Command Purchases')">❌</button>
                     <div class="game-content">
-                        <canvas id="audioCanvas"></canvas>
-                        <p>Interact with the app using voice commands. The big button is for a guided experience.</p>
+                        <p>Interact with the app using voice commands.</p>
                         <div id="speechContainer">
-                            <button id="controlSpeechButton" aria-pressed="true">🎤</button>
                             <div id="soundBars">
                                 <div class="sound-bar"></div>
                                 <div class="sound-bar"></div>
@@ -100,15 +98,16 @@
                                 <div class="sound-bar"></div>
                             </div>
 
+                        </div>
+                        <div class="button-container">
+                            <div class="instructions" id="instructions"><p>Press once for manual voice purchases or Press and hold to start your guided voice-command purchase.</p></div>
                             <div id="instructionContainer">                                 
                                 <div id="recognizedText">Press the speech button to start purchasing using voice
                                     commands</div>
                             </div>
-                        </div>
-                        <div class="button-container">
-                            <div class="instructions" id="instructions"><p class="responsive">Press and hold to start your guided voice-command purchase.</p></div>
                             <div id="button_vc_guide" class="glow-button">
                                 <div class="inner-circle">
+                                    <canvas style="position: absolute;" id="audioCanvas">🎤</canvas>
                                     Imagine<br/>&<br/>Believe
                                 </div>
                                 <div class="progress-circle" id="progressCircle"></div>
