@@ -10,18 +10,9 @@ function initAudioVisualization(stream) {
 
     const canvas = document.getElementById('audioCanvas');
     if (canvas) {
-
-        canvas.addEventListener('click', () => {
-            if (!isVisualizerCircular) {
-                canvas.classList.add('circular');
-                drawCircularVisualizer();                
-                isVisualizerCircular = true;
-            } else {
-                canvas.classList.remove('circular');
-                drawVisualizer();
-                isVisualizerCircular = false;
-            }
-        });        
+        canvas.classList.add('circular');
+        drawCircularVisualizer();                
+        isVisualizerCircular = true;
     }
     const ctx = canvas.getContext('2d');
     const bufferLength = analyser.frequencyBinCount;
