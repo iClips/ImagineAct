@@ -26,7 +26,6 @@ let aboutPopup;
 let popupClose;
 let soundBars;
 
-let controlSpeechButton;
 let recognizedTextLabel;
 let languageSelect;
 let themeSelect;
@@ -310,21 +309,6 @@ function registerEventListeners() {
             dropdown_menu.style.display = 'none';
         }
     };
-    controlSpeechButton = document.getElementById('controlSpeechButton');
-    if (!controlSpeechButton) {
-        showNote('error', 'Control Speech Button not found.');
-        return;
-    }
-    controlSpeechButton.addEventListener('click', () => {
-        if (!SpeechRecognition) {
-            initSpeechRecognition();
-        }
-        if (recognitionActive) {
-            stopVoiceRecognition();                            
-        } else {
-            startVoiceRecognition();            
-        }
-    });
 }
 
 function showNote(type, message) {
