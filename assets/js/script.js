@@ -86,7 +86,7 @@ async function initGlobalVars() {
         // Debugging the file path
         console.log("Fetching about-content.html...");
 
-        const response = await fetch('/inc/about-content.html'); // Adjust path if needed
+        const response = await fetch('../../inc/about-content.html'); // Adjust path if needed
         if (!response.ok) throw new Error(`HTTP error! About Content Error. Status: ${response.status}`);
 
         const markup = await response.text();
