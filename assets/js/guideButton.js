@@ -35,6 +35,16 @@ function resetButton() {
 // Button hold logic
 const guideButton = document.getElementById("button_vc_guide");
 
+guideButton.addEventListener('click', () => {
+        if (!SpeechRecognition) {
+            initSpeechRecognition();
+        }
+        if (recognitionActive) {
+            stopVoiceRecognition();                            
+        } else {
+            startVoiceRecognition();            
+        }
+    });
 guideButton.addEventListener("mousedown", startGuidedVCPurchase);
 guideButton.addEventListener("mouseup", resetButton);    
 guideButton.addEventListener("touchstart", startGuidedVCPurchase);
