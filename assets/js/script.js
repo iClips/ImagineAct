@@ -120,54 +120,42 @@ const mantras = [
     "I am empowered, unstoppable, inspired.",
     "Every command brings my vision to life.",
     "I receive what I desire, effortlessly.",
-    "I am the key to limitless potential."
+    "I am the key to limitless potential.",
+    "I am powerful beyond measure.",
+    "Abundance flows to me effortlessly.",
+    "I am at peace with myself and the world.",
+    "Every day, I grow stronger and wiser.",
+    "The universe supports my dreams and goals."
   ];
   
   // Function to animate mantra
   function showMantra() {
-    // Randomly select a mantra from the array
     const mantraText = mantras[Math.floor(Math.random() * mantras.length)];
-  
-    // Create a new mantra element
     const mantraElement = document.createElement("div");
     mantraElement.classList.add("mantra");
     mantraElement.textContent = mantraText;
-      if (!gameScreen) {
-          gameScreen = document.getElementById('gameScreen');
-      }   
-      gameScreen.appendChild(mantraElement); // Add to the game screen container
-  
-    // Randomize initial position and scaling
-    const initialScale = Math.random() * 0.5 + 0.75; // Scale between 0.75 and 1.25
+    document.body.appendChild(mantraElement); // Add to the body so it hovers above everything
+
+    // Randomize position and scaling
+    const initialScale = Math.random() * 0.5 + 0.75;
     mantraElement.style.transform = `scale(${initialScale})`;
-    mantraElement.style.left = `${Math.random() * 150}vw`;
-    mantraElement.style.top = `${Math.random() * 50}vh`;
-  
-    // Animate to random position with varying scale
-    const finalScale = Math.random() * 1.5 + 0.5; // Scale between 0.5 and 2
+    mantraElement.style.left = `${Math.random() * 80}vw`;
+    mantraElement.style.top = `${Math.random() * 80}vh`;
+
+    // Animate movement and fade out
+    const finalScale = Math.random() * 1.5 + 0.5;
     mantraElement.animate(
-      [
+        [
+            { transform: `scale(${initialScale}) translate(0, 0)`, opacity: 1 },
+            { transform: `scale(${finalScale}) translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`, opacity: 0 }
+        ],
         {
-          transform: `scale(${initialScale}) translate(0, 0)`,
-          opacity: 1,
-        },
-        {
-          transform: `scale(${finalScale}) translate(${Math.random() * 100 - 50}vw, ${Math.random() * 100 - 50}vh)`,
-          opacity: 0,
-        },
-      ],
-      {
-        duration: 3000, // Animation duration
-        easing: "ease-in-out",
-        fill: "forwards",
-      }
+            duration: 3000,
+            easing: "ease-in-out",
+            fill: "forwards"
+        }
     );
-  
-    // Remove the mantra element after animation completes
-    setTimeout(() => {
-      mantraElement.remove();
-    }, 3000);
-}
+  }
   
   
 async function authUser() {
