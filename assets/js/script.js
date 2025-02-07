@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     authUser();
+    showMantra();
+    initSpeechRecognition();
+    startAudioVisuals();
 });
 
 function initVCPurchases() {
@@ -131,7 +134,7 @@ const mantras = [
     // Randomize initial position and scaling
     const initialScale = Math.random() * 0.5 + 0.75; // Scale between 0.75 and 1.25
     mantraElement.style.transform = `scale(${initialScale})`;
-    mantraElement.style.left = `${Math.random() * 50}vw`;
+    mantraElement.style.left = `${Math.random() * 150}vw`;
     mantraElement.style.top = `${Math.random() * 50}vh`;
   
     // Animate to random position with varying scale
@@ -461,9 +464,7 @@ function initSpeechRecognition() {
     recognition.onerror = function(event) {
         stopVoiceRecognition();
         showNote('error', 'Speech recognition error detected: ' + event.error ? event.error : 'unknown');
-    };    
-
-    startAudioVisuals();
+    };        
 }
 
 function startVoiceRecognition() {
