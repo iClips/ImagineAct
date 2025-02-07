@@ -253,10 +253,15 @@ function handleLogin() {
     
 }
 
-window.onclick = (event) => {
-    if (event.target === aboutPopup) {
-        aboutPopup.style.display = 'none';
+window.onclick = function(event) {
+    const btn_menu = document.getElementById('btn_menu'); // Ensure it's assigned
+    const dropdown_menu = document.getElementById('dropdown_menu'); // Ensure it's assigned
+
+    if (!btn_menu || !dropdown_menu) {
+        console.error('btn_menu or dropdown_menu not found!');
+        return; // Prevent further errors
     }
+
     if (!btn_menu.contains(event.target) && !dropdown_menu.contains(event.target)) {
         dropdown_menu.style.display = 'none';
     }
