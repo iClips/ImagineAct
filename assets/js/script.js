@@ -129,7 +129,10 @@ const mantras = [
     const mantraElement = document.createElement("div");
     mantraElement.classList.add("mantra");
     mantraElement.textContent = mantraText;
-    gameScreen.appendChild(mantraElement); // Add to the game screen container
+      if (!gameScreen) {
+          gameScreen = document.getElementById('gameScreen');
+      }   
+      gameScreen.appendChild(mantraElement); // Add to the game screen container
   
     // Randomize initial position and scaling
     const initialScale = Math.random() * 0.5 + 0.75; // Scale between 0.75 and 1.25
