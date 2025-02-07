@@ -101,6 +101,6 @@ function animate() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("addItemForm").addEventListener("submit", handleAddItemSubmit);
+    // document.getElementById("addItemForm").addEventListener("sub?mit", handleAddItemSubmit);
     init3DScene();
 });
