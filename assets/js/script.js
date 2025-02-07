@@ -259,6 +259,10 @@ window.onclick = function(event) {
     if (!btn_menu.contains(event.target) && !dropdown_menu.contains(event.target)) {
         dropdown_menu.style.display = 'none';
     }
+
+    if (event.target === aboutPopup) {
+        aboutPopup.style.display = 'none';
+    }    
 };
 
 function registerEventListeners() {
@@ -302,15 +306,6 @@ function registerEventListeners() {
             toggleMenuPopup();
         });
     }
-
-    window.onclick = (event) => {
-        if (event.target === aboutPopup) {
-            aboutPopup.style.display = 'none';
-        }
-        if (!btn_menu.contains(event.target) && !dropdown_menu.contains(event.target)) {
-            dropdown_menu.style.display = 'none';
-        }
-    };
 }
 
 function showNote(type, message) {
