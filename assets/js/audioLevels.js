@@ -63,50 +63,6 @@ function initAudioVisualization(stream) {
             ctx.stroke();
         });
     }
-
-    function drawVisualizer() {
-        requestAnimationFrame(drawVisualizer);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(dataArray);
-
-        const barWidth = canvas.width / 40;
-        const middleY = canvas.height / 2;
-
-        ctx.beginPath();
-        ctx.moveTo(0, middleY);
-        ctx.lineTo(canvas.width, middleY);
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        dataArray.forEach((value, i) => {
-            const normalizedFrequency = Math.pow(value / 255, 1.6);
-            const fluctuation = Math.sin(Date.now() / 200) * 5;
-            const barHeight = normalizedFrequency * middleY + fluctuation;
-
-            const root = document.documentElement;
-            let barColor = '#00ff00';
-            if (root) {
-                const styles = getComputedStyle(root);
-                barColor = styles.getPropertyValue('--button-hover-background').trim();
-            }
-
-            const gradient = ctx.createLinearGradient(0, middleY - barHeight, 0, middleY + barHeight);
-            gradient.addColorStop(0, '#00ff00');
-            gradient.addColorStop(1, '#ff0000');
-            ctx.fillStyle = gradient;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = barColor;
-
-            const x = i * barWidth;
-            ctx.fillRect(x, middleY - barHeight, barWidth, barHeight);
-            ctx.fillRect(x, middleY, barWidth, barHeight);
-        });
-    }
-
-    drawVisualizer(); // ✅ Safe to call now
 }
 
 function startAudioVisuals() {
