@@ -434,9 +434,8 @@ function setTheme(theme) {
 }
 
 function initSpeechRecognition() {    
-    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    
+    SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;    
+    controlSpeechButton = document.getElementById('button_vc_guide');
     if (!SpeechRecognition || !controlSpeechButton) {
         alert('Speech Recognition API is not supported in this browser. Or speech button error.');
         return;
