@@ -52,9 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     authUser();
-    showMantra();
+    
     initSpeechRecognition();
     startAudioVisuals();
+
+    setInterval(showMantra, 5000);
+    showMantra(); 
 });
 
 function initVCPurchases() {
