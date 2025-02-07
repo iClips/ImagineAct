@@ -9,36 +9,44 @@ function initAudioVisualization(stream) {
     analyser.fftSize = 256;
 
     const canvas = document.getElementById('audioCanvas');
-    if (canvas) {
-        canvas.classList.add('circular');
-        drawCircularVisualizer();                
-        isVisualizerCircular = true;
+    if (!canvas) {
+        console.error("Canvas element not found!");
+        return;
     }
-    const ctx = canvas.getContext('2d');
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+
+    const ctx = canvas.getContext('2d'); // ✅ Ensure ctx is initialized before use
+    if (!ctx) {
+        console.error("Could not get canvas context!");
+        return;
+    }
 
     function resizeCanvas() {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
     }
-
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    const frequencyBoost = 1.6;
+    analyser.getByteFrequencyData(new Uint8Array(analyser.frequencyBinCount)); // Pre-fetch to ensure data array is initialized
 
-    function drawCircularVisualizer(){
-        requestAnimationFrame(() => drawCircularVisualizer());
-    
+    // Check for circular visualizer
+    if (canvas) {
+        canvas.classList.add('circular');
+        isVisualizerCircular = true;
+        drawCircularVisualizer(); // ✅ Now safe to call
+    }
+
+    function drawCircularVisualizer() {
+        requestAnimationFrame(drawCircularVisualizer);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
 
         const centerX = canvas.width / 2;
         const centerY = canvas.height / 2;
-        const radius = Math.min(canvas.width, canvas.height) / 3
-    
+        const radius = Math.min(canvas.width, canvas.height) / 3;
+
         dataArray.forEach((value, i) => {
             const angle = (i / dataArray.length) * Math.PI * 2;
             const barLength = radius + value / 10;
@@ -46,7 +54,7 @@ function initAudioVisualization(stream) {
             const y1 = centerY + radius * Math.sin(angle);
             const x2 = centerX + barLength * Math.cos(angle);
             const y2 = centerY + barLength * Math.sin(angle);
-    
+
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
@@ -55,13 +63,14 @@ function initAudioVisualization(stream) {
             ctx.stroke();
         });
     }
-    
+
     function drawVisualizer() {
         requestAnimationFrame(drawVisualizer);
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
+
         const barWidth = canvas.width / 40;
         const middleY = canvas.height / 2;
 
@@ -72,9 +81,9 @@ function initAudioVisualization(stream) {
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        for (let i = 0; i < dataArray.length; i++) {
-            const normalizedFrequency = Math.pow(dataArray[i] / 255, frequencyBoost);
-            const fluctuation = Math.sin(Date.now() / 200) * 5; // Pulsating effect
+        dataArray.forEach((value, i) => {
+            const normalizedFrequency = Math.pow(value / 255, 1.6);
+            const fluctuation = Math.sin(Date.now() / 200) * 5;
             const barHeight = normalizedFrequency * middleY + fluctuation;
 
             const root = document.documentElement;
@@ -92,82 +101,20 @@ function initAudioVisualization(stream) {
             ctx.shadowColor = barColor;
 
             const x = i * barWidth;
-
             ctx.fillRect(x, middleY - barHeight, barWidth, barHeight);
             ctx.fillRect(x, middleY, barWidth, barHeight);
-        }
+        });
     }
 
-    drawVisualizer();
+    drawVisualizer(); // ✅ Safe to call now
 }
 
 function startAudioVisuals() {
     try {
         navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(function(stream) {
-              initAudioVisualization(stream); 
-          })
-          .catch(function(err) {
-              console.error('Error accessing microphone: ', err);
-          });        
+            .then(stream => initAudioVisualization(stream))
+            .catch(err => console.error('Error accessing microphone: ', err));
     } catch (ex) {
-        showNote('error', ex.toString());
+        console.error('Error starting audio visualization:', ex);
     }
 }
-
-// Function to draw a seamless pattern
-function drawSeamlessPattern(context, canvasWidth, canvasHeight, motifWidth, motifHeight, gapX, gapY) {
-    const motifs = [];
-
-    // Step 1: Create the grid of motifs
-    for (let y = -motifHeight; y < canvasHeight + motifHeight; y += motifHeight + gapY) {
-        for (let x = -motifWidth; x < canvasWidth + motifWidth; x += motifWidth + gapX) {
-            const offsetX = Math.random() * 10 - 5; // Random jitter
-            const offsetY = Math.random() * 10 - 5;
-            const rotation = Math.random() * Math.PI / 6 - Math.PI / 12; // Random rotation (-15° to 15°)
-
-            motifs.push({
-                x: x + offsetX,
-                y: y + offsetY,
-                rotation: rotation,
-            });
-        }
-    }
-
-    // Step 2: Draw motifs
-    motifs.forEach(({ x, y, rotation }) => {
-        context.save();
-        context.translate(x + motifWidth / 2, y + motifHeight / 2); // Move to motif center
-        context.rotate(rotation);
-        context.translate(-motifWidth / 2, -motifHeight / 2); // Undo centering
-        drawMotif(context, motifWidth, motifHeight); // Draw motif
-        context.restore();
-    });
-}
-
-// Function to draw the motif (claw mark style for "Monster" logo)
-function drawMotif(context, width, height) {
-    context.fillStyle = 'green'; // Use the iconic Monster green color
-    context.beginPath();
-    context.moveTo(0, 0);
-    context.lineTo(width * 0.2, height);
-    context.lineTo(width * 0.4, 0);
-    context.lineTo(width * 0.6, height);
-    context.lineTo(width * 0.8, 0);
-    context.lineTo(width, height);
-    context.closePath();
-    context.fill();
-}
-
-// Initialize the canvas and call the pattern drawing function
-document.addEventListener('DOMContentLoaded', () => {
-    // const canvas = document.getElementById('audioCanvas');
-    // const context = canvas.getContext('2d');
-
-    // // Set canvas size to match the window
-    // canvas.width = window.innerWidth;
-    // canvas.height = window.innerHeight;
-
-    // // Call the drawSeamlessPattern function
-    // drawSeamlessPattern(context, canvas.width, canvas.height, 100, 300, 50, 50); // Customize sizes and gaps
-});
