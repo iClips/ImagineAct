@@ -60,6 +60,83 @@ document.addEventListener('DOMContentLoaded', () => {
     showMantra(); 
 });
 
+const mantras = [
+    "I am the spark that ignites dreams.",
+    "With each step, I create my reality.",
+    "I attract abundance with ease.",
+    "I am in control, building my path.",
+    "Each move takes me higher and higher.",
+    "The world is mine to shape and design.",
+    "I am empowered, unstoppable, inspired.",
+    "Every command brings my vision to life.",
+    "I receive what I desire, effortlessly.",
+    "I am the key to limitless potential.",
+    "I am powerful beyond measure.",
+    "Abundance flows to me effortlessly.",
+    "I am at peace with myself and the world.",
+    "Every day, I grow stronger and wiser.",
+    "The universe supports my dreams and goals."
+];
+
+let mantraText = "";
+let isListening = false;
+
+// Load diamonds from local storage
+let totalDiamonds = parseInt(localStorage.getItem("totalDiamonds")) || 0;
+
+// Function to show and animate mantra
+function showMantra() {
+    mantraText = mantras[Math.floor(Math.random() * mantras.length)];
+    const mantraElement = document.createElement("div");
+    mantraElement.classList.add("mantra");
+    mantraElement.textContent = mantraText;
+    document.body.appendChild(mantraElement);
+
+    // Randomize position and scaling
+    const initialScale = Math.random() * 0.5 + 0.75;
+    mantraElement.style.transform = `scale(${initialScale})`;
+    mantraElement.style.left = `${Math.random() * 80}vw`;
+    mantraElement.style.top = `${Math.random() * 80}vh`;
+
+    // Animate movement and fade out
+    const finalScale = Math.random() * 1.5 + 0.5;
+    mantraElement.animate(
+        [
+            { transform: `scale(${initialScale}) translate(0, 0)`, opacity: 1 },
+            { transform: `scale(${finalScale}) translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px)`, opacity: 0 }
+        ],
+        {
+            duration: 3000,
+            easing: "ease-in-out",
+            fill: "forwards"
+        }
+    );
+
+    startListeningForMantra();
+    setTimeout(moveToNextMantra, 3000);
+}
+
+// Function to start listening when the mantra appears
+function startListeningForMantra() {
+    if (isListening) return;
+    isListening = true;
+    
+}
+
+// Function to award a diamond
+function awardDiamond() {
+    totalDiamonds++;
+    localStorage.setItem("totalDiamonds", totalDiamonds);
+    showNote("message", "Diamond awarded! Total diamonds:", totalDiamonds);
+    console.log("Diamond awarded! Total diamonds:", totalDiamonds);
+    // You can add UI updates here to reflect the new diamond count
+}
+
+// Function to move to the next mantra
+function moveToNextMantra() {
+    showMantra();
+}
+
 function initVCPurchases() {
     initGlobalVars();
     registerEventListeners();        
@@ -442,6 +519,13 @@ function initSpeechRecognition() {
         const speechResult = event.results[event.resultIndex][0].transcript.trim();
         const capturedText = `You said: "${speechResult}"`;
         recognizedTextLabel.textContent = capturedText;
+
+        //intercept incase for mantra 
+        if (capturedText.toLowerCase() === mantraText.toLowerCase()) {
+            awardDiamond();
+            return;
+        }
+        
         const accuracy = processVoiceCommand(speechResult);
         
         if (accuracy && accuracy >= 0) {
