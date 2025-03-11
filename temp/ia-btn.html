@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 120px);
+    }
+    button {
+        position: absolute;
+        bottom: 30%; /* adjust to 32% or 20-25% as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        size: 160px;
+        border: none;
+        border-radius: 50%;
+        background-color: transparent;
+    }
+    .btn-wrapper {
+        position: relative;   
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Colored Outer Borders */
+    button .border-1 {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 112px;
+      height: 112px;
+      border: 4px solid blue;
+      border-radius: 50%;
+    }
+
+    button .border-2 {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 120px;
+      height: 120px;
+      border: 4px solid limegreen;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    button .border-3 {
+      position: absolute;
+      top: -14px;
+      left: -14px;
+      width: 128px;
+      height: 128px;
+      border: 4px solid orange;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    button .border-4 {
+        border-radius: 50%;
+        z-index: 3;
+        position: absolute;
+        top: -18px;
+        left: -18px;
+      width: 136px;
+      height: 136px;
+      border: 4px solid violet;
+    }
+    
+    .wrapper-b4 {
+        position: relative;   
+        width: 100%;
+        height: 100%;
+        
+     }
+    /* Countdown Timer */
+    button .timer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4vw; /* adjust font size to fit within the button */
+        font-weight: bold;
+        text-align: center;
+        width: 80%; /* adjust width to fit within the inner border */
+        height: 80%; /* adjust height to fit within the inner border */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <button>
+    <div class="btn-wrapper">
+        <div class="border-1"></div>
+        <div class="border-2"></div>
+        <div class="border-3"></div>
+        <div class="border-4">
+            <div class="wrapper-b4">
+                <div class="timer">00</div>
+            </div>
+        </div>
+    </div>
+  </button>
+
+  <script>
+    const button = document.querySelector('button');
+    const timerDisplay = document.querySelector('.timer');
+
+    let timer = null;
+    let currentTime = 0;
+
+    button.addEventListener('mousedown', () => {
+      timer = setInterval(() => {
+        currentTime++;
+        timerDisplay.textContent = currentTime.toString().padStart(2, '0');
+        
+        if (currentTime >= 68) {
+          clearInterval(timer);
+          freezeAndReset();
+        }
+      }, 1000);
+    });
+
+    button.addEventListener('mouseup', () => {
+      clearInterval(timer);
+    });
+
+    function freezeAndReset() {
+      // Freeze everything for 2.5 seconds
+      button.style.opacity = 0;
+      setTimeout(() => {
+        // Reset everything
+        button.style.opacity = 1;
+        currentTime = 0;
+        timerDisplay.textContent = '00';
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
